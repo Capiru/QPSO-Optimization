@@ -1,0 +1,4950 @@
+
+ ANSYS Multiphysics                                
+
+
+ *------------------------------------------------------------------*
+ |                                                                  |
+ |   W E L C O M E   T O   T H E   A N S Y S (R)  P R O G R A M     |
+ |                                                                  |
+ *------------------------------------------------------------------*
+
+
+
+
+ ***************************************************************
+ *                  ANSYS 14.0 LEGAL NOTICES                   *
+ ***************************************************************
+ *                                                             *
+ * Copyright 2011 SAS IP, Inc.  All rights reserved.           *
+ * Unauthorized use, distribution or duplication is            *
+ * prohibited.                                                 *
+ *                                                             *
+ * Ansys is a registered trademark of ANSYS, Inc. or its       *
+ * subsidiaries in the United States or other countries.       *
+ * See the ANSYS, Inc. online documentation or the ANSYS, Inc. *
+ * documentation CD or online help for the complete Legal      *
+ * Notice.                                                     *
+ *                                                             *
+ ***************************************************************
+ *                                                             *
+ * THIS ANSYS SOFTWARE PRODUCT AND PROGRAM DOCUMENTATION       *
+ * INCLUDE TRADE SECRETS AND CONFIDENTIAL AND PROPRIETARY      *
+ * PRODUCTS OF ANSYS, INC., ITS SUBSIDIARIES, OR LICENSORS.    *
+ * The software products and documentation are furnished by    *
+ * ANSYS, Inc. or its subsidiaries under a software license    *
+ * agreement that contains provisions concerning               *
+ * non-disclosure, copying, length and nature of use,          *
+ * compliance with exporting laws, warranties, disclaimers,    *
+ * limitations of liability, and remedies, and other           *
+ * provisions.  The software products and documentation may be *
+ * used, disclosed, transferred, or copied only in accordance  *
+ * with the terms and conditions of that software license      *
+ * agreement.                                                  *
+ *                                                             *
+ * ANSYS, Inc. is a UL registered                              *
+ * ISO 9001:2008 company.                                      *
+ *                                                             *
+ ***************************************************************
+ *                                                             *
+ * This product is subject to U.S. laws governing export and   *
+ * re-export.                                                  *
+ *                                                             *
+ * For U.S. Government users, except as specifically granted   *
+ * by the ANSYS, Inc. software license agreement, the use,     *
+ * duplication, or disclosure by the United States Government  *
+ * is subject to restrictions stated in the ANSYS, Inc.        *
+ * software license agreement and FAR 12.212 (for non-DOD      *
+ * licenses).                                                  *
+ *                                                             *
+ ***************************************************************
+
+
+
+          *****  ANSYS COMMAND LINE ARGUMENTS  *****
+  BATCH MODE REQUESTED (-b)    = LIST
+  INPUT FILE COPY MODE (-c)    = COPY
+
+ 00176432          VERSION=WINDOWS x64     RELEASE= 14.0     UP20111024
+ CURRENT JOBNAME=file  21:35:43  NOV 21, 2017 CP=      1.078
+
+     1  FINISH  
+     2  /CLEAR  
+     3  /TITLE, Modal Analysis  
+     4  /PREP7  
+     5  !-------------------------------------------
+     6  !Parametros do modelo   
+     7  !-------------------------------------------
+     8  !parametros auxiliares  
+     9  aux1=30e-3*1
+    10  RaioBoca=43e-3*1.0915   
+    11  pos1=327e-3*1   
+    12  pos2=97e-3*1.0441   
+    13      
+    14  AltTampo=480e-3*0.98313 
+    15  EspCaixa=105e-3*1   
+    16      
+    17  !curva inferior 
+    18  LargCurvaInferior=363e-3*1  
+    19  AltCurvaInferior=(AltTampo-pos1) !altura da curva inferior  
+    20      
+    21  !cintura
+    22  LargCintura=236e-3*1
+    23  AltCintura=(AltTampo-pos2-2*RaioBoca)  !altura da cintura   
+    24      
+    25  !curva superior 
+    26  LargCurvaSuperior=274e-3         !largura da curva superior 
+    27  AltCurvaSuperior=(AltTampo-pos2) !altura da curva superior  
+    28      
+    29  !travejamentos=enrijecedores que ligam as duas splines laterais 
+    30  EspTravej=20e-3*0.50*1  
+    31  DistTravejCintura=34e-3*0.8*1   
+    32      
+    33  !suporte do tampo   
+    34  AltSuporteCaixa=12e-3*1 
+    35      
+    36  !ponte  
+    37  LargPonte=(190e-3)*1
+    38  AltPonte=27e-3*0.95217  
+    39      
+    40  !enrijecedores  
+    41  AltEnrij=50e-3*1
+    42  EspEnrij=10e-3*1.0*0.92866  
+    43  OffsetEnrij=30e-3*1 
+    44  DistEnrij=40e-3*1.0176  
+    45  AltEnrijSuperior=AltCintura-DistTravejCintura-aux1  
+    46      
+    47  !braco  
+    48  LargBraco=64e-3*1   
+    49  AltBraco=340e-3*1   
+    50  EspBraco=20e-3*1.0*1
+    51      
+    52  !mao
+    53  LargMao=49e-3*1 
+    54  AltMao=160e-3*1 
+    55  EspMao=50e-3*1  
+    56      
+    57  !Espessura do tampo 4mm 
+    58      
+    59  !propriedades das placas (nao ilustradas no modelo) 
+    60  AEspTampo=0.002*0.70*1  
+    61  AEspFaixa=0.002*1   
+    62  AEspFundo=0.002*1.5*1   
+    63  AEspEscala=7E-3*1.8*1   
+    64  AEspBraco=18E-3*2.3*1   
+    65  AEspMao=22E-3*2.7*1 
+    66  AEspPonte=0.02*1
+    67  AEspSuporteCaixa=58E-3*1
+    68  AEspEnrij=0.006*0.5*1   
+    69  AEspTravej=0.010*0.9*1  
+    70      
+    71  !propriedades mecanicas das madeiras
+    72  CasteloDens=760*1   
+    73  CasteloEX=11.105E9*1
+    74  CasteloEY=0.55E9*1  
+    75  CasteloEZ=0.55E9*1  
+    76  CasteloPRxy=0.3*1   
+    77  CasteloPRyz=0.08*1  
+    78  CasteloPRxz=0.08*1  
+    79  CasteloGxy=0.55E9*1 
+    80  CasteloGyz=0.55E9*1 
+    81  CasteloGxz=0.55E9*1 
+    82      
+    83  PauFerroDens=680*1  
+    84  PauFerroEX=9228E6*1 
+    85  PauFerroEY=461.4E6*1
+    86  PauFerroEZ=461.4E6*1
+    87  PauFerroPRxy=0.1*1  
+    88  PauFerroPRyz=0.4*1  
+    89  PauFerroPRxz=0.1*1  
+    90  PauFerroGxy=461.4E6*1   
+    91  PauFerroGyz=461.4E6*1   
+    92  PauFerroGxz=461.4E6*1   
+    93      
+    94  CedroDens=504*1 
+    95  CedroEX=9839E6*1
+    96  CedroEY=491.95E6*1  
+    97  CedroEZ=491.95E6*1  
+    98  CedroPRxy=0.1*1 
+    99  CedroPRyz=0.4*1 
+   100  CedroPRxz=0.1*1 
+   101  CedroGxy=491.95E6*1 
+   102  CedroGyz=491.95E6*1 
+   103  CedroGxz=491.95E6*1 
+   104      
+   105  BalsaDens=155*1 
+   106  BalsaEX=4100E6*1
+   107  BalsaEY=125E6*1 
+   108  BalsaEZ=125E6*1 
+   109  BalsaPRxy=0.186*1   
+   110  BalsaPRyz=0.448*1   
+   111  BalsaPRxz=0.186*1   
+   112  BalsaGxy=166E6*1
+   113  BalsaGyz=20.5E6*1   
+   114  BalsaGxz=166E6*1
+   115      
+   116      
+   117  Nmod=50             !number of modes to be calculated   
+   118  Nrig=3              !number of a priori known rigid body modes  
+   119      
+   120      
+   121  !-------------------------------------------
+   122  !Defining element type, material properties mesh size   
+   123  !-------------------------------------------
+   124  esize,EspEnrij,0 	 !Mesh size   
+   125      
+   126  !----Material 1 - TAMPO 
+   127  et,1,SHELL281	 !Define element type 
+   128  mp,ex,1,CasteloEX	 !Young's Modulus 
+   129  mp,prxy,1,CasteloPRxy	 !Poisson's ratio 
+   130  mp,dens,1,CasteloDens !Density for  
+   131      
+   132  MPTEMP,1,0  
+   133  MPDATA,EX,1,1,CasteloEX 
+   134  MPDATA,EY,1,1,CasteloEY 
+   135  MPDATA,EZ,1,1,CasteloEZ 
+   136  MPDATA,PRXY,1,1,CasteloPRxy 
+   137  MPDATA,PRYZ,1,1,CasteloPRyz 
+   138  MPDATA,PRXZ,1,1,CasteloPRxz 
+   139  MPDATA,GXY,1,1,CasteloGxy   
+   140  MPDATA,GYZ,1,1,CasteloGyz   
+   141  MPDATA,GXZ,1,1,CasteloGxz   
+   142  MPDATA,DENS,1,1,CasteloDens 
+   143      
+   144  !----Material 10 - FAIXA
+   145  et,10,SHELL281	 !Define element type
+   146  mp,ex,10,CasteloEX	 !Young's Modulus
+   147  mp,prxy,10,CasteloPRxy	 !Poisson's ratio
+   148  mp,dens,10,CasteloDens !Density for 
+   149      
+   150  MPTEMP,1,0  
+   151  MPDATA,EX,10,1,CasteloEX
+   152  MPDATA,EY,10,1,CasteloEY
+   153  MPDATA,EZ,10,1,CasteloEZ
+   154  MPDATA,PRXY,10,1,CasteloPRxy
+   155  MPDATA,PRYZ,10,1,CasteloPRyz
+   156  MPDATA,PRXZ,10,1,CasteloPRxz
+   157  MPDATA,GXY,10,1,CasteloGxy  
+   158  MPDATA,GYZ,10,1,CasteloGyz  
+   159  MPDATA,GXZ,10,1,CasteloGxz  
+   160  MPDATA,DENS,10,1,CasteloDens
+   161      
+   162  !----Material 11
+   163  et,11,SHELL281	 !Define element type
+   164  mp,ex,11,CasteloEX	 !Young's Modulus
+   165  mp,prxy,11,CasteloPRxy	 !Poisson's ratio
+   166  mp,dens,11,CasteloDens !Density for 
+   167      
+   168  MPTEMP,1,0  
+   169  MPDATA,EX,11,1,CasteloEX
+   170  MPDATA,EY,11,1,CasteloEY
+   171  MPDATA,EZ,11,1,CasteloEZ
+   172  MPDATA,PRXY,11,1,CasteloPRxy
+   173  MPDATA,PRYZ,11,1,CasteloPRyz
+   174  MPDATA,PRXZ,11,1,CasteloPRxz
+   175  MPDATA,GXY,11,1,CasteloGxy  
+   176  MPDATA,GYZ,11,1,CasteloGyz  
+   177  MPDATA,GXZ,11,1,CasteloGxz  
+   178  MPDATA,DENS,11,1,CasteloDens
+   179      
+   180  !----Material 2 - ESCALA
+   181  et,2,SHELL281	 !Define element type 
+   182  mp,ex,2,PauFerroEX	 !Young's Modulus
+   183  mp,prxy,2,PauFerroPRxy	 !Poisson's ratio
+   184  mp,dens,2,PauFerroDens !Density for 
+   185      
+   186  MPTEMP,1,0  
+   187  MPDATA,EX,2,1,PauFerroEX
+   188  MPDATA,EY,2,1,PauFerroEY
+   189  MPDATA,EZ,2,1,PauFerroEZ
+   190  MPDATA,PRXY,2,1,PauFerroPRxy
+   191  MPDATA,PRYZ,2,1,PauFerroPRyz
+   192  MPDATA,PRXZ,2,1,PauFerroPRxz
+   193  MPDATA,GXY,2,1,PauFerroGxy  
+   194  MPDATA,GYZ,2,1,PauFerroGyz  
+   195  MPDATA,GXZ,2,1,PauFerroGxz  
+   196  MPDATA,DENS,2,1,PauFerroDens
+   197      
+   198  !----Material 20 - BRACO
+   199  et,20,SHELL281	 !Define element type
+   200  mp,ex,20,CedroEX 	 !Young's Modulus 
+   201  mp,prxy,20,CedroPRxy	 !Poisson's ratio  
+   202  mp,dens,20,CedroDens !Density for   
+   203      
+   204  MPTEMP,1,0  
+   205  MPDATA,EX,20,1,CedroEX  
+   206  MPDATA,EY,20,1,CedroEY  
+   207  MPDATA,EZ,20,1,CedroEZ  
+   208  MPDATA,PRXY,20,1,CedroPRxy  
+   209  MPDATA,PRYZ,20,1,CedroPRyz  
+   210  MPDATA,PRXZ,20,1,CedroPRxz  
+   211  MPDATA,GXY,20,1,CedroGxy
+   212  MPDATA,GYZ,20,1,CedroGyz
+   213  MPDATA,GXZ,20,1,CedroGxz
+   214  MPDATA,DENS,20,1,CedroDens  
+   215      
+   216  !----Material 21 - MAO  
+   217  et,21,SHELL281	 !Define element type
+   218  mp,ex,21,CedroEX 	 !Young's Modulus 
+   219  mp,prxy,21,CedroPRxy	 !Poisson's ratio  
+   220  mp,dens,21,CedroDens !Density for   
+   221      
+   222  MPTEMP,1,0  
+   223  MPDATA,EX,21,1,CedroEX  
+   224  MPDATA,EY,21,1,CedroEY  
+   225  MPDATA,EZ,21,1,CedroEZ  
+   226  MPDATA,PRXY,21,1,CedroPRxy  
+   227  MPDATA,PRYZ,21,1,CedroPRyz  
+   228  MPDATA,PRXZ,21,1,CedroPRxz  
+   229  MPDATA,GXY,21,1,CedroGxy
+   230  MPDATA,GYZ,21,1,CedroGyz
+   231  MPDATA,GXZ,21,1,CedroGxz
+   232  MPDATA,DENS,21,1,CedroDens  
+   233      
+   234  !----Material 3 - PONTE 
+   235  et,3,SHELL281	 !Define element type 
+   236  mp,ex,3,PauFerroEX	 !Young's Modulus
+   237  mp,prxy,3,PauFerroPRxy	 !Poisson's ratio
+   238  mp,dens,3,PauFerroDens !Density for 
+   239      
+   240  MPTEMP,1,0  
+   241  MPDATA,EX,3,1,PauFerroEX
+   242  MPDATA,EY,3,1,PauFerroEY
+   243  MPDATA,EZ,3,1,PauFerroEZ
+   244  MPDATA,PRXY,3,1,PauFerroPRxy
+   245  MPDATA,PRYZ,3,1,PauFerroPRyz
+   246  MPDATA,PRXZ,3,1,PauFerroPRxz
+   247  MPDATA,GXY,3,1,PauFerroGxy  
+   248  MPDATA,GYZ,3,1,PauFerroGyz  
+   249  MPDATA,GXZ,3,1,PauFerroGxz  
+   250  MPDATA,DENS,3,1,PauFerroDens
+   251      
+   252  !----Material 4 
+   253  et,4,SHELL281	 !Define element type 
+   254  mp,ex,4,CedroEX 	 !Young's Modulus  
+   255  mp,prxy,4,CedroPRxy	 !Poisson's ratio   
+   256  mp,dens,4,CedroDens !Density for
+   257      
+   258  MPTEMP,1,0  
+   259  MPDATA,EX,4,1,CedroEX   
+   260  MPDATA,EY,4,1,CedroEY   
+   261  MPDATA,EZ,4,1,CedroEZ   
+   262  MPDATA,PRXY,4,1,CedroPRxy   
+   263  MPDATA,PRYZ,4,1,CedroPRyz   
+   264  MPDATA,PRXZ,4,1,CedroPRxz   
+   265  MPDATA,GXY,4,1,CedroGxy 
+   266  MPDATA,GYZ,4,1,CedroGyz 
+   267  MPDATA,GXZ,4,1,CedroGxz 
+   268  MPDATA,DENS,4,1,CedroDens   
+   269      
+   270  !----Material 5 
+   271  et,5,SHELL281	 !Define element type 
+   272  mp,ex,5,BalsaEX	 !Young's Modulus   
+   273  mp,prxy,5,BalsaPRxy	 !Poisson's ratio   
+   274  mp,dens,5,BalsaDens !Density for
+   275      
+   276  MPTEMP,1,0  
+   277  MPDATA,EX,5,1,BalsaEX   
+   278  MPDATA,EY,5,1,BalsaEY   
+   279  MPDATA,EZ,5,1,BalsaEZ   
+   280  MPDATA,PRXY,5,1,BalsaPRxy   
+   281  MPDATA,PRYZ,5,1,BalsaPRyz   
+   282  MPDATA,PRXZ,5,1,BalsaPRxz   
+   283  MPDATA,GXY,5,1,BalsaGxy 
+   284  MPDATA,GYZ,5,1,BalsaGyz 
+   285  MPDATA,GXZ,5,1,BalsaGxz 
+   286  MPDATA,DENS,5,1,BalsaDens   
+   287      
+   288  !----Material 6 
+   289  et,6,SHELL281	 !Define element type 
+   290  mp,ex,6,BalsaEX	 !Young's Modulus   
+   291  mp,prxy,6,BalsaPRxy	 !Poisson's ratio   
+   292  mp,dens,6,BalsaDens !Density for
+   293      
+   294  MPTEMP,1,0  
+   295  MPDATA,EX,6,1,BalsaEX   
+   296  MPDATA,EY,6,1,BalsaEY   
+   297  MPDATA,EZ,6,1,BalsaEZ   
+   298  MPDATA,PRXY,6,1,BalsaPRxy   
+   299  MPDATA,PRYZ,6,1,BalsaPRyz   
+   300  MPDATA,PRXZ,6,1,BalsaPRxz   
+   301  MPDATA,GXY,6,1,BalsaGxy 
+   302  MPDATA,GYZ,6,1,BalsaGyz 
+   303  MPDATA,GXZ,6,1,BalsaGxz 
+   304  MPDATA,DENS,6,1,BalsaDens   
+   305      
+   306  !-------------------------------------- 
+   307  ! Definição das orientação das fibras e camadas do violão   
+   308  !-------------------------------------- 
+   309  !Camadas Material 1  - Tampo superior   
+   310  sect,1,shell,,  
+   311  secdata, AEspTampo/3,1,0.0,3
+   312  secdata, AEspTampo/3,1,0.0,3
+   313  secdata, AEspTampo/3,1,0.0,3
+   314  secoffset,MID   
+   315  seccontrol, , , , , , , 
+   316      
+   317  !Camadas Material 1.0  - Faixa  
+   318  sect,10,shell,, 
+   319  secdata, AEspFaixa/3,10,0.0,3   
+   320  secdata, AEspFaixa/3,10,0.0,3   
+   321  secdata, AEspFaixa/3,10,0.0,3   
+   322  secoffset,MID   
+   323  seccontrol, , , , , , , 
+   324      
+   325  !Camadas Material 1.1  - Fundo  
+   326  sect,11,shell,, 
+   327  secdata, AEspFundo/3,11,0.0,3   
+   328  secdata, AEspFundo/3,11,0.0,3   
+   329  secdata, AEspFundo/3,11,0.0,3   
+   330  secoffset,MID   
+   331  seccontrol, , , , , , , 
+   332      
+   333      
+   334  !Camadas Material 2 - Escala
+   335  sect,2,shell,,  
+   336  secdata, AEspEscala,2,0.0,3 
+   337  secoffset,MID   
+   338  seccontrol, , , , , , , 
+   339      
+   340  !Camadas Material 2.0 - Braço   
+   341  sect,20,shell,, 
+   342  secdata, AEspBraco,20,0.0,3 
+   343  secoffset,MID   
+   344  seccontrol, , , , , , , 
+   345      
+   346  !Camadas Material 2.1 - Suporte Fios
+   347  sect,21,shell,, 
+   348  secdata, AEspMao,21,0.0,3   
+   349  secoffset,MID   
+   350  seccontrol, , , , , , , 
+   351      
+   352      
+   353  !Camadas Material 3 - Ponte 
+   354  sect,3,shell,,  
+   355  secdata, AEspPonte,3,0.0,3  
+   356  secoffset,USER,-AEspPonte/2              !<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<  
+   357  seccontrol, , , , , , , 
+   358      
+   359  !Camadas Material 4 - Retângulos de Suporte 
+   360  sect,4,shell,,  
+   361  secdata, AEspSuporteCaixa,4,0.0,3   
+   362  secoffset,MID   
+   363  seccontrol, , , , , , , 
+   364      
+   365  !Camadas Material 5 - Enrijecedores do tampo
+   366  sect,5,shell,,  
+   367  secdata, AEspEnrij,5,0.0,3  
+   368  secoffset,MID   
+   369  seccontrol, , , , , , , 
+   370      
+   371  !Camadas Material 6 - Travejamentos 
+   372  sect,6,shell,,  
+   373  secdata, AEspTravej,6,0.0,3 
+   374  secoffset,MID   
+   375  seccontrol, , , , , , , 
+   376      
+   377  !-------------------------------------------
+   378  !Defining Geometry  
+   379  !-------------------------------------------
+   380  K, 1,     0,      0,  0	
+   381  K,2,(LargCurvaInferior/3) , (AltCurvaInferior/8), 0 
+   382  K,3,-(LargCurvaInferior/3) , (AltCurvaInferior/8), 0
+   383  K, 4,(LargCurvaInferior/2),(AltCurvaInferior),  0   
+   384  K, 5,-(LargCurvaInferior/2), (AltCurvaInferior),  0 
+   385  K, 6, (LargCintura/2), (AltCintura),  0 
+   386  K, 7, -(LargCintura/2), (AltCintura), 0 
+   387  K,8, (LargCurvaSuperior/2),(AltCurvaSuperior),0 
+   388  K,9, -(LargCurvaSuperior/2),(AltCurvaSuperior),0
+   389  K,10, (LargCurvaSuperior/3),(AltTampo-pos2/8),0 
+   390  K,11, -(LargCurvaSuperior/3),(AltTampo-pos2/8),0
+   391  K, 12, 0, AltTampo, 0   
+   392  SPLINE, 1, 2, 4, 6, ,,-1,,,,1,, !SPLINE do inicio at? a cintura lado direito
+   393  SPLINE, 6,8, 10, 12,,,,-1,,-1,,, !SPLINE da cintura at? o final 
+   394  SPLINE, 1, 3,5,7,,,1,,,,1, !SPLINE do inicio at? a cintura lado esquerdo
+   395  SPLINE, 7, 9, 11 , 12, ,,,-1,,1,, !SPLINE do inicio at? a cintura lado esquerdo 
+   396  L, 7,6 !linha auxiliar  
+   397  !AL, 1, 2, 3,13,9,8,7 !?rea 1   
+   398  !AL, 13, 4, 5, 6, 12, 11, 10 !?rea 2
+   399  !AADD, 1, 2 
+   400      
+   401  K, (1+12),     0,      0,  EspCaixa	
+   402  K,(2+12),(LargCurvaInferior/3) , (AltCurvaInferior/8), EspCaixa 
+   403  K,(3+12),-(LargCurvaInferior/3) , (AltCurvaInferior/8), EspCaixa
+   404  K, (4+12),(LargCurvaInferior/2),(AltCurvaInferior),  EspCaixa   
+   405  K, (5+12),-(LargCurvaInferior/2), (AltCurvaInferior),  EspCaixa 
+   406  K, (6+12), (LargCintura/2), (AltCintura),  EspCaixa 
+   407  K, (7+12), -(LargCintura/2), (AltCintura), EspCaixa 
+   408  K,(8+12), (LargCurvaSuperior/2),(AltCurvaSuperior),EspCaixa 
+   409  K,(9+12), -(LargCurvaSuperior/2),(AltCurvaSuperior),EspCaixa
+   410  K,(10+12), (LargCurvaSuperior/3),(AltTampo-pos2/8),EspCaixa 
+   411  K,(11+12), -(LargCurvaSuperior/3),(AltTampo-pos2/8),EspCaixa
+   412  K, (12+12), 0, AltTampo, EspCaixa   
+   413  SPLINE, (1+12), (2+12), (4+12), (6+12), ,,-1,,,,1,, !SPLINE do inicio at? a cintura lado direito
+   414  SPLINE, (6+12),(8+12), (10+12), (12+12),,,,-1,,-1,,, !SPLINE da cintura at? o final 
+   415  SPLINE, (1+12), (3+12),(5+12),(7+12),,,1,,,,1, !SPLINE do inicio at? a cintura lado esquerdo
+   416  SPLINE, (7+12), (9+12), (11+12) , (12+12), ,,,-1,,1,, !SPLINE do inicio at? a cintura lado esquerdo 
+   417  L, 19,18 !linha auxiliar
+   418  !AL, (1+12), (2+12), (3+12),(13+12),(9+12),(8+12),(7+12) !?rea 1
+   419  !AL, (13+12), (4+12), (5+12), (6+12), (12+12), (11+12), (10+12) !?rea 2 
+   420  !AADD, 1, 2 
+   421      
+   422  L,1,1+12
+   423  L,2,2+12
+   424  L,3,3+12
+   425  L,4,4+12
+   426  L,5,5+12
+   427  L,6,6+12
+   428  L,7,7+12
+   429  L,8,8+12
+   430  L,9,9+12
+   431  L,10,10+12  
+   432  L,11,11+12  
+   433  L,12,12+12  
+   434      
+   435      
+   436  !Linhas Auxiliares  
+   437  L,8,9                !linha 39 curva cima superior  
+   438  L,8+12,9+12	     !linha 40 , curva cima, inferior   
+   439      
+   440      
+   441      
+   442      
+   443  !travejamentos superiores   
+   444      
+   445  !K,30, (LargCintura/2), (AltCintura),  EspTravej
+   446  !K,31, -(LargCintura/2), (AltCintura), EspTravej
+   447  K,32, (LargCurvaSuperior/2),(AltCurvaSuperior),EspTravej
+   448  K,33, -(LargCurvaSuperior/2),(AltCurvaSuperior),EspTravej   
+   449  !L,30,31 	 	!L41
+   450  !L,30,6			!L42  
+   451  !L,31,7			!L43  
+   452  L,32,33			!L44  
+   453  L,32,8			!L45   
+   454  L,33,9			!L46   
+   455      
+   456  !Travejamento Inferior a Cintura na parte superior  
+   457      
+   458  K,94, LargCintura/2,AltCintura-DistTravejCintura,0  
+   459  K,95, -LargCintura/2,AltCintura-DistTravejCintura,0 
+   460  K,96, LargCintura/2, AltCintura-DistTravejCintura, EspTravej
+   461  K,97, -LargCintura/2, AltCintura-DistTravejCintura, EspTravej   
+   462  L,96,97 
+   463  L,97,95 
+   464  L,96,94 
+   465  L,94,95 
+   466  L, 6, 94
+   467  L, 7,95 
+   468      
+   469  !travejamentos inferiores   
+   470      
+   471  !K,34, (LargCintura/2), (AltCintura),  EspCaixa-EspTravej   
+   472  !K,35, -(LargCintura/2), (AltCintura), EspCaixa-EspTravej   
+   473  !L,34,35 	 		!L47   
+   474  !L,34,6+12			!L48   
+   475  !L,35,7+12			!L49   
+   476  !Travejamento Inferior a Cintura na parte inferior  
+   477      
+   478  K,98, LargCintura/2,AltCintura-DistTravejCintura,EspCaixa   
+   479  K,99, -LargCintura/2,AltCintura-DistTravejCintura,EspCaixa  
+   480  K,100, LargCintura/2, AltCintura-DistTravejCintura, EspCaixa-EspTravej  
+   481  K,101, -LargCintura/2, AltCintura-DistTravejCintura, EspCaixa-EspTravej 
+   482  L,98,99 
+   483  L,100,101   
+   484  L,98,100
+   485  L,99,101
+   486  L, 6+12, 98 
+   487  L, 7+12,99  
+   488      
+   489  K,36, (LargCurvaSuperior/2),(AltCurvaSuperior),EspCaixa-EspTravej   
+   490  K,37, -(LargCurvaSuperior/2),(AltCurvaSuperior),EspCaixa-EspTravej  
+   491  L,36,37			        !L50  
+   492  L,36,8+12			!L51
+   493  L,37,9+12			!L52
+   494      
+   495  L, 17,16			!L53 
+   496  K, 38,LargCurvaInferior/2,AltCurvaInferior, EspCaixa-EspTravej  
+   497  K, 39,-LargCurvaInferior/2,AltCurvaInferior, EspCaixa-EspTravej 
+   498  L, 38, 39			!L54
+   499  L, 38, 16			!L55
+   500  L, 39, 17			!L56
+   501      
+   502  L, 14, 15   
+   503  K,40,(LargCurvaInferior/3) , (AltCurvaInferior/8), EspCaixa-EspTravej   
+   504  K,41,-(LargCurvaInferior/3) , (AltCurvaInferior/8), EspCaixa-EspTravej  
+   505  L, 40, 41   
+   506  L, 40, 14   
+   507  L, 41, 15   
+   508      
+   509  !enrijecedores  
+   510  K,50,EspEnrij/2,AltEnrijSuperior,0  
+   511  K,51,EspEnrij/2,AltEnrij,0  
+   512  K,52,-EspEnrij/2,AltEnrijSuperior,0 
+   513  K,53,-EspEnrij/2,AltEnrij,0 
+   514  L,50,51 
+   515  L,50,52 
+   516  L,51,53 
+   517  L,52,53 
+   518      
+   519  K,54,DistEnrij,AltEnrijSuperior,0   
+   520  K,55,DistEnrij+OffsetEnrij,AltEnrij,0   
+   521  K,56,DistEnrij+EspEnrij,AltEnrijSuperior,0  
+   522  K,57,DistEnrij+EspEnrij+OffsetEnrij,AltEnrij,0  
+   523  L,(50+4),(51+4) 
+   524  L,(50+4),(52+4) 
+   525  L,(51+4),(53+4) 
+   526  L,(52+4),(53+4) 
+   527      
+   528  K,58,-DistEnrij,AltEnrijSuperior,0  
+   529  K,59,-(DistEnrij+OffsetEnrij),AltEnrij,0
+   530  K,60,-(DistEnrij+EspEnrij),AltEnrijSuperior,0   
+   531  K,61,-(DistEnrij+EspEnrij+OffsetEnrij),AltEnrij,0   
+   532  L,(50+4*2),(51+4*2) 
+   533  L,(50+4*2),(52+4*2) 
+   534  L,(51+4*2),(53+4*2) 
+   535  L,(52+4*2),(53+4*2) 
+   536      
+   537  K,62,2*DistEnrij,AltEnrijSuperior,0 
+   538  K,63,2*DistEnrij+2*OffsetEnrij,AltEnrij,0   
+   539  K,64,2*DistEnrij+EspEnrij,AltEnrijSuperior,0
+   540  K,65,2*DistEnrij+2*OffsetEnrij+EspEnrij,AltEnrij,0  
+   541  L,(50+4*3),(51+4*3) 
+   542  L,(50+4*3),(52+4*3) 
+   543  L,(51+12),(53+12)   
+   544  L,(52+4*3),(53+4*3) 
+   545      
+   546  K,66,-(2*DistEnrij),AltEnrijSuperior,0  
+   547  K,67,-(2*DistEnrij+2*OffsetEnrij),AltEnrij,0
+   548  K,68,-(2*DistEnrij+EspEnrij),AltEnrijSuperior,0 
+   549  K,69,-(2*DistEnrij+2*OffsetEnrij+EspEnrij),AltEnrij,0   
+   550  L,(50+4*4),(51+4*4) 
+   551  L,(50+4*4),(52+4*4) 
+   552  L,(51+4*4),(53+4*4) 
+   553  L,(52+4*4),(53+4*4) 
+   554      
+   555  !retangulos de suporte  
+   556      
+   557  K,71,0,AltSuporteCaixa,0
+   558  K,72,0,AltSuporteCaixa,EspCaixa 
+   559  L,1,71  
+   560  L,72,13 
+   561  L,72,71 
+   562      
+   563  K,74,0,(AltTampo-AltSuporteCaixa),0 
+   564  K,75,0,(AltTampo-AltSuporteCaixa),EspCaixa  
+   565  L,12,74 
+   566  L,74,75 
+   567  L,75,24 
+   568      
+   569  !Enrijecedores PT.2 
+   570  K,80,EspEnrij/2,AltEnrijSuperior,EspEnrij   
+   571  K,81,EspEnrij/2,AltEnrij,EspEnrij   
+   572  L, 80,81
+   573  L, 80, 50   
+   574  L, 81, 51   
+   575      
+   576  K,82,DistEnrij,AltEnrijSuperior,EspEnrij
+   577  K,83,DistEnrij+OffsetEnrij,AltEnrij,EspEnrij
+   578  L, 82, 83   
+   579  L, 82, 54   
+   580  L, 83, 55   
+   581      
+   582  K,84,-(DistEnrij),AltEnrijSuperior,EspEnrij 
+   583  K,85,-(DistEnrij+OffsetEnrij),AltEnrij,EspEnrij 
+   584  L,84, 85
+   585  L, 84, 58   
+   586  L, 85, 59   
+   587      
+   588  K,86,(2*DistEnrij),AltEnrijSuperior,EspEnrij
+   589  K,87,2*(DistEnrij+OffsetEnrij),AltEnrij,EspEnrij
+   590  L, 86, 87   
+   591  L, 86, 62   
+   592  L, 87, 63   
+   593      
+   594  K,88,-(2*DistEnrij),AltEnrijSuperior,EspEnrij   
+   595  K,89,-2*(DistEnrij+OffsetEnrij),AltEnrij,EspEnrij   
+   596  L, 88, 89   
+   597  L, 88, 66   
+   598  L, 89, 67   
+   599      
+   600  !PONTE  
+   601      
+   602  K, 90, LargPonte/2, AltCurvaInferior,0  
+   603  K, 91, -(LargPonte/2), AltCurvaInferior, 0  
+   604  K, 92, LargPonte/2, AltCurvaInferior+AltPonte,0 
+   605  K,93, -(LargPonte/2), AltCurvaInferior+AltPonte,0   
+   606  L,90,91 
+   607  L,90,92 
+   608  L,91,93 
+   609  L,92,93 
+   610      
+   611  !Retângulo do Braço 
+   612  K,102,LargMao/2,AltTampo+AltBraco,0 
+   613  K,103,-LargMao/2,AltTampo+AltBraco,0
+   614  K,104,LargBraco/2,(AltCurvaSuperior+AltCintura)/2,0 
+   615  K,105,-LargBraco/2,(AltCurvaSuperior+AltCintura)/2,0
+   616  K,110,0,AltTampo+AltBraco,0 
+   617  K,113,0,(AltCurvaSuperior+AltCintura)/2,0   
+   618  L,102,110   
+   619  L,110,103   
+   620  L,104,113   
+   621  L,113,105   
+   622  L,103,105   
+   623  L,102,104   
+   624      
+   625  !Retangulo do tampo auxilliar   
+   626  K,106,0,AltTampo+AltSuporteCaixa,0  
+   627  K,107,0,AltTampo+AltSuporteCaixa,EspCaixa   
+   628  L,106,12
+   629  L,107,24
+   630  L,110,106   
+   631  L,106,113   
+   632      
+   633  !Mao do Violao  
+   634  K,108,LargMao/2,AltTampo+AltBraco+AltMao,EspMao 
+   635  K,109,-LargMao/2,AltTampo+AltBraco+AltMao,EspMao
+   636  L,108,109   
+   637  L,108,102   
+   638  L,109,103   
+   639      
+   640  !ret suport braco   
+   641  K,111,0,AltTampo+AltSuporteCaixa,EspBraco   
+   642  K,112,0,AltTampo+AltBraco,EspBraco  
+   643  L,111,112   
+   644  L,112,110   
+   645  L,106,111   
+   646  L,111,107   
+   647      
+   648  !retangulos auxiliares p/ os retangulos auxiliares  
+   649  K,121,EspEnrij,AltTampo-AltSuporteCaixa,0   
+   650  K,114,EspEnrij,AltTampo+30e-3,0 
+   651  L,121,114   
+   652  L,121,74
+   653  L,114,12
+   654      
+   655  K,115,EspEnrij,AltTampo-AltSuporteCaixa,EspCaixa
+   656  K,116,EspEnrij,AltTampo+30e-3,EspCaixa  
+   657  L,115,116   
+   658  L,115,75
+   659  L,116,24
+   660      
+   661  K,117,EspEnrij,AltSuporteCaixa,0
+   662  K,118,EspEnrij,0-30e-3,0
+   663  L,117,118   
+   664  L,117,71
+   665  L,118,1 
+   666      
+   667      
+   668  K,119,EspEnrij,AltSuporteCaixa,EspCaixa 
+   669  K,120,EspEnrij,0-30e-3,EspCaixa 
+   670  L,119,120   
+   671  L,119,72
+   672  L,120,13
+   673      
+   674  !?reas Auxiliares Casco Superior
+   675  AL, 1,2,3,13,9,8,7 		!A1
+   676  AL, 13,10,4,39			!A2
+   677  AL, 39, 11,12,6,5		!A3  
+   678      
+   679  !Circulo
+   680  CYL4, 0, (AltTampo-pos2-RaioBoca), RaioBoca,0,0,0,0  		!A4  
+   681      
+   682  !?reas Enrijecedores
+   683  AL,102,103,104,79		!A5  
+   684  AL,71,96,97,98			!A6
+   685  AL,94,93,95,67			!A7
+   686  AL,75,100,99,101		!A8   
+   687  AL,83,105,106,107		!A9  
+   688      
+   689  !ENRIJECEDORES  
+   690  AL,79,80,81,82			!A10   
+   691  AL,71,72,73,74			!A11   
+   692  AL,67,68,69,70			!A12   
+   693  AL,75,76,77,78			!A13   
+   694  AL,83,84,85,86			!A14   
+   695      
+   696  !?REA RETANGULOS
+   697  AL,27,87,88,89			!A15 parte de baixo
+   698      
+   699  AL,38,90,91,92			!A16 parte de cima 
+   700      
+   701  !?rea Travejadores  
+   702  AL,63,64,65,66			!A17   
+   703  AL,59,60,61,62			!A18   
+   704      
+   705  AL,50,51,52,53			!A19parte de baixo do circulo  
+   706  AL,44,45,46,47			!A20   
+   707      
+   708  AL,40,56,57,58			!A21parte de cima do circulo   
+   709  AL,39,41,42,43			!A22   
+   710      
+   711  !?reas Laterais 
+   712  AL,1, 14,27,28			!A23   
+   713  AL, 2, 28, 30 , 15  
+   714  AL, 3, 30 , 16 ,32		!A25
+   715  AL, 4, 32, 17, 34   
+   716  AL, 5, 34, 18 , 36		!A27
+   717  AL, 6, 36, 19 , 38  
+   718  AL, 7, 27, 20, 29		!A29 
+   719  AL, 8, 21,29,31			!A30  
+   720  AL, 9, 22, 31, 33   
+   721  AL, 10 , 33, 35, 23		!A32   
+   722  AL, 11,24, 35, 37   
+   723  AL, 12, 37,38, 25		!A34 
+   724      
+   725  !?reas Auxiliares Casco Inferior
+   726  AL,19,18,24,25,40		!A35 
+   727  AL,26,17,40,23			!A36   
+   728  AL,26,22,59,16			!A37   
+   729  AL,59,21,63,15			!A38   
+   730  AL,63,14,20			!A39  
+   731      
+   732  !?rea Ret?ngulo de suporte dos Fios 
+   733  AL,108,109,110,111  
+   734      
+   735  !?reas Auxiliares   
+   736  AL,49,13,48,47  
+   737  AL,26,50,54,55  
+   738      
+   739  !área retangulo do braço
+   740  AL,113,120,116,121,115  
+   741  AL,114,120,117,121,112  
+   742      
+   743  !área bracos
+   744  AL,127,125,120,126  
+   745  AL,128,127,118,119,38   
+   746  AL,122,124,113,112,123  
+   747      
+   748  !Auxiliares 
+   749  AL,90,129,130,131   
+   750  AL,92,132,133,134   
+   751  AL,87,135,136,137   
+   752  AL,88,138,139,140   
+   753      
+   754  !Opera??es de ?rea  
+   755      
+   756  AOVLAP,1,40,41,10,11,12,13,14,50
+   757  AOVLAP,37,42
+   758      
+   759  AOVLAP,2,4,44,43
+   760  AOVLAP,3,40,50,48   
+   761      
+   762  AOVLAP, 35, 49  
+   763  AOVLAP, 39, 51  
+   764      
+   765  ADELE,3 
+   766  ADELE, 35   
+   767  ADELE, 52   
+   768      
+   769  ADELE, 13   
+   770  ADELE, 37   
+   771  ADELE, 70   
+   772      
+   773  AGLUE,8,58,66,57,64,67  
+   774  AGLUE,7,54,62,53,63,67  
+   775  AGLUE,6,56,65,55,63,67  
+   776      
+   777  AGLUE, 40,48,34,28  
+   778  AGLUE, 49,50,23,29  
+   779  AGLUE, 59,13,29,67  
+   780  AGLUE, 4,2,73,71,74,72  
+   781      
+   782  AGLUE, 20,41,67 
+   783      
+   784  AGLUE,22,12,11,69,68,43,71,73,44
+   785      
+   786  AGLUE,68,11,43,41   
+   787  AGLUE, 69,12,44,22  
+   788      
+   789  AGLUE, 15,23,29,49,50,59,67 
+   790  AGLUE, 16,6,34,48,71,73,4,40
+   791      
+   792  !-------------------------------------- 
+   793  ! Gerando a malha por regiões e especificando as propriedades   
+   794  !-------------------------------------- 
+   795  !Tampo superior e inferior e laterais---#1  
+   796  TYPE,   1   
+   797  MAT,    1   
+   798  REAL,   
+   799  ESYS,   0   
+   800  SECNUM, 1   
+   801  TSHAP,LINE  
+   802      
+   803  !Tampo superior 
+   804  AMESH,43
+   805  AMESH,44
+   806  AMESH,68
+   807  AMESH,69
+   808  AMESH,22
+   809  AMESH,10
+   810  AMESH,56
+   811  AMESH,55
+   812  AMESH,54
+   813  AMESH,53
+   814  AMESH,58
+   815  AMESH,57
+   816  AMESH,14
+   817  AMESH,59
+   818  AMESH,67
+   819      
+   820  TYPE,   10  
+   821  MAT,    10  
+   822  REAL,   
+   823  ESYS,   0   
+   824  SECNUM, 10  
+   825  TSHAP,LINE  
+   826      
+   827  !Laterais   
+   828  AMESH, 23   
+   829  AMESH, 24   
+   830  AMESH, 25   
+   831  AMESH, 26   
+   832  AMESH, 27   
+   833  AMESH, 35   
+   834      
+   835  AMESH, 28   
+   836  AMESH, 33   
+   837  AMESH, 32   
+   838  AMESH, 31   
+   839  AMESH, 30   
+   840  AMESH, 29   
+   841      
+   842  TYPE,   11  
+   843  MAT,    11  
+   844  REAL,   
+   845  ESYS,   0   
+   846  SECNUM, 11  
+   847  TSHAP,LINE  
+   848      
+   849  !Tampo inferior 
+   850  AMESH,40
+   851  AMESH,48
+   852  AMESH,36
+   853  AMESH,42
+   854  AMESH,1 
+   855  AMESH,38
+   856  AMESH,50
+   857  AMESH,49
+   858      
+   859  !Braço  --#2
+   860  TYPE,   2   
+   861  MAT,    2   
+   862  REAL,   
+   863  ESYS,   0   
+   864  SECNUM, 2   
+   865  TSHAP,LINE  
+   866      
+   867  !Braço cima 
+   868  AMESH, 11   
+   869  AMESH, 12   
+   870  AMESH, 72   
+   871  AMESH,74
+   872  AMESH,73
+   873  AMESH,71
+   874  AMESH,2 
+   875  AMESH,4 
+   876      
+   877  !Braço  --#2
+   878  TYPE,   20  
+   879  MAT,    20  
+   880  REAL,   
+   881  ESYS,   0   
+   882  SECNUM, 20  
+   883  TSHAP,LINE  
+   884      
+   885  !Braço baixo
+   886  AMESH, 45   
+   887      
+   888  !Braço  --#2
+   889  TYPE,   21  
+   890  MAT,    21  
+   891  REAL,   
+   892  ESYS,   0   
+   893  SECNUM, 21  
+   894  TSHAP,LINE  
+   895      
+   896  !suporte fios   
+   897  AMESH, 47   
+   898      
+   899  !Ponte   --#3   
+   900  TYPE,   3   
+   901  MAT,    3   
+   902  REAL,   
+   903  ESYS,   0   
+   904  SECNUM, 3   
+   905  TSHAP,LINE  
+   906      
+   907  !Ponte  
+   908  AMESH,60
+   909  AMESH,65
+   910  AMESH,63
+   911  AMESH,62
+   912  AMESH,64
+   913  AMESH,66
+   914  AMESH,61
+   915      
+   916  !Retangulos de suporte---#4 
+   917  TYPE,   4   
+   918  MAT,    4   
+   919  REAL,   
+   920  ESYS,   0   
+   921  SECNUM, 4   
+   922  TSHAP,LINE  
+   923      
+   924  AMESH, 16   
+   925  AMESH, 46   
+   926  AMESH, 15   
+   927      
+   928  !Enrijecedores tampo---#5   
+   929  TYPE,   5   
+   930  MAT,    5   
+   931  REAL,   
+   932  ESYS,   0   
+   933  SECNUM, 5   
+   934  TSHAP,LINE  
+   935      
+   936  AMESH, 5
+   937  AMESH, 3
+   938  AMESH, 8
+   939  AMESH, 7
+   940  AMESH, 9
+   941      
+   942  !Travejamentos---#6 
+   943  TYPE,   6   
+   944  MAT,    6   
+   945  REAL,   
+   946  ESYS,   0   
+   947  SECNUM, 6   
+   948  TSHAP,LINE  
+   949      
+   950  AMESH, 13   
+   951  AMESH, 21   
+   952  AMESH, 19   
+   953  AMESH, 18   
+   954  AMESH, 20   
+   955  AMESH, 17   
+   956      
+   957  !Condições de contorno aplicada a keypoints 
+   958  DK, 110,UX, 0,,, UY,UZ  
+   959      
+   960  !ksel,s,loc,x,-2e-3,2e-3
+   961  !ksel,r,loc,y,AltCurvaInferior+AltPonte/2-2e-3,AltCurvaInferior+AltPonte/2+2e-3 
+   962  !ksel,r,loc,z,-2e-3,2e-3
+   963      
+   964  !FK,all,FZ,1			! Apply force
+   965      
+   966  !ksel,all   
+   967      
+   968  DTRAN   !Trasnferir condições de contoro aos nós da malha   
+   969      
+   970  FINISH  
+   971      
+   972  /SOLU                   !Solution Phase 
+   973  antype,2                !Modal Analysis 
+   974  MODOPT,SUBSP,16,,,,,    !Subspace iteration method and first 12 modes   
+   975  !-------------------------------------------
+   976  !Solve the Eigenvalue/EigenVector   
+   977  !-------------------------------------------
+   978  SOLVE   
+   979  FINISH  
+   980      
+   981      
+   982      
+   983      
+   984      
+   985      
+   986      
+   987      
+   988      
+   989      
+   990      
+   991      
+   992      
+   993      
+   994      
+   995      
+   996      
+   997      
+   998      
+   999      
+  1000      
+
+ RUN SETUP PROCEDURE FROM FILE= C:\Program Files\ANSYS Inc\v140\ANSYS\apdl\start140.ans
+
+ /INPUT FILE= C:\Program Files\ANSYS Inc\v140\ANSYS\apdl\start140.ans  LINE=       0
+
+ CLEAR DATABASE AND RERUN START.ANS
+
+ RUN SETUP PROCEDURE FROM FILE= C:\Program Files\ANSYS Inc\v140\ANSYS\apdl\start140.ans
+
+ ANSYS Multiphysics                                
+
+ /INPUT FILE= C:\Program Files\ANSYS Inc\v140\ANSYS\apdl\start140.ans  LINE=       0
+
+ TITLE= 
+  Modal Analysis                                                               
+
+1
+
+ ***** ANSYS - ENGINEERING ANALYSIS SYSTEM  RELEASE 14.0     *****
+ ANSYS Multiphysics                                
+ 00176432          VERSION=WINDOWS x64   21:35:43  NOV 21, 2017 CP=      1.109
+
+  Modal Analysis                                                               
+
+
+          ***** ANSYS ANALYSIS DEFINITION (PREP7) *****
+
+ PARAMETER AUX1 =    0.3000000000E-01
+
+ PARAMETER RAIOBOCA =    0.4693450000E-01
+
+ PARAMETER POS1 =    0.3270000000    
+
+ PARAMETER POS2 =    0.1012777000    
+
+ PARAMETER ALTTAMPO =    0.4719024000    
+
+ PARAMETER ESPCAIXA =    0.1050000000    
+
+ PARAMETER LARGCURVAINFERIOR =    0.3630000000    
+
+ PARAMETER ALTCURVAINFERIOR =    0.1449024000    
+
+ PARAMETER LARGCINTURA =    0.2360000000    
+
+ PARAMETER ALTCINTURA =    0.2767557000    
+
+ PARAMETER LARGCURVASUPERIOR =    0.2740000000    
+
+ PARAMETER ALTCURVASUPERIOR =    0.3706247000    
+
+ PARAMETER ESPTRAVEJ =    0.1000000000E-01
+
+ PARAMETER DISTTRAVEJCINTURA =    0.2720000000E-01
+
+ PARAMETER ALTSUPORTECAIXA =    0.1200000000E-01
+
+ PARAMETER LARGPONTE =    0.1900000000    
+
+ PARAMETER ALTPONTE =    0.2570859000E-01
+
+ PARAMETER ALTENRIJ =    0.5000000000E-01
+
+ PARAMETER ESPENRIJ =    0.9286600000E-02
+
+ PARAMETER OFFSETENRIJ =    0.3000000000E-01
+
+ PARAMETER DISTENRIJ =    0.4070400000E-01
+
+ PARAMETER ALTENRIJSUPERIOR =    0.2195557000    
+
+ PARAMETER LARGBRACO =    0.6400000000E-01
+
+ PARAMETER ALTBRACO =    0.3400000000    
+
+ PARAMETER ESPBRACO =    0.2000000000E-01
+
+ PARAMETER LARGMAO =    0.4900000000E-01
+
+ PARAMETER ALTMAO =    0.1600000000    
+
+ PARAMETER ESPMAO =    0.5000000000E-01
+
+ PARAMETER AESPTAMPO =    0.1400000000E-02
+
+ PARAMETER AESPFAIXA =    0.2000000000E-02
+
+ PARAMETER AESPFUNDO =    0.3000000000E-02
+
+ PARAMETER AESPESCALA =    0.1260000000E-01
+
+ PARAMETER AESPBRACO =    0.4140000000E-01
+
+ PARAMETER AESPMAO =    0.5940000000E-01
+
+ PARAMETER AESPPONTE =    0.2000000000E-01
+
+ PARAMETER AESPSUPORTECAIXA =    0.5800000000E-01
+
+ PARAMETER AESPENRIJ =    0.3000000000E-02
+
+ PARAMETER AESPTRAVEJ =    0.9000000000E-02
+
+ PARAMETER CASTELODENS =     760.0000000    
+
+ PARAMETER CASTELOEX =    0.1110500000E+11
+
+ PARAMETER CASTELOEY =     550000000.0    
+
+ PARAMETER CASTELOEZ =     550000000.0    
+
+ PARAMETER CASTELOPRXY =    0.3000000000    
+
+ PARAMETER CASTELOPRYZ =    0.8000000000E-01
+
+ PARAMETER CASTELOPRXZ =    0.8000000000E-01
+
+ PARAMETER CASTELOGXY =     550000000.0    
+
+ PARAMETER CASTELOGYZ =     550000000.0    
+
+ PARAMETER CASTELOGXZ =     550000000.0    
+
+ PARAMETER PAUFERRODENS =     680.0000000    
+
+ PARAMETER PAUFERROEX =     9228000000.    
+
+ PARAMETER PAUFERROEY =     461400000.0    
+
+ PARAMETER PAUFERROEZ =     461400000.0    
+
+ PARAMETER PAUFERROPRXY =    0.1000000000    
+
+ PARAMETER PAUFERROPRYZ =    0.4000000000    
+
+ PARAMETER PAUFERROPRXZ =    0.1000000000    
+
+ PARAMETER PAUFERROGXY =     461400000.0    
+
+ PARAMETER PAUFERROGYZ =     461400000.0    
+
+ PARAMETER PAUFERROGXZ =     461400000.0    
+
+ PARAMETER CEDRODENS =     504.0000000    
+
+ PARAMETER CEDROEX =     9839000000.    
+
+ PARAMETER CEDROEY =     491950000.0    
+
+ PARAMETER CEDROEZ =     491950000.0    
+
+ PARAMETER CEDROPRXY =    0.1000000000    
+
+ PARAMETER CEDROPRYZ =    0.4000000000    
+
+ PARAMETER CEDROPRXZ =    0.1000000000    
+
+ PARAMETER CEDROGXY =     491950000.0    
+
+ PARAMETER CEDROGYZ =     491950000.0    
+
+ PARAMETER CEDROGXZ =     491950000.0    
+
+ PARAMETER BALSADENS =     155.0000000    
+
+ PARAMETER BALSAEX =     4100000000.    
+
+ PARAMETER BALSAEY =     125000000.0    
+
+ PARAMETER BALSAEZ =     125000000.0    
+
+ PARAMETER BALSAPRXY =    0.1860000000    
+
+ PARAMETER BALSAPRYZ =    0.4480000000    
+
+ PARAMETER BALSAPRXZ =    0.1860000000    
+
+ PARAMETER BALSAGXY =     166000000.0    
+
+ PARAMETER BALSAGYZ =     20500000.00    
+
+ PARAMETER BALSAGXZ =     166000000.0    
+
+ PARAMETER NMOD =     50.00000000    
+
+ PARAMETER NRIG =     3.000000000    
+
+ DEFAULT ELEMENT DIVISIONS PER LINE BASED ON ELEMENT SIZE =  0.929E-02
+
+ ELEMENT TYPE      1 IS SHELL281     8-NODE SHELL                
+  KEYOPT( 1- 6)=        0      0      0        0      0      0
+  KEYOPT( 7-12)=        0      0      0        0      0      0
+  KEYOPT(13-18)=        0      0      0        0      0      0
+
+ CURRENT NODAL DOF SET IS  UX    UY    UZ    ROTX  ROTY  ROTZ
+  THREE-DIMENSIONAL MODEL
+
+ MATERIAL         1     EX   =  0.1110500E+11  
+
+ MATERIAL         1     PRXY =  0.3000000      
+
+ MATERIAL         1     DENS =   760.0000      
+
+ *** PROPERTY TEMPERATURE TABLE    NUM. TEMPS=  1 ***
+ SLOC=   1     0.000000    
+
+ PROPERTY TABLE EX    MAT=      1  NUM. POINTS=  1
+ SLOC=   1    0.1110500E+11
+
+ PROPERTY TABLE EY    MAT=      1  NUM. POINTS=  1
+ SLOC=   1    0.5500000E+09
+
+ PROPERTY TABLE EZ    MAT=      1  NUM. POINTS=  1
+ SLOC=   1    0.5500000E+09
+
+ PROPERTY TABLE PRXY  MAT=      1  NUM. POINTS=  1
+ SLOC=   1    0.3000000    
+
+ PROPERTY TABLE PRYZ  MAT=      1  NUM. POINTS=  1
+ SLOC=   1    0.8000000E-01
+
+ PROPERTY TABLE PRXZ  MAT=      1  NUM. POINTS=  1
+ SLOC=   1    0.8000000E-01
+
+ PROPERTY TABLE GXY   MAT=      1  NUM. POINTS=  1
+ SLOC=   1    0.5500000E+09
+
+ PROPERTY TABLE GYZ   MAT=      1  NUM. POINTS=  1
+ SLOC=   1    0.5500000E+09
+
+ PROPERTY TABLE GXZ   MAT=      1  NUM. POINTS=  1
+ SLOC=   1    0.5500000E+09
+
+ PROPERTY TABLE DENS  MAT=      1  NUM. POINTS=  1
+ SLOC=   1     760.0000    
+
+ ELEMENT TYPE     10 IS SHELL281     8-NODE SHELL                
+  KEYOPT( 1- 6)=        0      0      0        0      0      0
+  KEYOPT( 7-12)=        0      0      0        0      0      0
+  KEYOPT(13-18)=        0      0      0        0      0      0
+
+ CURRENT NODAL DOF SET IS  UX    UY    UZ    ROTX  ROTY  ROTZ
+  THREE-DIMENSIONAL MODEL
+
+ MATERIAL        10     EX   =  0.1110500E+11  
+
+ MATERIAL        10     PRXY =  0.3000000      
+
+ MATERIAL        10     DENS =   760.0000      
+
+ *** PROPERTY TEMPERATURE TABLE    NUM. TEMPS=  1 ***
+ SLOC=   1     0.000000    
+
+ PROPERTY TABLE EX    MAT=     10  NUM. POINTS=  1
+ SLOC=   1    0.1110500E+11
+
+ PROPERTY TABLE EY    MAT=     10  NUM. POINTS=  1
+ SLOC=   1    0.5500000E+09
+
+ PROPERTY TABLE EZ    MAT=     10  NUM. POINTS=  1
+ SLOC=   1    0.5500000E+09
+
+ PROPERTY TABLE PRXY  MAT=     10  NUM. POINTS=  1
+ SLOC=   1    0.3000000    
+
+ PROPERTY TABLE PRYZ  MAT=     10  NUM. POINTS=  1
+ SLOC=   1    0.8000000E-01
+
+ PROPERTY TABLE PRXZ  MAT=     10  NUM. POINTS=  1
+ SLOC=   1    0.8000000E-01
+
+ PROPERTY TABLE GXY   MAT=     10  NUM. POINTS=  1
+ SLOC=   1    0.5500000E+09
+
+ PROPERTY TABLE GYZ   MAT=     10  NUM. POINTS=  1
+ SLOC=   1    0.5500000E+09
+
+ PROPERTY TABLE GXZ   MAT=     10  NUM. POINTS=  1
+ SLOC=   1    0.5500000E+09
+
+ PROPERTY TABLE DENS  MAT=     10  NUM. POINTS=  1
+ SLOC=   1     760.0000    
+
+ ELEMENT TYPE     11 IS SHELL281     8-NODE SHELL                
+  KEYOPT( 1- 6)=        0      0      0        0      0      0
+  KEYOPT( 7-12)=        0      0      0        0      0      0
+  KEYOPT(13-18)=        0      0      0        0      0      0
+
+ CURRENT NODAL DOF SET IS  UX    UY    UZ    ROTX  ROTY  ROTZ
+  THREE-DIMENSIONAL MODEL
+
+ MATERIAL        11     EX   =  0.1110500E+11  
+
+ MATERIAL        11     PRXY =  0.3000000      
+
+ MATERIAL        11     DENS =   760.0000      
+
+ *** PROPERTY TEMPERATURE TABLE    NUM. TEMPS=  1 ***
+ SLOC=   1     0.000000    
+
+ PROPERTY TABLE EX    MAT=     11  NUM. POINTS=  1
+ SLOC=   1    0.1110500E+11
+
+ PROPERTY TABLE EY    MAT=     11  NUM. POINTS=  1
+ SLOC=   1    0.5500000E+09
+
+ PROPERTY TABLE EZ    MAT=     11  NUM. POINTS=  1
+ SLOC=   1    0.5500000E+09
+
+ PROPERTY TABLE PRXY  MAT=     11  NUM. POINTS=  1
+ SLOC=   1    0.3000000    
+
+ PROPERTY TABLE PRYZ  MAT=     11  NUM. POINTS=  1
+ SLOC=   1    0.8000000E-01
+
+ PROPERTY TABLE PRXZ  MAT=     11  NUM. POINTS=  1
+ SLOC=   1    0.8000000E-01
+
+ PROPERTY TABLE GXY   MAT=     11  NUM. POINTS=  1
+ SLOC=   1    0.5500000E+09
+
+ PROPERTY TABLE GYZ   MAT=     11  NUM. POINTS=  1
+ SLOC=   1    0.5500000E+09
+
+ PROPERTY TABLE GXZ   MAT=     11  NUM. POINTS=  1
+ SLOC=   1    0.5500000E+09
+
+ PROPERTY TABLE DENS  MAT=     11  NUM. POINTS=  1
+ SLOC=   1     760.0000    
+
+ ELEMENT TYPE      2 IS SHELL281     8-NODE SHELL                
+  KEYOPT( 1- 6)=        0      0      0        0      0      0
+  KEYOPT( 7-12)=        0      0      0        0      0      0
+  KEYOPT(13-18)=        0      0      0        0      0      0
+
+ CURRENT NODAL DOF SET IS  UX    UY    UZ    ROTX  ROTY  ROTZ
+  THREE-DIMENSIONAL MODEL
+
+ MATERIAL         2     EX   =  0.9228000E+10  
+
+ MATERIAL         2     PRXY =  0.1000000      
+
+ MATERIAL         2     DENS =   680.0000      
+
+ *** PROPERTY TEMPERATURE TABLE    NUM. TEMPS=  1 ***
+ SLOC=   1     0.000000    
+
+ PROPERTY TABLE EX    MAT=      2  NUM. POINTS=  1
+ SLOC=   1    0.9228000E+10
+
+ PROPERTY TABLE EY    MAT=      2  NUM. POINTS=  1
+ SLOC=   1    0.4614000E+09
+
+ PROPERTY TABLE EZ    MAT=      2  NUM. POINTS=  1
+ SLOC=   1    0.4614000E+09
+
+ PROPERTY TABLE PRXY  MAT=      2  NUM. POINTS=  1
+ SLOC=   1    0.1000000    
+
+ PROPERTY TABLE PRYZ  MAT=      2  NUM. POINTS=  1
+ SLOC=   1    0.4000000    
+
+ PROPERTY TABLE PRXZ  MAT=      2  NUM. POINTS=  1
+ SLOC=   1    0.1000000    
+
+ PROPERTY TABLE GXY   MAT=      2  NUM. POINTS=  1
+ SLOC=   1    0.4614000E+09
+
+ PROPERTY TABLE GYZ   MAT=      2  NUM. POINTS=  1
+ SLOC=   1    0.4614000E+09
+
+ PROPERTY TABLE GXZ   MAT=      2  NUM. POINTS=  1
+ SLOC=   1    0.4614000E+09
+
+ PROPERTY TABLE DENS  MAT=      2  NUM. POINTS=  1
+ SLOC=   1     680.0000    
+
+ ELEMENT TYPE     20 IS SHELL281     8-NODE SHELL                
+  KEYOPT( 1- 6)=        0      0      0        0      0      0
+  KEYOPT( 7-12)=        0      0      0        0      0      0
+  KEYOPT(13-18)=        0      0      0        0      0      0
+
+ CURRENT NODAL DOF SET IS  UX    UY    UZ    ROTX  ROTY  ROTZ
+  THREE-DIMENSIONAL MODEL
+
+ MATERIAL        20     EX   =  0.9839000E+10  
+
+ MATERIAL        20     PRXY =  0.1000000      
+
+ MATERIAL        20     DENS =   504.0000      
+
+ *** PROPERTY TEMPERATURE TABLE    NUM. TEMPS=  1 ***
+ SLOC=   1     0.000000    
+
+ PROPERTY TABLE EX    MAT=     20  NUM. POINTS=  1
+ SLOC=   1    0.9839000E+10
+
+ PROPERTY TABLE EY    MAT=     20  NUM. POINTS=  1
+ SLOC=   1    0.4919500E+09
+
+ PROPERTY TABLE EZ    MAT=     20  NUM. POINTS=  1
+ SLOC=   1    0.4919500E+09
+
+ PROPERTY TABLE PRXY  MAT=     20  NUM. POINTS=  1
+ SLOC=   1    0.1000000    
+
+ PROPERTY TABLE PRYZ  MAT=     20  NUM. POINTS=  1
+ SLOC=   1    0.4000000    
+
+ PROPERTY TABLE PRXZ  MAT=     20  NUM. POINTS=  1
+ SLOC=   1    0.1000000    
+
+ PROPERTY TABLE GXY   MAT=     20  NUM. POINTS=  1
+ SLOC=   1    0.4919500E+09
+
+ PROPERTY TABLE GYZ   MAT=     20  NUM. POINTS=  1
+ SLOC=   1    0.4919500E+09
+
+ PROPERTY TABLE GXZ   MAT=     20  NUM. POINTS=  1
+ SLOC=   1    0.4919500E+09
+
+ PROPERTY TABLE DENS  MAT=     20  NUM. POINTS=  1
+ SLOC=   1     504.0000    
+
+ ELEMENT TYPE     21 IS SHELL281     8-NODE SHELL                
+  KEYOPT( 1- 6)=        0      0      0        0      0      0
+  KEYOPT( 7-12)=        0      0      0        0      0      0
+  KEYOPT(13-18)=        0      0      0        0      0      0
+
+ CURRENT NODAL DOF SET IS  UX    UY    UZ    ROTX  ROTY  ROTZ
+  THREE-DIMENSIONAL MODEL
+
+ MATERIAL        21     EX   =  0.9839000E+10  
+
+ MATERIAL        21     PRXY =  0.1000000      
+
+ MATERIAL        21     DENS =   504.0000      
+
+ *** PROPERTY TEMPERATURE TABLE    NUM. TEMPS=  1 ***
+ SLOC=   1     0.000000    
+
+ PROPERTY TABLE EX    MAT=     21  NUM. POINTS=  1
+ SLOC=   1    0.9839000E+10
+
+ PROPERTY TABLE EY    MAT=     21  NUM. POINTS=  1
+ SLOC=   1    0.4919500E+09
+
+ PROPERTY TABLE EZ    MAT=     21  NUM. POINTS=  1
+ SLOC=   1    0.4919500E+09
+
+ PROPERTY TABLE PRXY  MAT=     21  NUM. POINTS=  1
+ SLOC=   1    0.1000000    
+
+ PROPERTY TABLE PRYZ  MAT=     21  NUM. POINTS=  1
+ SLOC=   1    0.4000000    
+
+ PROPERTY TABLE PRXZ  MAT=     21  NUM. POINTS=  1
+ SLOC=   1    0.1000000    
+
+ PROPERTY TABLE GXY   MAT=     21  NUM. POINTS=  1
+ SLOC=   1    0.4919500E+09
+
+ PROPERTY TABLE GYZ   MAT=     21  NUM. POINTS=  1
+ SLOC=   1    0.4919500E+09
+
+ PROPERTY TABLE GXZ   MAT=     21  NUM. POINTS=  1
+ SLOC=   1    0.4919500E+09
+
+ PROPERTY TABLE DENS  MAT=     21  NUM. POINTS=  1
+ SLOC=   1     504.0000    
+
+ ELEMENT TYPE      3 IS SHELL281     8-NODE SHELL                
+  KEYOPT( 1- 6)=        0      0      0        0      0      0
+  KEYOPT( 7-12)=        0      0      0        0      0      0
+  KEYOPT(13-18)=        0      0      0        0      0      0
+
+ CURRENT NODAL DOF SET IS  UX    UY    UZ    ROTX  ROTY  ROTZ
+  THREE-DIMENSIONAL MODEL
+
+ MATERIAL         3     EX   =  0.9228000E+10  
+
+ MATERIAL         3     PRXY =  0.1000000      
+
+ MATERIAL         3     DENS =   680.0000      
+
+ *** PROPERTY TEMPERATURE TABLE    NUM. TEMPS=  1 ***
+ SLOC=   1     0.000000    
+
+ PROPERTY TABLE EX    MAT=      3  NUM. POINTS=  1
+ SLOC=   1    0.9228000E+10
+
+ PROPERTY TABLE EY    MAT=      3  NUM. POINTS=  1
+ SLOC=   1    0.4614000E+09
+
+ PROPERTY TABLE EZ    MAT=      3  NUM. POINTS=  1
+ SLOC=   1    0.4614000E+09
+
+ PROPERTY TABLE PRXY  MAT=      3  NUM. POINTS=  1
+ SLOC=   1    0.1000000    
+
+ PROPERTY TABLE PRYZ  MAT=      3  NUM. POINTS=  1
+ SLOC=   1    0.4000000    
+
+ PROPERTY TABLE PRXZ  MAT=      3  NUM. POINTS=  1
+ SLOC=   1    0.1000000    
+
+ PROPERTY TABLE GXY   MAT=      3  NUM. POINTS=  1
+ SLOC=   1    0.4614000E+09
+
+ PROPERTY TABLE GYZ   MAT=      3  NUM. POINTS=  1
+ SLOC=   1    0.4614000E+09
+
+ PROPERTY TABLE GXZ   MAT=      3  NUM. POINTS=  1
+ SLOC=   1    0.4614000E+09
+
+ PROPERTY TABLE DENS  MAT=      3  NUM. POINTS=  1
+ SLOC=   1     680.0000    
+
+ ELEMENT TYPE      4 IS SHELL281     8-NODE SHELL                
+  KEYOPT( 1- 6)=        0      0      0        0      0      0
+  KEYOPT( 7-12)=        0      0      0        0      0      0
+  KEYOPT(13-18)=        0      0      0        0      0      0
+
+ CURRENT NODAL DOF SET IS  UX    UY    UZ    ROTX  ROTY  ROTZ
+  THREE-DIMENSIONAL MODEL
+
+ MATERIAL         4     EX   =  0.9839000E+10  
+
+ MATERIAL         4     PRXY =  0.1000000      
+
+ MATERIAL         4     DENS =   504.0000      
+
+ *** PROPERTY TEMPERATURE TABLE    NUM. TEMPS=  1 ***
+ SLOC=   1     0.000000    
+
+ PROPERTY TABLE EX    MAT=      4  NUM. POINTS=  1
+ SLOC=   1    0.9839000E+10
+
+ PROPERTY TABLE EY    MAT=      4  NUM. POINTS=  1
+ SLOC=   1    0.4919500E+09
+
+ PROPERTY TABLE EZ    MAT=      4  NUM. POINTS=  1
+ SLOC=   1    0.4919500E+09
+
+ PROPERTY TABLE PRXY  MAT=      4  NUM. POINTS=  1
+ SLOC=   1    0.1000000    
+
+ PROPERTY TABLE PRYZ  MAT=      4  NUM. POINTS=  1
+ SLOC=   1    0.4000000    
+
+ PROPERTY TABLE PRXZ  MAT=      4  NUM. POINTS=  1
+ SLOC=   1    0.1000000    
+
+ PROPERTY TABLE GXY   MAT=      4  NUM. POINTS=  1
+ SLOC=   1    0.4919500E+09
+
+ PROPERTY TABLE GYZ   MAT=      4  NUM. POINTS=  1
+ SLOC=   1    0.4919500E+09
+
+ PROPERTY TABLE GXZ   MAT=      4  NUM. POINTS=  1
+ SLOC=   1    0.4919500E+09
+
+ PROPERTY TABLE DENS  MAT=      4  NUM. POINTS=  1
+ SLOC=   1     504.0000    
+
+ ELEMENT TYPE      5 IS SHELL281     8-NODE SHELL                
+  KEYOPT( 1- 6)=        0      0      0        0      0      0
+  KEYOPT( 7-12)=        0      0      0        0      0      0
+  KEYOPT(13-18)=        0      0      0        0      0      0
+
+ CURRENT NODAL DOF SET IS  UX    UY    UZ    ROTX  ROTY  ROTZ
+  THREE-DIMENSIONAL MODEL
+
+ MATERIAL         5     EX   =  0.4100000E+10  
+
+ MATERIAL         5     PRXY =  0.1860000      
+
+ MATERIAL         5     DENS =   155.0000      
+
+ *** PROPERTY TEMPERATURE TABLE    NUM. TEMPS=  1 ***
+ SLOC=   1     0.000000    
+
+ PROPERTY TABLE EX    MAT=      5  NUM. POINTS=  1
+ SLOC=   1    0.4100000E+10
+
+ PROPERTY TABLE EY    MAT=      5  NUM. POINTS=  1
+ SLOC=   1    0.1250000E+09
+
+ PROPERTY TABLE EZ    MAT=      5  NUM. POINTS=  1
+ SLOC=   1    0.1250000E+09
+
+ PROPERTY TABLE PRXY  MAT=      5  NUM. POINTS=  1
+ SLOC=   1    0.1860000    
+
+ PROPERTY TABLE PRYZ  MAT=      5  NUM. POINTS=  1
+ SLOC=   1    0.4480000    
+
+ PROPERTY TABLE PRXZ  MAT=      5  NUM. POINTS=  1
+ SLOC=   1    0.1860000    
+
+ PROPERTY TABLE GXY   MAT=      5  NUM. POINTS=  1
+ SLOC=   1    0.1660000E+09
+
+ PROPERTY TABLE GYZ   MAT=      5  NUM. POINTS=  1
+ SLOC=   1    0.2050000E+08
+
+ PROPERTY TABLE GXZ   MAT=      5  NUM. POINTS=  1
+ SLOC=   1    0.1660000E+09
+
+ PROPERTY TABLE DENS  MAT=      5  NUM. POINTS=  1
+ SLOC=   1     155.0000    
+
+ ELEMENT TYPE      6 IS SHELL281     8-NODE SHELL                
+  KEYOPT( 1- 6)=        0      0      0        0      0      0
+  KEYOPT( 7-12)=        0      0      0        0      0      0
+  KEYOPT(13-18)=        0      0      0        0      0      0
+
+ CURRENT NODAL DOF SET IS  UX    UY    UZ    ROTX  ROTY  ROTZ
+  THREE-DIMENSIONAL MODEL
+
+ MATERIAL         6     EX   =  0.4100000E+10  
+
+ MATERIAL         6     PRXY =  0.1860000      
+
+ MATERIAL         6     DENS =   155.0000      
+
+ *** PROPERTY TEMPERATURE TABLE    NUM. TEMPS=  1 ***
+ SLOC=   1     0.000000    
+
+ PROPERTY TABLE EX    MAT=      6  NUM. POINTS=  1
+ SLOC=   1    0.4100000E+10
+
+ PROPERTY TABLE EY    MAT=      6  NUM. POINTS=  1
+ SLOC=   1    0.1250000E+09
+
+ PROPERTY TABLE EZ    MAT=      6  NUM. POINTS=  1
+ SLOC=   1    0.1250000E+09
+
+ PROPERTY TABLE PRXY  MAT=      6  NUM. POINTS=  1
+ SLOC=   1    0.1860000    
+
+ PROPERTY TABLE PRYZ  MAT=      6  NUM. POINTS=  1
+ SLOC=   1    0.4480000    
+
+ PROPERTY TABLE PRXZ  MAT=      6  NUM. POINTS=  1
+ SLOC=   1    0.1860000    
+
+ PROPERTY TABLE GXY   MAT=      6  NUM. POINTS=  1
+ SLOC=   1    0.1660000E+09
+
+ PROPERTY TABLE GYZ   MAT=      6  NUM. POINTS=  1
+ SLOC=   1    0.2050000E+08
+
+ PROPERTY TABLE GXZ   MAT=      6  NUM. POINTS=  1
+ SLOC=   1    0.1660000E+09
+
+ PROPERTY TABLE DENS  MAT=      6  NUM. POINTS=  1
+ SLOC=   1     155.0000    
+                                      
+   INPUT SECTION ID NUMBER             1
+   INPUT SECTION TYPE                 SHELL
+   INPUT SHELL SECTION NAME                   
+
+
+ Shell Section ID=    1 Number of layers=    1  Total Thickness=     0.000467
+ Shell Section ID=    1 Number of layers=    2  Total Thickness=     0.000933
+ Shell Section ID=    1 Number of layers=    3  Total Thickness=     0.001400
+         
+   SHELL SECTION WITH SECTION ID NUMBER      1 IS OFFSET TO MID SURFACE OF SHELL
+
+  Layer      Thickness   MatID   Ori. Angle  Num Intg. Pts
+
+      1        0.0005     1        0.0000     3
+      2        0.0005     1        0.0000     3
+      3        0.0005     1        0.0000     3
+
+  Section Solution Controls
+  User Transverse Shear Stiffness (11)=  0.0000    
+                                  (22)=  0.0000    
+                                  (12)=  0.0000    
+  Added Mass Per Unit Area            =  0.0000    
+  Hourglass Scale Factor; Membrane    =  1.0000    
+                          Bending     =  1.0000    
+  Drill Stiffness Scale Factor        =  1.0000    
+
+  Layer      Thickness   MatID   Ori. Angle  Num Intg. Pts
+
+      1        0.0005     1        0.0000     3
+      2        0.0005     1        0.0000     3
+      3        0.0005     1        0.0000     3
+
+  Section Solution Controls
+  User Transverse Shear Stiffness (11)=  0.0000    
+                                  (22)=  0.0000    
+                                  (12)=  0.0000    
+  Added Mass Per Unit Area            =  0.0000    
+  Hourglass Scale Factor; Membrane    =  0.0000    
+                          Bending     =  0.0000    
+  Drill Stiffness Scale Factor        =  0.0000    
+                                      
+   INPUT SECTION ID NUMBER            10
+   INPUT SECTION TYPE                 SHELL
+   INPUT SHELL SECTION NAME                   
+
+
+ Shell Section ID=   10 Number of layers=    1  Total Thickness=     0.000667
+ Shell Section ID=   10 Number of layers=    2  Total Thickness=     0.001333
+ Shell Section ID=   10 Number of layers=    3  Total Thickness=     0.002000
+         
+   SHELL SECTION WITH SECTION ID NUMBER     10 IS OFFSET TO MID SURFACE OF SHELL
+
+  Layer      Thickness   MatID   Ori. Angle  Num Intg. Pts
+
+      1        0.0007    10        0.0000     3
+      2        0.0007    10        0.0000     3
+      3        0.0007    10        0.0000     3
+
+  Section Solution Controls
+  User Transverse Shear Stiffness (11)=  0.0000    
+                                  (22)=  0.0000    
+                                  (12)=  0.0000    
+  Added Mass Per Unit Area            =  0.0000    
+  Hourglass Scale Factor; Membrane    =  1.0000    
+                          Bending     =  1.0000    
+  Drill Stiffness Scale Factor        =  1.0000    
+
+  Layer      Thickness   MatID   Ori. Angle  Num Intg. Pts
+
+      1        0.0007    10        0.0000     3
+      2        0.0007    10        0.0000     3
+      3        0.0007    10        0.0000     3
+
+  Section Solution Controls
+  User Transverse Shear Stiffness (11)=  0.0000    
+                                  (22)=  0.0000    
+                                  (12)=  0.0000    
+  Added Mass Per Unit Area            =  0.0000    
+  Hourglass Scale Factor; Membrane    =  0.0000    
+                          Bending     =  0.0000    
+  Drill Stiffness Scale Factor        =  0.0000    
+                                      
+   INPUT SECTION ID NUMBER            11
+   INPUT SECTION TYPE                 SHELL
+   INPUT SHELL SECTION NAME                   
+
+
+ Shell Section ID=   11 Number of layers=    1  Total Thickness=     0.001000
+ Shell Section ID=   11 Number of layers=    2  Total Thickness=     0.002000
+ Shell Section ID=   11 Number of layers=    3  Total Thickness=     0.003000
+         
+   SHELL SECTION WITH SECTION ID NUMBER     11 IS OFFSET TO MID SURFACE OF SHELL
+
+  Layer      Thickness   MatID   Ori. Angle  Num Intg. Pts
+
+      1        0.0010    11        0.0000     3
+      2        0.0010    11        0.0000     3
+      3        0.0010    11        0.0000     3
+
+  Section Solution Controls
+  User Transverse Shear Stiffness (11)=  0.0000    
+                                  (22)=  0.0000    
+                                  (12)=  0.0000    
+  Added Mass Per Unit Area            =  0.0000    
+  Hourglass Scale Factor; Membrane    =  1.0000    
+                          Bending     =  1.0000    
+  Drill Stiffness Scale Factor        =  1.0000    
+
+  Layer      Thickness   MatID   Ori. Angle  Num Intg. Pts
+
+      1        0.0010    11        0.0000     3
+      2        0.0010    11        0.0000     3
+      3        0.0010    11        0.0000     3
+
+  Section Solution Controls
+  User Transverse Shear Stiffness (11)=  0.0000    
+                                  (22)=  0.0000    
+                                  (12)=  0.0000    
+  Added Mass Per Unit Area            =  0.0000    
+  Hourglass Scale Factor; Membrane    =  0.0000    
+                          Bending     =  0.0000    
+  Drill Stiffness Scale Factor        =  0.0000    
+                                      
+   INPUT SECTION ID NUMBER             2
+   INPUT SECTION TYPE                 SHELL
+   INPUT SHELL SECTION NAME                   
+
+
+ Shell Section ID=    2 Number of layers=    1  Total Thickness=     0.012600
+         
+   SHELL SECTION WITH SECTION ID NUMBER      2 IS OFFSET TO MID SURFACE OF SHELL
+
+  Layer      Thickness   MatID   Ori. Angle  Num Intg. Pts
+
+      1        0.0126     2        0.0000     3
+
+  Section Solution Controls
+  User Transverse Shear Stiffness (11)=  0.0000    
+                                  (22)=  0.0000    
+                                  (12)=  0.0000    
+  Added Mass Per Unit Area            =  0.0000    
+  Hourglass Scale Factor; Membrane    =  1.0000    
+                          Bending     =  1.0000    
+  Drill Stiffness Scale Factor        =  1.0000    
+
+  Layer      Thickness   MatID   Ori. Angle  Num Intg. Pts
+
+      1        0.0126     2        0.0000     3
+
+  Section Solution Controls
+  User Transverse Shear Stiffness (11)=  0.0000    
+                                  (22)=  0.0000    
+                                  (12)=  0.0000    
+  Added Mass Per Unit Area            =  0.0000    
+  Hourglass Scale Factor; Membrane    =  0.0000    
+                          Bending     =  0.0000    
+  Drill Stiffness Scale Factor        =  0.0000    
+                                      
+   INPUT SECTION ID NUMBER            20
+   INPUT SECTION TYPE                 SHELL
+   INPUT SHELL SECTION NAME                   
+
+
+ Shell Section ID=   20 Number of layers=    1  Total Thickness=     0.041400
+         
+   SHELL SECTION WITH SECTION ID NUMBER     20 IS OFFSET TO MID SURFACE OF SHELL
+
+  Layer      Thickness   MatID   Ori. Angle  Num Intg. Pts
+
+      1        0.0414    20        0.0000     3
+
+  Section Solution Controls
+  User Transverse Shear Stiffness (11)=  0.0000    
+                                  (22)=  0.0000    
+                                  (12)=  0.0000    
+  Added Mass Per Unit Area            =  0.0000    
+  Hourglass Scale Factor; Membrane    =  1.0000    
+                          Bending     =  1.0000    
+  Drill Stiffness Scale Factor        =  1.0000    
+
+  Layer      Thickness   MatID   Ori. Angle  Num Intg. Pts
+
+      1        0.0414    20        0.0000     3
+
+  Section Solution Controls
+  User Transverse Shear Stiffness (11)=  0.0000    
+                                  (22)=  0.0000    
+                                  (12)=  0.0000    
+  Added Mass Per Unit Area            =  0.0000    
+  Hourglass Scale Factor; Membrane    =  0.0000    
+                          Bending     =  0.0000    
+  Drill Stiffness Scale Factor        =  0.0000    
+                                      
+   INPUT SECTION ID NUMBER            21
+   INPUT SECTION TYPE                 SHELL
+   INPUT SHELL SECTION NAME                   
+
+
+ Shell Section ID=   21 Number of layers=    1  Total Thickness=     0.059400
+         
+   SHELL SECTION WITH SECTION ID NUMBER     21 IS OFFSET TO MID SURFACE OF SHELL
+
+  Layer      Thickness   MatID   Ori. Angle  Num Intg. Pts
+
+      1        0.0594    21        0.0000     3
+
+  Section Solution Controls
+  User Transverse Shear Stiffness (11)=  0.0000    
+                                  (22)=  0.0000    
+                                  (12)=  0.0000    
+  Added Mass Per Unit Area            =  0.0000    
+  Hourglass Scale Factor; Membrane    =  1.0000    
+                          Bending     =  1.0000    
+  Drill Stiffness Scale Factor        =  1.0000    
+
+  Layer      Thickness   MatID   Ori. Angle  Num Intg. Pts
+
+      1        0.0594    21        0.0000     3
+
+  Section Solution Controls
+  User Transverse Shear Stiffness (11)=  0.0000    
+                                  (22)=  0.0000    
+                                  (12)=  0.0000    
+  Added Mass Per Unit Area            =  0.0000    
+  Hourglass Scale Factor; Membrane    =  0.0000    
+                          Bending     =  0.0000    
+  Drill Stiffness Scale Factor        =  0.0000    
+                                      
+   INPUT SECTION ID NUMBER             3
+   INPUT SECTION TYPE                 SHELL
+   INPUT SHELL SECTION NAME                   
+
+
+ Shell Section ID=    3 Number of layers=    1  Total Thickness=     0.020000
+         
+   SHELL SECTION WITH SECTION ID NUMBER      3 IS OFFSET TO
+   OFFSET = -0.10000E-01
+
+  Layer      Thickness   MatID   Ori. Angle  Num Intg. Pts
+
+      1        0.0200     3        0.0000     3
+
+  Section Solution Controls
+  User Transverse Shear Stiffness (11)=  0.0000    
+                                  (22)=  0.0000    
+                                  (12)=  0.0000    
+  Added Mass Per Unit Area            =  0.0000    
+  Hourglass Scale Factor; Membrane    =  1.0000    
+                          Bending     =  1.0000    
+  Drill Stiffness Scale Factor        =  1.0000    
+
+  Layer      Thickness   MatID   Ori. Angle  Num Intg. Pts
+
+      1        0.0200     3        0.0000     3
+
+  Section Solution Controls
+  User Transverse Shear Stiffness (11)=  0.0000    
+                                  (22)=  0.0000    
+                                  (12)=  0.0000    
+  Added Mass Per Unit Area            =  0.0000    
+  Hourglass Scale Factor; Membrane    =  0.0000    
+                          Bending     =  0.0000    
+  Drill Stiffness Scale Factor        =  0.0000    
+                                      
+   INPUT SECTION ID NUMBER             4
+   INPUT SECTION TYPE                 SHELL
+   INPUT SHELL SECTION NAME                   
+
+
+ Shell Section ID=    4 Number of layers=    1  Total Thickness=     0.058000
+         
+   SHELL SECTION WITH SECTION ID NUMBER      4 IS OFFSET TO MID SURFACE OF SHELL
+
+  Layer      Thickness   MatID   Ori. Angle  Num Intg. Pts
+
+      1        0.0580     4        0.0000     3
+
+  Section Solution Controls
+  User Transverse Shear Stiffness (11)=  0.0000    
+                                  (22)=  0.0000    
+                                  (12)=  0.0000    
+  Added Mass Per Unit Area            =  0.0000    
+  Hourglass Scale Factor; Membrane    =  1.0000    
+                          Bending     =  1.0000    
+  Drill Stiffness Scale Factor        =  1.0000    
+
+  Layer      Thickness   MatID   Ori. Angle  Num Intg. Pts
+
+      1        0.0580     4        0.0000     3
+
+  Section Solution Controls
+  User Transverse Shear Stiffness (11)=  0.0000    
+                                  (22)=  0.0000    
+                                  (12)=  0.0000    
+  Added Mass Per Unit Area            =  0.0000    
+  Hourglass Scale Factor; Membrane    =  0.0000    
+                          Bending     =  0.0000    
+  Drill Stiffness Scale Factor        =  0.0000    
+                                      
+   INPUT SECTION ID NUMBER             5
+   INPUT SECTION TYPE                 SHELL
+   INPUT SHELL SECTION NAME                   
+
+
+ Shell Section ID=    5 Number of layers=    1  Total Thickness=     0.003000
+         
+   SHELL SECTION WITH SECTION ID NUMBER      5 IS OFFSET TO MID SURFACE OF SHELL
+
+  Layer      Thickness   MatID   Ori. Angle  Num Intg. Pts
+
+      1        0.0030     5        0.0000     3
+
+  Section Solution Controls
+  User Transverse Shear Stiffness (11)=  0.0000    
+                                  (22)=  0.0000    
+                                  (12)=  0.0000    
+  Added Mass Per Unit Area            =  0.0000    
+  Hourglass Scale Factor; Membrane    =  1.0000    
+                          Bending     =  1.0000    
+  Drill Stiffness Scale Factor        =  1.0000    
+
+  Layer      Thickness   MatID   Ori. Angle  Num Intg. Pts
+
+      1        0.0030     5        0.0000     3
+
+  Section Solution Controls
+  User Transverse Shear Stiffness (11)=  0.0000    
+                                  (22)=  0.0000    
+                                  (12)=  0.0000    
+  Added Mass Per Unit Area            =  0.0000    
+  Hourglass Scale Factor; Membrane    =  0.0000    
+                          Bending     =  0.0000    
+  Drill Stiffness Scale Factor        =  0.0000    
+                                      
+   INPUT SECTION ID NUMBER             6
+   INPUT SECTION TYPE                 SHELL
+   INPUT SHELL SECTION NAME                   
+
+
+ Shell Section ID=    6 Number of layers=    1  Total Thickness=     0.009000
+         
+   SHELL SECTION WITH SECTION ID NUMBER      6 IS OFFSET TO MID SURFACE OF SHELL
+
+  Layer      Thickness   MatID   Ori. Angle  Num Intg. Pts
+
+      1        0.0090     6        0.0000     3
+
+  Section Solution Controls
+  User Transverse Shear Stiffness (11)=  0.0000    
+                                  (22)=  0.0000    
+                                  (12)=  0.0000    
+  Added Mass Per Unit Area            =  0.0000    
+  Hourglass Scale Factor; Membrane    =  1.0000    
+                          Bending     =  1.0000    
+  Drill Stiffness Scale Factor        =  1.0000    
+
+  Layer      Thickness   MatID   Ori. Angle  Num Intg. Pts
+
+      1        0.0090     6        0.0000     3
+
+  Section Solution Controls
+  User Transverse Shear Stiffness (11)=  0.0000    
+                                  (22)=  0.0000    
+                                  (12)=  0.0000    
+  Added Mass Per Unit Area            =  0.0000    
+  Hourglass Scale Factor; Membrane    =  0.0000    
+                          Bending     =  0.0000    
+  Drill Stiffness Scale Factor        =  0.0000    
+
+ KEYPOINT      1   X,Y,Z=   0.00000       0.00000       0.00000      IN CSYS=  0
+
+ KEYPOINT      2   X,Y,Z=  0.121000      0.181128E-01   0.00000      IN CSYS=  0
+
+ KEYPOINT      3   X,Y,Z= -0.121000      0.181128E-01   0.00000      IN CSYS=  0
+
+ KEYPOINT      4   X,Y,Z=  0.181500      0.144902       0.00000      IN CSYS=  0
+
+ KEYPOINT      5   X,Y,Z= -0.181500      0.144902       0.00000      IN CSYS=  0
+
+ KEYPOINT      6   X,Y,Z=  0.118000      0.276756       0.00000      IN CSYS=  0
+
+ KEYPOINT      7   X,Y,Z= -0.118000      0.276756       0.00000      IN CSYS=  0
+
+ KEYPOINT      8   X,Y,Z=  0.137000      0.370625       0.00000      IN CSYS=  0
+
+ KEYPOINT      9   X,Y,Z= -0.137000      0.370625       0.00000      IN CSYS=  0
+
+ KEYPOINT     10   X,Y,Z=  0.913333E-01  0.459243       0.00000      IN CSYS=  0
+
+ KEYPOINT     11   X,Y,Z= -0.913333E-01  0.459243       0.00000      IN CSYS=  0
+
+ KEYPOINT     12   X,Y,Z=   0.00000      0.471902       0.00000      IN CSYS=  0
+
+ FIT A CUBIC SPLINE THROUGH KEYPOINTS        1       2       4       6
+ END1 TANGENT=    -1.0000    0.0000    0.0000
+ END2 TANGENT=     0.0000    1.0000    0.0000  IN CSYS=   0
+  LINE NO.=     1  KP1=      1  TAN1=   -1.0000   0.0000   0.0000
+                   KP2=      2  TAN2=    0.8342   0.5515   0.0000
+  LINE NO.=     2  KP1=      2  TAN1=   -0.8342  -0.5515   0.0000
+                   KP2=      4  TAN2=   -0.2309   0.9730   0.0000
+  LINE NO.=     3  KP1=      4  TAN1=    0.2309  -0.9730   0.0000
+                   KP2=      6  TAN2=    0.0000   1.0000   0.0000
+
+ FIT A CUBIC SPLINE THROUGH KEYPOINTS        6       8      10      12
+ END1 TANGENT=     0.0000   -1.0000    0.0000
+ END2 TANGENT=    -1.0000    0.0000    0.0000  IN CSYS=   0
+  LINE NO.=     4  KP1=      6  TAN1=    0.0000  -1.0000   0.0000
+                   KP2=      8  TAN2=    0.0075   1.0000   0.0000
+  LINE NO.=     5  KP1=      8  TAN1=   -0.0075  -1.0000   0.0000
+                   KP2=     10  TAN2=   -0.8452   0.5344   0.0000
+  LINE NO.=     6  KP1=     10  TAN1=    0.8452  -0.5344   0.0000
+                   KP2=     12  TAN2=   -1.0000   0.0000   0.0000
+
+ FIT A CUBIC SPLINE THROUGH KEYPOINTS        1       3       5       7
+ END1 TANGENT=     1.0000    0.0000    0.0000
+ END2 TANGENT=     0.0000    1.0000    0.0000  IN CSYS=   0
+  LINE NO.=     7  KP1=      1  TAN1=    1.0000   0.0000   0.0000
+                   KP2=      3  TAN2=   -0.8342   0.5515   0.0000
+  LINE NO.=     8  KP1=      3  TAN1=    0.8342  -0.5515   0.0000
+                   KP2=      5  TAN2=    0.2309   0.9730   0.0000
+  LINE NO.=     9  KP1=      5  TAN1=   -0.2309  -0.9730   0.0000
+                   KP2=      7  TAN2=    0.0000   1.0000   0.0000
+
+ FIT A CUBIC SPLINE THROUGH KEYPOINTS        7       9      11      12
+ END1 TANGENT=     0.0000   -1.0000    0.0000
+ END2 TANGENT=     1.0000    0.0000    0.0000  IN CSYS=   0
+  LINE NO.=    10  KP1=      7  TAN1=    0.0000  -1.0000   0.0000
+                   KP2=      9  TAN2=   -0.0075   1.0000   0.0000
+  LINE NO.=    11  KP1=      9  TAN1=    0.0075  -1.0000   0.0000
+                   KP2=     11  TAN2=    0.8452   0.5344   0.0000
+  LINE NO.=    12  KP1=     11  TAN1=   -0.8452  -0.5344   0.0000
+                   KP2=     12  TAN2=    1.0000   0.0000   0.0000
+
+ LINE CONNECTS KEYPOINTS      7     6
+  LINE NO.=    13  KP1=      7  TAN1=   -1.0000   0.0000   0.0000
+                   KP2=      6  TAN2=    1.0000   0.0000   0.0000
+
+ KEYPOINT     13   X,Y,Z=   0.00000       0.00000      0.105000      IN CSYS=  0
+
+ KEYPOINT     14   X,Y,Z=  0.121000      0.181128E-01  0.105000      IN CSYS=  0
+
+ KEYPOINT     15   X,Y,Z= -0.121000      0.181128E-01  0.105000      IN CSYS=  0
+
+ KEYPOINT     16   X,Y,Z=  0.181500      0.144902      0.105000      IN CSYS=  0
+
+ KEYPOINT     17   X,Y,Z= -0.181500      0.144902      0.105000      IN CSYS=  0
+
+ KEYPOINT     18   X,Y,Z=  0.118000      0.276756      0.105000      IN CSYS=  0
+
+ KEYPOINT     19   X,Y,Z= -0.118000      0.276756      0.105000      IN CSYS=  0
+
+ KEYPOINT     20   X,Y,Z=  0.137000      0.370625      0.105000      IN CSYS=  0
+
+ KEYPOINT     21   X,Y,Z= -0.137000      0.370625      0.105000      IN CSYS=  0
+
+ KEYPOINT     22   X,Y,Z=  0.913333E-01  0.459243      0.105000      IN CSYS=  0
+
+ KEYPOINT     23   X,Y,Z= -0.913333E-01  0.459243      0.105000      IN CSYS=  0
+
+ KEYPOINT     24   X,Y,Z=   0.00000      0.471902      0.105000      IN CSYS=  0
+
+ FIT A CUBIC SPLINE THROUGH KEYPOINTS       13      14      16      18
+ END1 TANGENT=    -1.0000    0.0000    0.0000
+ END2 TANGENT=     0.0000    1.0000    0.0000  IN CSYS=   0
+  LINE NO.=    14  KP1=     13  TAN1=   -1.0000   0.0000   0.0000
+                   KP2=     14  TAN2=    0.8342   0.5515   0.0000
+  LINE NO.=    15  KP1=     14  TAN1=   -0.8342  -0.5515   0.0000
+                   KP2=     16  TAN2=   -0.2309   0.9730   0.0000
+  LINE NO.=    16  KP1=     16  TAN1=    0.2309  -0.9730   0.0000
+                   KP2=     18  TAN2=    0.0000   1.0000   0.0000
+
+ FIT A CUBIC SPLINE THROUGH KEYPOINTS       18      20      22      24
+ END1 TANGENT=     0.0000   -1.0000    0.0000
+ END2 TANGENT=    -1.0000    0.0000    0.0000  IN CSYS=   0
+  LINE NO.=    17  KP1=     18  TAN1=    0.0000  -1.0000   0.0000
+                   KP2=     20  TAN2=    0.0075   1.0000   0.0000
+  LINE NO.=    18  KP1=     20  TAN1=   -0.0075  -1.0000   0.0000
+                   KP2=     22  TAN2=   -0.8452   0.5344   0.0000
+  LINE NO.=    19  KP1=     22  TAN1=    0.8452  -0.5344   0.0000
+                   KP2=     24  TAN2=   -1.0000   0.0000   0.0000
+
+ FIT A CUBIC SPLINE THROUGH KEYPOINTS       13      15      17      19
+ END1 TANGENT=     1.0000    0.0000    0.0000
+ END2 TANGENT=     0.0000    1.0000    0.0000  IN CSYS=   0
+  LINE NO.=    20  KP1=     13  TAN1=    1.0000   0.0000   0.0000
+                   KP2=     15  TAN2=   -0.8342   0.5515   0.0000
+  LINE NO.=    21  KP1=     15  TAN1=    0.8342  -0.5515   0.0000
+                   KP2=     17  TAN2=    0.2309   0.9730   0.0000
+  LINE NO.=    22  KP1=     17  TAN1=   -0.2309  -0.9730   0.0000
+                   KP2=     19  TAN2=    0.0000   1.0000   0.0000
+
+ FIT A CUBIC SPLINE THROUGH KEYPOINTS       19      21      23      24
+ END1 TANGENT=     0.0000   -1.0000    0.0000
+ END2 TANGENT=     1.0000    0.0000    0.0000  IN CSYS=   0
+  LINE NO.=    23  KP1=     19  TAN1=    0.0000  -1.0000   0.0000
+                   KP2=     21  TAN2=   -0.0075   1.0000   0.0000
+  LINE NO.=    24  KP1=     21  TAN1=    0.0075  -1.0000   0.0000
+                   KP2=     23  TAN2=    0.8452   0.5344   0.0000
+  LINE NO.=    25  KP1=     23  TAN1=   -0.8452  -0.5344   0.0000
+                   KP2=     24  TAN2=    1.0000   0.0000   0.0000
+
+ LINE CONNECTS KEYPOINTS     19    18
+  LINE NO.=    26  KP1=     19  TAN1=   -1.0000   0.0000   0.0000
+                   KP2=     18  TAN2=    1.0000   0.0000   0.0000
+
+ LINE CONNECTS KEYPOINTS      1    13
+  LINE NO.=    27  KP1=      1  TAN1=    0.0000   0.0000  -1.0000
+                   KP2=     13  TAN2=    0.0000   0.0000   1.0000
+
+ LINE CONNECTS KEYPOINTS      2    14
+  LINE NO.=    28  KP1=      2  TAN1=    0.0000   0.0000  -1.0000
+                   KP2=     14  TAN2=    0.0000   0.0000   1.0000
+
+ LINE CONNECTS KEYPOINTS      3    15
+  LINE NO.=    29  KP1=      3  TAN1=    0.0000   0.0000  -1.0000
+                   KP2=     15  TAN2=    0.0000   0.0000   1.0000
+
+ LINE CONNECTS KEYPOINTS      4    16
+  LINE NO.=    30  KP1=      4  TAN1=    0.0000   0.0000  -1.0000
+                   KP2=     16  TAN2=    0.0000   0.0000   1.0000
+
+ LINE CONNECTS KEYPOINTS      5    17
+  LINE NO.=    31  KP1=      5  TAN1=    0.0000   0.0000  -1.0000
+                   KP2=     17  TAN2=    0.0000   0.0000   1.0000
+
+ LINE CONNECTS KEYPOINTS      6    18
+  LINE NO.=    32  KP1=      6  TAN1=    0.0000   0.0000  -1.0000
+                   KP2=     18  TAN2=    0.0000   0.0000   1.0000
+
+ LINE CONNECTS KEYPOINTS      7    19
+  LINE NO.=    33  KP1=      7  TAN1=    0.0000   0.0000  -1.0000
+                   KP2=     19  TAN2=    0.0000   0.0000   1.0000
+
+ LINE CONNECTS KEYPOINTS      8    20
+  LINE NO.=    34  KP1=      8  TAN1=    0.0000   0.0000  -1.0000
+                   KP2=     20  TAN2=    0.0000   0.0000   1.0000
+
+ LINE CONNECTS KEYPOINTS      9    21
+  LINE NO.=    35  KP1=      9  TAN1=    0.0000   0.0000  -1.0000
+                   KP2=     21  TAN2=    0.0000   0.0000   1.0000
+
+ LINE CONNECTS KEYPOINTS     10    22
+  LINE NO.=    36  KP1=     10  TAN1=    0.0000   0.0000  -1.0000
+                   KP2=     22  TAN2=    0.0000   0.0000   1.0000
+
+ LINE CONNECTS KEYPOINTS     11    23
+  LINE NO.=    37  KP1=     11  TAN1=    0.0000   0.0000  -1.0000
+                   KP2=     23  TAN2=    0.0000   0.0000   1.0000
+
+ LINE CONNECTS KEYPOINTS     12    24
+  LINE NO.=    38  KP1=     12  TAN1=    0.0000   0.0000  -1.0000
+                   KP2=     24  TAN2=    0.0000   0.0000   1.0000
+
+ LINE CONNECTS KEYPOINTS      8     9
+  LINE NO.=    39  KP1=      8  TAN1=    1.0000   0.0000   0.0000
+                   KP2=      9  TAN2=   -1.0000   0.0000   0.0000
+
+ LINE CONNECTS KEYPOINTS     20    21
+  LINE NO.=    40  KP1=     20  TAN1=    1.0000   0.0000   0.0000
+                   KP2=     21  TAN2=   -1.0000   0.0000   0.0000
+
+ KEYPOINT     32   X,Y,Z=  0.137000      0.370625      0.100000E-01  IN CSYS=  0
+
+ KEYPOINT     33   X,Y,Z= -0.137000      0.370625      0.100000E-01  IN CSYS=  0
+
+ LINE CONNECTS KEYPOINTS     32    33
+  LINE NO.=    41  KP1=     32  TAN1=    1.0000   0.0000   0.0000
+                   KP2=     33  TAN2=   -1.0000   0.0000   0.0000
+
+ LINE CONNECTS KEYPOINTS     32     8
+  LINE NO.=    42  KP1=     32  TAN1=    0.0000   0.0000   1.0000
+                   KP2=      8  TAN2=    0.0000   0.0000  -1.0000
+
+ LINE CONNECTS KEYPOINTS     33     9
+  LINE NO.=    43  KP1=     33  TAN1=    0.0000   0.0000   1.0000
+                   KP2=      9  TAN2=    0.0000   0.0000  -1.0000
+
+ KEYPOINT     94   X,Y,Z=  0.118000      0.249556       0.00000      IN CSYS=  0
+
+ KEYPOINT     95   X,Y,Z= -0.118000      0.249556       0.00000      IN CSYS=  0
+
+ KEYPOINT     96   X,Y,Z=  0.118000      0.249556      0.100000E-01  IN CSYS=  0
+
+ KEYPOINT     97   X,Y,Z= -0.118000      0.249556      0.100000E-01  IN CSYS=  0
+
+ LINE CONNECTS KEYPOINTS     96    97
+  LINE NO.=    44  KP1=     96  TAN1=    1.0000   0.0000   0.0000
+                   KP2=     97  TAN2=   -1.0000   0.0000   0.0000
+
+ LINE CONNECTS KEYPOINTS     97    95
+  LINE NO.=    45  KP1=     97  TAN1=    0.0000   0.0000   1.0000
+                   KP2=     95  TAN2=    0.0000   0.0000  -1.0000
+
+ LINE CONNECTS KEYPOINTS     96    94
+  LINE NO.=    46  KP1=     96  TAN1=    0.0000   0.0000   1.0000
+                   KP2=     94  TAN2=    0.0000   0.0000  -1.0000
+
+ LINE CONNECTS KEYPOINTS     94    95
+  LINE NO.=    47  KP1=     94  TAN1=    1.0000   0.0000   0.0000
+                   KP2=     95  TAN2=   -1.0000   0.0000   0.0000
+
+ LINE CONNECTS KEYPOINTS      6    94
+  LINE NO.=    48  KP1=      6  TAN1=    0.0000   1.0000   0.0000
+                   KP2=     94  TAN2=    0.0000  -1.0000   0.0000
+
+ LINE CONNECTS KEYPOINTS      7    95
+  LINE NO.=    49  KP1=      7  TAN1=    0.0000   1.0000   0.0000
+                   KP2=     95  TAN2=    0.0000  -1.0000   0.0000
+
+ KEYPOINT     98   X,Y,Z=  0.118000      0.249556      0.105000      IN CSYS=  0
+
+ KEYPOINT     99   X,Y,Z= -0.118000      0.249556      0.105000      IN CSYS=  0
+
+ KEYPOINT    100   X,Y,Z=  0.118000      0.249556      0.950000E-01  IN CSYS=  0
+
+ KEYPOINT    101   X,Y,Z= -0.118000      0.249556      0.950000E-01  IN CSYS=  0
+
+ LINE CONNECTS KEYPOINTS     98    99
+  LINE NO.=    50  KP1=     98  TAN1=    1.0000   0.0000   0.0000
+                   KP2=     99  TAN2=   -1.0000   0.0000   0.0000
+
+ LINE CONNECTS KEYPOINTS    100   101
+  LINE NO.=    51  KP1=    100  TAN1=    1.0000   0.0000   0.0000
+                   KP2=    101  TAN2=   -1.0000   0.0000   0.0000
+
+ LINE CONNECTS KEYPOINTS     98   100
+  LINE NO.=    52  KP1=     98  TAN1=    0.0000   0.0000   1.0000
+                   KP2=    100  TAN2=    0.0000   0.0000  -1.0000
+
+ LINE CONNECTS KEYPOINTS     99   101
+  LINE NO.=    53  KP1=     99  TAN1=    0.0000   0.0000   1.0000
+                   KP2=    101  TAN2=    0.0000   0.0000  -1.0000
+
+ LINE CONNECTS KEYPOINTS     18    98
+  LINE NO.=    54  KP1=     18  TAN1=    0.0000   1.0000   0.0000
+                   KP2=     98  TAN2=    0.0000  -1.0000   0.0000
+
+ LINE CONNECTS KEYPOINTS     19    99
+  LINE NO.=    55  KP1=     19  TAN1=    0.0000   1.0000   0.0000
+                   KP2=     99  TAN2=    0.0000  -1.0000   0.0000
+
+ KEYPOINT     36   X,Y,Z=  0.137000      0.370625      0.950000E-01  IN CSYS=  0
+
+ KEYPOINT     37   X,Y,Z= -0.137000      0.370625      0.950000E-01  IN CSYS=  0
+
+ LINE CONNECTS KEYPOINTS     36    37
+  LINE NO.=    56  KP1=     36  TAN1=    1.0000   0.0000   0.0000
+                   KP2=     37  TAN2=   -1.0000   0.0000   0.0000
+
+ LINE CONNECTS KEYPOINTS     36    20
+  LINE NO.=    57  KP1=     36  TAN1=    0.0000   0.0000  -1.0000
+                   KP2=     20  TAN2=    0.0000   0.0000   1.0000
+
+ LINE CONNECTS KEYPOINTS     37    21
+  LINE NO.=    58  KP1=     37  TAN1=    0.0000   0.0000  -1.0000
+                   KP2=     21  TAN2=    0.0000   0.0000   1.0000
+
+ LINE CONNECTS KEYPOINTS     17    16
+  LINE NO.=    59  KP1=     17  TAN1=   -1.0000   0.0000   0.0000
+                   KP2=     16  TAN2=    1.0000   0.0000   0.0000
+
+ KEYPOINT     38   X,Y,Z=  0.181500      0.144902      0.950000E-01  IN CSYS=  0
+
+ KEYPOINT     39   X,Y,Z= -0.181500      0.144902      0.950000E-01  IN CSYS=  0
+
+ LINE CONNECTS KEYPOINTS     38    39
+  LINE NO.=    60  KP1=     38  TAN1=    1.0000   0.0000   0.0000
+                   KP2=     39  TAN2=   -1.0000   0.0000   0.0000
+
+ LINE CONNECTS KEYPOINTS     38    16
+  LINE NO.=    61  KP1=     38  TAN1=    0.0000   0.0000  -1.0000
+                   KP2=     16  TAN2=    0.0000   0.0000   1.0000
+
+ LINE CONNECTS KEYPOINTS     39    17
+  LINE NO.=    62  KP1=     39  TAN1=    0.0000   0.0000  -1.0000
+                   KP2=     17  TAN2=    0.0000   0.0000   1.0000
+
+ LINE CONNECTS KEYPOINTS     14    15
+  LINE NO.=    63  KP1=     14  TAN1=    1.0000   0.0000   0.0000
+                   KP2=     15  TAN2=   -1.0000   0.0000   0.0000
+
+ KEYPOINT     40   X,Y,Z=  0.121000      0.181128E-01  0.950000E-01  IN CSYS=  0
+
+ KEYPOINT     41   X,Y,Z= -0.121000      0.181128E-01  0.950000E-01  IN CSYS=  0
+
+ LINE CONNECTS KEYPOINTS     40    41
+  LINE NO.=    64  KP1=     40  TAN1=    1.0000   0.0000   0.0000
+                   KP2=     41  TAN2=   -1.0000   0.0000   0.0000
+
+ LINE CONNECTS KEYPOINTS     40    14
+  LINE NO.=    65  KP1=     40  TAN1=    0.0000   0.0000  -1.0000
+                   KP2=     14  TAN2=    0.0000   0.0000   1.0000
+
+ LINE CONNECTS KEYPOINTS     41    15
+  LINE NO.=    66  KP1=     41  TAN1=    0.0000   0.0000  -1.0000
+                   KP2=     15  TAN2=    0.0000   0.0000   1.0000
+
+ KEYPOINT     50   X,Y,Z=  0.464330E-02  0.219556       0.00000      IN CSYS=  0
+
+ KEYPOINT     51   X,Y,Z=  0.464330E-02  0.500000E-01   0.00000      IN CSYS=  0
+
+ KEYPOINT     52   X,Y,Z= -0.464330E-02  0.219556       0.00000      IN CSYS=  0
+
+ KEYPOINT     53   X,Y,Z= -0.464330E-02  0.500000E-01   0.00000      IN CSYS=  0
+
+ LINE CONNECTS KEYPOINTS     50    51
+  LINE NO.=    67  KP1=     50  TAN1=    0.0000   1.0000   0.0000
+                   KP2=     51  TAN2=    0.0000  -1.0000   0.0000
+
+ LINE CONNECTS KEYPOINTS     50    52
+  LINE NO.=    68  KP1=     50  TAN1=    1.0000   0.0000   0.0000
+                   KP2=     52  TAN2=   -1.0000   0.0000   0.0000
+
+ LINE CONNECTS KEYPOINTS     51    53
+  LINE NO.=    69  KP1=     51  TAN1=    1.0000   0.0000   0.0000
+                   KP2=     53  TAN2=   -1.0000   0.0000   0.0000
+
+ LINE CONNECTS KEYPOINTS     52    53
+  LINE NO.=    70  KP1=     52  TAN1=    0.0000   1.0000   0.0000
+                   KP2=     53  TAN2=    0.0000  -1.0000   0.0000
+
+ KEYPOINT     54   X,Y,Z=  0.407040E-01  0.219556       0.00000      IN CSYS=  0
+
+ KEYPOINT     55   X,Y,Z=  0.707040E-01  0.500000E-01   0.00000      IN CSYS=  0
+
+ KEYPOINT     56   X,Y,Z=  0.499906E-01  0.219556       0.00000      IN CSYS=  0
+
+ KEYPOINT     57   X,Y,Z=  0.799906E-01  0.500000E-01   0.00000      IN CSYS=  0
+
+ LINE CONNECTS KEYPOINTS     54    55
+  LINE NO.=    71  KP1=     54  TAN1=   -0.1742   0.9847   0.0000
+                   KP2=     55  TAN2=    0.1742  -0.9847   0.0000
+
+ LINE CONNECTS KEYPOINTS     54    56
+  LINE NO.=    72  KP1=     54  TAN1=   -1.0000   0.0000   0.0000
+                   KP2=     56  TAN2=    1.0000   0.0000   0.0000
+
+ LINE CONNECTS KEYPOINTS     55    57
+  LINE NO.=    73  KP1=     55  TAN1=   -1.0000   0.0000   0.0000
+                   KP2=     57  TAN2=    1.0000   0.0000   0.0000
+
+ LINE CONNECTS KEYPOINTS     56    57
+  LINE NO.=    74  KP1=     56  TAN1=   -0.1742   0.9847   0.0000
+                   KP2=     57  TAN2=    0.1742  -0.9847   0.0000
+
+ KEYPOINT     58   X,Y,Z= -0.407040E-01  0.219556       0.00000      IN CSYS=  0
+
+ KEYPOINT     59   X,Y,Z= -0.707040E-01  0.500000E-01   0.00000      IN CSYS=  0
+
+ KEYPOINT     60   X,Y,Z= -0.499906E-01  0.219556       0.00000      IN CSYS=  0
+
+ KEYPOINT     61   X,Y,Z= -0.799906E-01  0.500000E-01   0.00000      IN CSYS=  0
+
+ LINE CONNECTS KEYPOINTS     58    59
+  LINE NO.=    75  KP1=     58  TAN1=    0.1742   0.9847   0.0000
+                   KP2=     59  TAN2=   -0.1742  -0.9847   0.0000
+
+ LINE CONNECTS KEYPOINTS     58    60
+  LINE NO.=    76  KP1=     58  TAN1=    1.0000   0.0000   0.0000
+                   KP2=     60  TAN2=   -1.0000   0.0000   0.0000
+
+ LINE CONNECTS KEYPOINTS     59    61
+  LINE NO.=    77  KP1=     59  TAN1=    1.0000   0.0000   0.0000
+                   KP2=     61  TAN2=   -1.0000   0.0000   0.0000
+
+ LINE CONNECTS KEYPOINTS     60    61
+  LINE NO.=    78  KP1=     60  TAN1=    0.1742   0.9847   0.0000
+                   KP2=     61  TAN2=   -0.1742  -0.9847   0.0000
+
+ KEYPOINT     62   X,Y,Z=  0.814080E-01  0.219556       0.00000      IN CSYS=  0
+
+ KEYPOINT     63   X,Y,Z=  0.141408      0.500000E-01   0.00000      IN CSYS=  0
+
+ KEYPOINT     64   X,Y,Z=  0.906946E-01  0.219556       0.00000      IN CSYS=  0
+
+ KEYPOINT     65   X,Y,Z=  0.150695      0.500000E-01   0.00000      IN CSYS=  0
+
+ LINE CONNECTS KEYPOINTS     62    63
+  LINE NO.=    79  KP1=     62  TAN1=   -0.3336   0.9427   0.0000
+                   KP2=     63  TAN2=    0.3336  -0.9427   0.0000
+
+ LINE CONNECTS KEYPOINTS     62    64
+  LINE NO.=    80  KP1=     62  TAN1=   -1.0000   0.0000   0.0000
+                   KP2=     64  TAN2=    1.0000   0.0000   0.0000
+
+ LINE CONNECTS KEYPOINTS     63    65
+  LINE NO.=    81  KP1=     63  TAN1=   -1.0000   0.0000   0.0000
+                   KP2=     65  TAN2=    1.0000   0.0000   0.0000
+
+ LINE CONNECTS KEYPOINTS     64    65
+  LINE NO.=    82  KP1=     64  TAN1=   -0.3336   0.9427   0.0000
+                   KP2=     65  TAN2=    0.3336  -0.9427   0.0000
+
+ KEYPOINT     66   X,Y,Z= -0.814080E-01  0.219556       0.00000      IN CSYS=  0
+
+ KEYPOINT     67   X,Y,Z= -0.141408      0.500000E-01   0.00000      IN CSYS=  0
+
+ KEYPOINT     68   X,Y,Z= -0.906946E-01  0.219556       0.00000      IN CSYS=  0
+
+ KEYPOINT     69   X,Y,Z= -0.150695      0.500000E-01   0.00000      IN CSYS=  0
+
+ LINE CONNECTS KEYPOINTS     66    67
+  LINE NO.=    83  KP1=     66  TAN1=    0.3336   0.9427   0.0000
+                   KP2=     67  TAN2=   -0.3336  -0.9427   0.0000
+
+ LINE CONNECTS KEYPOINTS     66    68
+  LINE NO.=    84  KP1=     66  TAN1=    1.0000   0.0000   0.0000
+                   KP2=     68  TAN2=   -1.0000   0.0000   0.0000
+
+ LINE CONNECTS KEYPOINTS     67    69
+  LINE NO.=    85  KP1=     67  TAN1=    1.0000   0.0000   0.0000
+                   KP2=     69  TAN2=   -1.0000   0.0000   0.0000
+
+ LINE CONNECTS KEYPOINTS     68    69
+  LINE NO.=    86  KP1=     68  TAN1=    0.3336   0.9427   0.0000
+                   KP2=     69  TAN2=   -0.3336  -0.9427   0.0000
+
+ KEYPOINT     71   X,Y,Z=   0.00000      0.120000E-01   0.00000      IN CSYS=  0
+
+ KEYPOINT     72   X,Y,Z=   0.00000      0.120000E-01  0.105000      IN CSYS=  0
+
+ LINE CONNECTS KEYPOINTS      1    71
+  LINE NO.=    87  KP1=      1  TAN1=    0.0000  -1.0000   0.0000
+                   KP2=     71  TAN2=    0.0000   1.0000   0.0000
+
+ LINE CONNECTS KEYPOINTS     72    13
+  LINE NO.=    88  KP1=     72  TAN1=    0.0000   1.0000   0.0000
+                   KP2=     13  TAN2=    0.0000  -1.0000   0.0000
+
+ LINE CONNECTS KEYPOINTS     72    71
+  LINE NO.=    89  KP1=     72  TAN1=    0.0000   0.0000   1.0000
+                   KP2=     71  TAN2=    0.0000   0.0000  -1.0000
+
+ KEYPOINT     74   X,Y,Z=   0.00000      0.459902       0.00000      IN CSYS=  0
+
+ KEYPOINT     75   X,Y,Z=   0.00000      0.459902      0.105000      IN CSYS=  0
+
+ LINE CONNECTS KEYPOINTS     12    74
+  LINE NO.=    90  KP1=     12  TAN1=    0.0000   1.0000   0.0000
+                   KP2=     74  TAN2=    0.0000  -1.0000   0.0000
+
+ LINE CONNECTS KEYPOINTS     74    75
+  LINE NO.=    91  KP1=     74  TAN1=    0.0000   0.0000  -1.0000
+                   KP2=     75  TAN2=    0.0000   0.0000   1.0000
+
+ LINE CONNECTS KEYPOINTS     75    24
+  LINE NO.=    92  KP1=     75  TAN1=    0.0000  -1.0000   0.0000
+                   KP2=     24  TAN2=    0.0000   1.0000   0.0000
+
+ KEYPOINT     80   X,Y,Z=  0.464330E-02  0.219556      0.928660E-02  IN CSYS=  0
+
+ KEYPOINT     81   X,Y,Z=  0.464330E-02  0.500000E-01  0.928660E-02  IN CSYS=  0
+
+ LINE CONNECTS KEYPOINTS     80    81
+  LINE NO.=    93  KP1=     80  TAN1=    0.0000   1.0000   0.0000
+                   KP2=     81  TAN2=    0.0000  -1.0000   0.0000
+
+ LINE CONNECTS KEYPOINTS     80    50
+  LINE NO.=    94  KP1=     80  TAN1=    0.0000   0.0000   1.0000
+                   KP2=     50  TAN2=    0.0000   0.0000  -1.0000
+
+ LINE CONNECTS KEYPOINTS     81    51
+  LINE NO.=    95  KP1=     81  TAN1=    0.0000   0.0000   1.0000
+                   KP2=     51  TAN2=    0.0000   0.0000  -1.0000
+
+ KEYPOINT     82   X,Y,Z=  0.407040E-01  0.219556      0.928660E-02  IN CSYS=  0
+
+ KEYPOINT     83   X,Y,Z=  0.707040E-01  0.500000E-01  0.928660E-02  IN CSYS=  0
+
+ LINE CONNECTS KEYPOINTS     82    83
+  LINE NO.=    96  KP1=     82  TAN1=   -0.1742   0.9847   0.0000
+                   KP2=     83  TAN2=    0.1742  -0.9847   0.0000
+
+ LINE CONNECTS KEYPOINTS     82    54
+  LINE NO.=    97  KP1=     82  TAN1=    0.0000   0.0000   1.0000
+                   KP2=     54  TAN2=    0.0000   0.0000  -1.0000
+
+ LINE CONNECTS KEYPOINTS     83    55
+  LINE NO.=    98  KP1=     83  TAN1=    0.0000   0.0000   1.0000
+                   KP2=     55  TAN2=    0.0000   0.0000  -1.0000
+
+ KEYPOINT     84   X,Y,Z= -0.407040E-01  0.219556      0.928660E-02  IN CSYS=  0
+
+ KEYPOINT     85   X,Y,Z= -0.707040E-01  0.500000E-01  0.928660E-02  IN CSYS=  0
+
+ LINE CONNECTS KEYPOINTS     84    85
+  LINE NO.=    99  KP1=     84  TAN1=    0.1742   0.9847   0.0000
+                   KP2=     85  TAN2=   -0.1742  -0.9847   0.0000
+
+ LINE CONNECTS KEYPOINTS     84    58
+  LINE NO.=   100  KP1=     84  TAN1=    0.0000   0.0000   1.0000
+                   KP2=     58  TAN2=    0.0000   0.0000  -1.0000
+
+ LINE CONNECTS KEYPOINTS     85    59
+  LINE NO.=   101  KP1=     85  TAN1=    0.0000   0.0000   1.0000
+                   KP2=     59  TAN2=    0.0000   0.0000  -1.0000
+
+ KEYPOINT     86   X,Y,Z=  0.814080E-01  0.219556      0.928660E-02  IN CSYS=  0
+
+ KEYPOINT     87   X,Y,Z=  0.141408      0.500000E-01  0.928660E-02  IN CSYS=  0
+
+ LINE CONNECTS KEYPOINTS     86    87
+  LINE NO.=   102  KP1=     86  TAN1=   -0.3336   0.9427   0.0000
+                   KP2=     87  TAN2=    0.3336  -0.9427   0.0000
+
+ LINE CONNECTS KEYPOINTS     86    62
+  LINE NO.=   103  KP1=     86  TAN1=    0.0000   0.0000   1.0000
+                   KP2=     62  TAN2=    0.0000   0.0000  -1.0000
+
+ LINE CONNECTS KEYPOINTS     87    63
+  LINE NO.=   104  KP1=     87  TAN1=    0.0000   0.0000   1.0000
+                   KP2=     63  TAN2=    0.0000   0.0000  -1.0000
+
+ KEYPOINT     88   X,Y,Z= -0.814080E-01  0.219556      0.928660E-02  IN CSYS=  0
+
+ KEYPOINT     89   X,Y,Z= -0.141408      0.500000E-01  0.928660E-02  IN CSYS=  0
+
+ LINE CONNECTS KEYPOINTS     88    89
+  LINE NO.=   105  KP1=     88  TAN1=    0.3336   0.9427   0.0000
+                   KP2=     89  TAN2=   -0.3336  -0.9427   0.0000
+
+ LINE CONNECTS KEYPOINTS     88    66
+  LINE NO.=   106  KP1=     88  TAN1=    0.0000   0.0000   1.0000
+                   KP2=     66  TAN2=    0.0000   0.0000  -1.0000
+
+ LINE CONNECTS KEYPOINTS     89    67
+  LINE NO.=   107  KP1=     89  TAN1=    0.0000   0.0000   1.0000
+                   KP2=     67  TAN2=    0.0000   0.0000  -1.0000
+
+ KEYPOINT     90   X,Y,Z=  0.950000E-01  0.144902       0.00000      IN CSYS=  0
+
+ KEYPOINT     91   X,Y,Z= -0.950000E-01  0.144902       0.00000      IN CSYS=  0
+
+ KEYPOINT     92   X,Y,Z=  0.950000E-01  0.170611       0.00000      IN CSYS=  0
+
+ KEYPOINT     93   X,Y,Z= -0.950000E-01  0.170611       0.00000      IN CSYS=  0
+
+ LINE CONNECTS KEYPOINTS     90    91
+  LINE NO.=   108  KP1=     90  TAN1=    1.0000   0.0000   0.0000
+                   KP2=     91  TAN2=   -1.0000   0.0000   0.0000
+
+ LINE CONNECTS KEYPOINTS     90    92
+  LINE NO.=   109  KP1=     90  TAN1=    0.0000  -1.0000   0.0000
+                   KP2=     92  TAN2=    0.0000   1.0000   0.0000
+
+ LINE CONNECTS KEYPOINTS     91    93
+  LINE NO.=   110  KP1=     91  TAN1=    0.0000  -1.0000   0.0000
+                   KP2=     93  TAN2=    0.0000   1.0000   0.0000
+
+ LINE CONNECTS KEYPOINTS     92    93
+  LINE NO.=   111  KP1=     92  TAN1=    1.0000   0.0000   0.0000
+                   KP2=     93  TAN2=   -1.0000   0.0000   0.0000
+
+ KEYPOINT    102   X,Y,Z=  0.245000E-01  0.811902       0.00000      IN CSYS=  0
+
+ KEYPOINT    103   X,Y,Z= -0.245000E-01  0.811902       0.00000      IN CSYS=  0
+
+ KEYPOINT    104   X,Y,Z=  0.320000E-01  0.323690       0.00000      IN CSYS=  0
+
+ KEYPOINT    105   X,Y,Z= -0.320000E-01  0.323690       0.00000      IN CSYS=  0
+
+ KEYPOINT    110   X,Y,Z=   0.00000      0.811902       0.00000      IN CSYS=  0
+
+ KEYPOINT    113   X,Y,Z=   0.00000      0.323690       0.00000      IN CSYS=  0
+
+ LINE CONNECTS KEYPOINTS    102   110
+  LINE NO.=   112  KP1=    102  TAN1=    1.0000   0.0000   0.0000
+                   KP2=    110  TAN2=   -1.0000   0.0000   0.0000
+
+ LINE CONNECTS KEYPOINTS    110   103
+  LINE NO.=   113  KP1=    110  TAN1=    1.0000   0.0000   0.0000
+                   KP2=    103  TAN2=   -1.0000   0.0000   0.0000
+
+ LINE CONNECTS KEYPOINTS    104   113
+  LINE NO.=   114  KP1=    104  TAN1=    1.0000   0.0000   0.0000
+                   KP2=    113  TAN2=   -1.0000   0.0000   0.0000
+
+ LINE CONNECTS KEYPOINTS    113   105
+  LINE NO.=   115  KP1=    113  TAN1=    1.0000   0.0000   0.0000
+                   KP2=    105  TAN2=   -1.0000   0.0000   0.0000
+
+ LINE CONNECTS KEYPOINTS    103   105
+  LINE NO.=   116  KP1=    103  TAN1=    0.0154   0.9999   0.0000
+                   KP2=    105  TAN2=   -0.0154  -0.9999   0.0000
+
+ LINE CONNECTS KEYPOINTS    102   104
+  LINE NO.=   117  KP1=    102  TAN1=   -0.0154   0.9999   0.0000
+                   KP2=    104  TAN2=    0.0154  -0.9999   0.0000
+
+ KEYPOINT    106   X,Y,Z=   0.00000      0.483902       0.00000      IN CSYS=  0
+
+ KEYPOINT    107   X,Y,Z=   0.00000      0.483902      0.105000      IN CSYS=  0
+
+ LINE CONNECTS KEYPOINTS    106    12
+  LINE NO.=   118  KP1=    106  TAN1=    0.0000   1.0000   0.0000
+                   KP2=     12  TAN2=    0.0000  -1.0000   0.0000
+
+ LINE CONNECTS KEYPOINTS    107    24
+  LINE NO.=   119  KP1=    107  TAN1=    0.0000   1.0000   0.0000
+                   KP2=     24  TAN2=    0.0000  -1.0000   0.0000
+
+ LINE CONNECTS KEYPOINTS    110   106
+  LINE NO.=   120  KP1=    110  TAN1=    0.0000   1.0000   0.0000
+                   KP2=    106  TAN2=    0.0000  -1.0000   0.0000
+
+ LINE CONNECTS KEYPOINTS    106   113
+  LINE NO.=   121  KP1=    106  TAN1=    0.0000   1.0000   0.0000
+                   KP2=    113  TAN2=    0.0000  -1.0000   0.0000
+
+ KEYPOINT    108   X,Y,Z=  0.245000E-01  0.971902      0.500000E-01  IN CSYS=  0
+
+ KEYPOINT    109   X,Y,Z= -0.245000E-01  0.971902      0.500000E-01  IN CSYS=  0
+
+ LINE CONNECTS KEYPOINTS    108   109
+  LINE NO.=   122  KP1=    108  TAN1=    1.0000   0.0000   0.0000
+                   KP2=    109  TAN2=   -1.0000   0.0000   0.0000
+
+ LINE CONNECTS KEYPOINTS    108   102
+  LINE NO.=   123  KP1=    108  TAN1=    0.0000   0.9545   0.2983
+                   KP2=    102  TAN2=    0.0000  -0.9545  -0.2983
+
+ LINE CONNECTS KEYPOINTS    109   103
+  LINE NO.=   124  KP1=    109  TAN1=    0.0000   0.9545   0.2983
+                   KP2=    103  TAN2=    0.0000  -0.9545  -0.2983
+
+ KEYPOINT    111   X,Y,Z=   0.00000      0.483902      0.200000E-01  IN CSYS=  0
+
+ KEYPOINT    112   X,Y,Z=   0.00000      0.811902      0.200000E-01  IN CSYS=  0
+
+ LINE CONNECTS KEYPOINTS    111   112
+  LINE NO.=   125  KP1=    111  TAN1=    0.0000  -1.0000   0.0000
+                   KP2=    112  TAN2=    0.0000   1.0000   0.0000
+
+ LINE CONNECTS KEYPOINTS    112   110
+  LINE NO.=   126  KP1=    112  TAN1=    0.0000   0.0000   1.0000
+                   KP2=    110  TAN2=    0.0000   0.0000  -1.0000
+
+ LINE CONNECTS KEYPOINTS    106   111
+  LINE NO.=   127  KP1=    106  TAN1=    0.0000   0.0000  -1.0000
+                   KP2=    111  TAN2=    0.0000   0.0000   1.0000
+
+ LINE CONNECTS KEYPOINTS    111   107
+  LINE NO.=   128  KP1=    111  TAN1=    0.0000   0.0000  -1.0000
+                   KP2=    107  TAN2=    0.0000   0.0000   1.0000
+
+ KEYPOINT    121   X,Y,Z=  0.928660E-02  0.459902       0.00000      IN CSYS=  0
+
+ KEYPOINT    114   X,Y,Z=  0.928660E-02  0.501902       0.00000      IN CSYS=  0
+
+ LINE CONNECTS KEYPOINTS    121   114
+  LINE NO.=   129  KP1=    121  TAN1=    0.0000  -1.0000   0.0000
+                   KP2=    114  TAN2=    0.0000   1.0000   0.0000
+
+ LINE CONNECTS KEYPOINTS    121    74
+  LINE NO.=   130  KP1=    121  TAN1=    1.0000   0.0000   0.0000
+                   KP2=     74  TAN2=   -1.0000   0.0000   0.0000
+
+ LINE CONNECTS KEYPOINTS    114    12
+  LINE NO.=   131  KP1=    114  TAN1=    0.2957   0.9553   0.0000
+                   KP2=     12  TAN2=   -0.2957  -0.9553   0.0000
+
+ KEYPOINT    115   X,Y,Z=  0.928660E-02  0.459902      0.105000      IN CSYS=  0
+
+ KEYPOINT    116   X,Y,Z=  0.928660E-02  0.501902      0.105000      IN CSYS=  0
+
+ LINE CONNECTS KEYPOINTS    115   116
+  LINE NO.=   132  KP1=    115  TAN1=    0.0000  -1.0000   0.0000
+                   KP2=    116  TAN2=    0.0000   1.0000   0.0000
+
+ LINE CONNECTS KEYPOINTS    115    75
+  LINE NO.=   133  KP1=    115  TAN1=    1.0000   0.0000   0.0000
+                   KP2=     75  TAN2=   -1.0000   0.0000   0.0000
+
+ LINE CONNECTS KEYPOINTS    116    24
+  LINE NO.=   134  KP1=    116  TAN1=    0.2957   0.9553   0.0000
+                   KP2=     24  TAN2=   -0.2957  -0.9553   0.0000
+
+ KEYPOINT    117   X,Y,Z=  0.928660E-02  0.120000E-01   0.00000      IN CSYS=  0
+
+ KEYPOINT    118   X,Y,Z=  0.928660E-02 -0.300000E-01   0.00000      IN CSYS=  0
+
+ LINE CONNECTS KEYPOINTS    117   118
+  LINE NO.=   135  KP1=    117  TAN1=    0.0000   1.0000   0.0000
+                   KP2=    118  TAN2=    0.0000  -1.0000   0.0000
+
+ LINE CONNECTS KEYPOINTS    117    71
+  LINE NO.=   136  KP1=    117  TAN1=    1.0000   0.0000   0.0000
+                   KP2=     71  TAN2=   -1.0000   0.0000   0.0000
+
+ LINE CONNECTS KEYPOINTS    118     1
+  LINE NO.=   137  KP1=    118  TAN1=    0.2957  -0.9553   0.0000
+                   KP2=      1  TAN2=   -0.2957   0.9553   0.0000
+
+ KEYPOINT    119   X,Y,Z=  0.928660E-02  0.120000E-01  0.105000      IN CSYS=  0
+
+ KEYPOINT    120   X,Y,Z=  0.928660E-02 -0.300000E-01  0.105000      IN CSYS=  0
+
+ LINE CONNECTS KEYPOINTS    119   120
+  LINE NO.=   138  KP1=    119  TAN1=    0.0000   1.0000   0.0000
+                   KP2=    120  TAN2=    0.0000  -1.0000   0.0000
+
+ LINE CONNECTS KEYPOINTS    119    72
+  LINE NO.=   139  KP1=    119  TAN1=    1.0000   0.0000   0.0000
+                   KP2=     72  TAN2=   -1.0000   0.0000   0.0000
+
+ LINE CONNECTS KEYPOINTS    120    13
+  LINE NO.=   140  KP1=    120  TAN1=    0.2957  -0.9553   0.0000
+                   KP2=     13  TAN2=   -0.2957   0.9553   0.0000
+
+ DEFINE AREA BY LIST OF LINES
+      LINE LIST =     1    2    3   13    9    8    7
+      (TRAVERSED IN SAME DIRECTION AS LINE     1)
+
+     AREA NUMBER =      1
+
+ DEFINE AREA BY LIST OF LINES
+      LINE LIST =    13   10    4   39
+      (TRAVERSED IN SAME DIRECTION AS LINE    13)
+
+     AREA NUMBER =      2
+
+ DEFINE AREA BY LIST OF LINES
+      LINE LIST =    39   11   12    6    5
+      (TRAVERSED IN SAME DIRECTION AS LINE    39)
+
+     AREA NUMBER =      3
+
+ CREATE A CIRCULAR AREA WITH
+ INNER RADIUS         =      0.000000000    
+ OUTER RADIUS         =     0.4693450000E-01
+ STARTING THETA ANGLE =      0.000000000    
+ ENDING   THETA ANGLE =      360.0000000    
+      OUTPUT AREA =     4
+
+ DEFINE AREA BY LIST OF LINES
+      LINE LIST =   102  103  104   79
+      (TRAVERSED IN SAME DIRECTION AS LINE   102)
+
+     AREA NUMBER =      5
+
+ DEFINE AREA BY LIST OF LINES
+      LINE LIST =    71   96   97   98
+      (TRAVERSED IN SAME DIRECTION AS LINE    71)
+
+     AREA NUMBER =      6
+
+ DEFINE AREA BY LIST OF LINES
+      LINE LIST =    94   93   95   67
+      (TRAVERSED IN SAME DIRECTION AS LINE    94)
+
+     AREA NUMBER =      7
+
+ DEFINE AREA BY LIST OF LINES
+      LINE LIST =    75  100   99  101
+      (TRAVERSED IN SAME DIRECTION AS LINE    75)
+
+     AREA NUMBER =      8
+
+ DEFINE AREA BY LIST OF LINES
+      LINE LIST =    83  105  106  107
+      (TRAVERSED IN SAME DIRECTION AS LINE    83)
+
+     AREA NUMBER =      9
+
+ DEFINE AREA BY LIST OF LINES
+      LINE LIST =    79   80   81   82
+      (TRAVERSED IN SAME DIRECTION AS LINE    79)
+
+     AREA NUMBER =     10
+
+ DEFINE AREA BY LIST OF LINES
+      LINE LIST =    71   72   73   74
+      (TRAVERSED IN SAME DIRECTION AS LINE    71)
+
+     AREA NUMBER =     11
+
+ DEFINE AREA BY LIST OF LINES
+      LINE LIST =    67   68   69   70
+      (TRAVERSED IN SAME DIRECTION AS LINE    67)
+
+     AREA NUMBER =     12
+
+ DEFINE AREA BY LIST OF LINES
+      LINE LIST =    75   76   77   78
+      (TRAVERSED IN SAME DIRECTION AS LINE    75)
+
+     AREA NUMBER =     13
+
+ DEFINE AREA BY LIST OF LINES
+      LINE LIST =    83   84   85   86
+      (TRAVERSED IN SAME DIRECTION AS LINE    83)
+
+     AREA NUMBER =     14
+
+ DEFINE AREA BY LIST OF LINES
+      LINE LIST =    27   87   88   89
+      (TRAVERSED IN SAME DIRECTION AS LINE    27)
+
+     AREA NUMBER =     15
+
+ DEFINE AREA BY LIST OF LINES
+      LINE LIST =    38   90   91   92
+      (TRAVERSED IN SAME DIRECTION AS LINE    38)
+
+     AREA NUMBER =     16
+
+ DEFINE AREA BY LIST OF LINES
+      LINE LIST =    63   64   65   66
+      (TRAVERSED IN SAME DIRECTION AS LINE    63)
+
+     AREA NUMBER =     17
+
+ DEFINE AREA BY LIST OF LINES
+      LINE LIST =    59   60   61   62
+      (TRAVERSED IN SAME DIRECTION AS LINE    59)
+
+     AREA NUMBER =     18
+
+ DEFINE AREA BY LIST OF LINES
+      LINE LIST =    50   51   52   53
+      (TRAVERSED IN SAME DIRECTION AS LINE    50)
+
+     AREA NUMBER =     19
+
+ DEFINE AREA BY LIST OF LINES
+      LINE LIST =    44   45   46   47
+      (TRAVERSED IN SAME DIRECTION AS LINE    44)
+
+     AREA NUMBER =     20
+
+ DEFINE AREA BY LIST OF LINES
+      LINE LIST =    40   56   57   58
+      (TRAVERSED IN SAME DIRECTION AS LINE    40)
+
+     AREA NUMBER =     21
+
+ DEFINE AREA BY LIST OF LINES
+      LINE LIST =    39   41   42   43
+      (TRAVERSED IN SAME DIRECTION AS LINE    39)
+
+     AREA NUMBER =     22
+
+ DEFINE AREA BY LIST OF LINES
+      LINE LIST =     1   14   27   28
+      (TRAVERSED IN SAME DIRECTION AS LINE     1)
+
+ *** WARNING ***                         CP =       1.156   TIME= 21:35:43
+ Lines 1, 28, 14, and 27 do not lie on a common coordinate value in the  
+ currently active coordinate system (CSYS).  A non-planar area (Coons    
+ patch) will be fitted.                                                  
+
+     AREA NUMBER =     23
+
+ DEFINE AREA BY LIST OF LINES
+      LINE LIST =     2   28   30   15
+      (TRAVERSED IN SAME DIRECTION AS LINE     2)
+
+ *** WARNING ***                         CP =       1.156   TIME= 21:35:43
+ Lines 2, 30, 15, and 28 do not lie on a common coordinate value in the  
+ currently active coordinate system (CSYS).  A non-planar area (Coons    
+ patch) will be fitted.                                                  
+
+     AREA NUMBER =     24
+
+ DEFINE AREA BY LIST OF LINES
+      LINE LIST =     3   30   16   32
+      (TRAVERSED IN SAME DIRECTION AS LINE     3)
+
+ *** WARNING ***                         CP =       1.156   TIME= 21:35:43
+ Lines 3, 32, 16, and 30 do not lie on a common coordinate value in the  
+ currently active coordinate system (CSYS).  A non-planar area (Coons    
+ patch) will be fitted.                                                  
+
+     AREA NUMBER =     25
+
+ DEFINE AREA BY LIST OF LINES
+      LINE LIST =     4   32   17   34
+      (TRAVERSED IN SAME DIRECTION AS LINE     4)
+
+ *** WARNING ***                         CP =       1.156   TIME= 21:35:43
+ Lines 4, 34, 17, and 32 do not lie on a common coordinate value in the  
+ currently active coordinate system (CSYS).  A non-planar area (Coons    
+ patch) will be fitted.                                                  
+
+     AREA NUMBER =     26
+
+ DEFINE AREA BY LIST OF LINES
+      LINE LIST =     5   34   18   36
+      (TRAVERSED IN SAME DIRECTION AS LINE     5)
+
+ *** WARNING ***                         CP =       1.156   TIME= 21:35:43
+ Lines 5, 36, 18, and 34 do not lie on a common coordinate value in the  
+ currently active coordinate system (CSYS).  A non-planar area (Coons    
+ patch) will be fitted.                                                  
+
+     AREA NUMBER =     27
+
+ DEFINE AREA BY LIST OF LINES
+      LINE LIST =     6   36   19   38
+      (TRAVERSED IN SAME DIRECTION AS LINE     6)
+
+ *** WARNING ***                         CP =       1.156   TIME= 21:35:43
+ Lines 6, 38, 19, and 36 do not lie on a common coordinate value in the  
+ currently active coordinate system (CSYS).  A non-planar area (Coons    
+ patch) will be fitted.                                                  
+
+     AREA NUMBER =     28
+
+ DEFINE AREA BY LIST OF LINES
+      LINE LIST =     7   27   20   29
+      (TRAVERSED IN SAME DIRECTION AS LINE     7)
+
+ *** WARNING ***                         CP =       1.156   TIME= 21:35:43
+ Lines 7, 29, 20, and 27 do not lie on a common coordinate value in the  
+ currently active coordinate system (CSYS).  A non-planar area (Coons    
+ patch) will be fitted.                                                  
+
+     AREA NUMBER =     29
+
+ DEFINE AREA BY LIST OF LINES
+      LINE LIST =     8   21   29   31
+      (TRAVERSED IN SAME DIRECTION AS LINE     8)
+
+ *** WARNING ***                         CP =       1.156   TIME= 21:35:43
+ Lines 8, 31, 21, and 29 do not lie on a common coordinate value in the  
+ currently active coordinate system (CSYS).  A non-planar area (Coons    
+ patch) will be fitted.                                                  
+
+     AREA NUMBER =     30
+
+ DEFINE AREA BY LIST OF LINES
+      LINE LIST =     9   22   31   33
+      (TRAVERSED IN SAME DIRECTION AS LINE     9)
+
+ *** WARNING ***                         CP =       1.156   TIME= 21:35:43
+ Lines 9, 33, 22, and 31 do not lie on a common coordinate value in the  
+ currently active coordinate system (CSYS).  A non-planar area (Coons    
+ patch) will be fitted.                                                  
+
+     AREA NUMBER =     31
+
+ DEFINE AREA BY LIST OF LINES
+      LINE LIST =    10   33   35   23
+      (TRAVERSED IN SAME DIRECTION AS LINE    10)
+
+ *** WARNING ***                         CP =       1.156   TIME= 21:35:43
+ Lines 10, 35, 23, and 33 do not lie on a common coordinate value in the 
+ currently active coordinate system (CSYS).  A non-planar area (Coons    
+ patch) will be fitted.                                                  
+
+     AREA NUMBER =     32
+
+ DEFINE AREA BY LIST OF LINES
+      LINE LIST =    11   24   35   37
+      (TRAVERSED IN SAME DIRECTION AS LINE    11)
+
+ *** WARNING ***                         CP =       1.156   TIME= 21:35:43
+ Lines 11, 37, 24, and 35 do not lie on a common coordinate value in the 
+ currently active coordinate system (CSYS).  A non-planar area (Coons    
+ patch) will be fitted.                                                  
+
+     AREA NUMBER =     33
+
+ DEFINE AREA BY LIST OF LINES
+      LINE LIST =    12   37   38   25
+      (TRAVERSED IN SAME DIRECTION AS LINE    12)
+
+ *** WARNING ***                         CP =       1.156   TIME= 21:35:43
+ Lines 12, 38, 25, and 37 do not lie on a common coordinate value in the 
+ currently active coordinate system (CSYS).  A non-planar area (Coons    
+ patch) will be fitted.                                                  
+
+     AREA NUMBER =     34
+
+ DEFINE AREA BY LIST OF LINES
+      LINE LIST =    19   18   24   25   40
+      (TRAVERSED IN SAME DIRECTION AS LINE    19)
+
+     AREA NUMBER =     35
+
+ DEFINE AREA BY LIST OF LINES
+      LINE LIST =    26   17   40   23
+      (TRAVERSED IN SAME DIRECTION AS LINE    26)
+
+     AREA NUMBER =     36
+
+ DEFINE AREA BY LIST OF LINES
+      LINE LIST =    26   22   59   16
+      (TRAVERSED IN SAME DIRECTION AS LINE    26)
+
+     AREA NUMBER =     37
+
+ DEFINE AREA BY LIST OF LINES
+      LINE LIST =    59   21   63   15
+      (TRAVERSED IN SAME DIRECTION AS LINE    59)
+
+     AREA NUMBER =     38
+
+ DEFINE AREA BY LIST OF LINES
+      LINE LIST =    63   14   20
+      (TRAVERSED IN SAME DIRECTION AS LINE    63)
+
+     AREA NUMBER =     39
+
+ DEFINE AREA BY LIST OF LINES
+      LINE LIST =   108  109  110  111
+      (TRAVERSED IN SAME DIRECTION AS LINE   108)
+
+     AREA NUMBER =     40
+
+ DEFINE AREA BY LIST OF LINES
+      LINE LIST =    49   13   48   47
+      (TRAVERSED IN SAME DIRECTION AS LINE    49)
+
+     AREA NUMBER =     41
+
+ DEFINE AREA BY LIST OF LINES
+      LINE LIST =    26   50   54   55
+      (TRAVERSED IN SAME DIRECTION AS LINE    26)
+
+     AREA NUMBER =     42
+
+ DEFINE AREA BY LIST OF LINES
+      LINE LIST =   113  120  116  121  115
+      (TRAVERSED IN SAME DIRECTION AS LINE   113)
+
+     AREA NUMBER =     43
+
+ DEFINE AREA BY LIST OF LINES
+      LINE LIST =   114  120  117  121  112
+      (TRAVERSED IN SAME DIRECTION AS LINE   114)
+
+     AREA NUMBER =     44
+
+ DEFINE AREA BY LIST OF LINES
+      LINE LIST =   127  125  120  126
+      (TRAVERSED IN SAME DIRECTION AS LINE   127)
+
+     AREA NUMBER =     45
+
+ DEFINE AREA BY LIST OF LINES
+      LINE LIST =   128  127  118  119   38
+      (TRAVERSED IN SAME DIRECTION AS LINE   128)
+
+     AREA NUMBER =     46
+
+ DEFINE AREA BY LIST OF LINES
+      LINE LIST =   122  124  113  112  123
+      (TRAVERSED IN SAME DIRECTION AS LINE   122)
+
+     AREA NUMBER =     47
+
+ DEFINE AREA BY LIST OF LINES
+      LINE LIST =    90  129  130  131
+      (TRAVERSED IN SAME DIRECTION AS LINE    90)
+
+     AREA NUMBER =     48
+
+ DEFINE AREA BY LIST OF LINES
+      LINE LIST =    92  132  133  134
+      (TRAVERSED IN SAME DIRECTION AS LINE    92)
+
+     AREA NUMBER =     49
+
+ DEFINE AREA BY LIST OF LINES
+      LINE LIST =    87  135  136  137
+      (TRAVERSED IN SAME DIRECTION AS LINE    87)
+
+     AREA NUMBER =     50
+
+ DEFINE AREA BY LIST OF LINES
+      LINE LIST =    88  138  139  140
+      (TRAVERSED IN SAME DIRECTION AS LINE    88)
+
+     AREA NUMBER =     51
+
+ OVERLAP AREAS
+      INPUT AREAS =     1   40   41   10   11   12   13   14   50
+      INPUT AREAS WILL BE DELETED IF POSSIBLE
+      OUTPUT AREAS =    10   14   41   52   53   54   55   56   57   58
+      OUTPUT AREAS =    59   60   61   62   63   64   65   66   67
+
+ OVERLAP AREAS
+      INPUT AREAS =    37   42
+      INPUT AREAS WILL BE DELETED IF POSSIBLE
+      OUTPUT AREAS =     1   42
+
+ OVERLAP AREAS
+      INPUT AREAS =     2    4   44   43
+      INPUT AREAS WILL BE DELETED IF POSSIBLE
+      OUTPUT AREAS =    11   12   13   37   40   50   68   69   70
+
+ OVERLAP AREAS
+      INPUT AREAS =     3   40   50   48
+      INPUT AREAS WILL BE DELETED IF POSSIBLE
+      OUTPUT AREAS =     2    4   43   44   71   72   73   74
+
+ OVERLAP AREAS
+      INPUT AREAS =    35   49
+      INPUT AREAS WILL BE DELETED IF POSSIBLE
+      OUTPUT AREAS =     3   40   48
+
+ OVERLAP AREAS
+      INPUT AREAS =    39   51
+      INPUT AREAS WILL BE DELETED IF POSSIBLE
+      OUTPUT AREAS =    35   49   50
+
+ DELETE SELECTED AREAS FROM      3 TO      3 BY      1
+
+     DELETED    1 AREAS
+
+ DELETE SELECTED AREAS FROM     35 TO     35 BY      1
+
+     DELETED    1 AREAS
+
+ DELETE SELECTED AREAS FROM     52 TO     52 BY      1
+
+     DELETED    1 AREAS
+
+ DELETE SELECTED AREAS FROM     13 TO     13 BY      1
+
+     DELETED    1 AREAS
+
+ DELETE SELECTED AREAS FROM     37 TO     37 BY      1
+
+     DELETED    1 AREAS
+
+ DELETE SELECTED AREAS FROM     70 TO     70 BY      1
+
+     DELETED    1 AREAS
+
+ GLUE AREAS
+      INPUT AREAS =     8   58   66   57   64   67
+      INPUT AREAS WILL BE DELETED IF POSSIBLE
+      OUTPUT AREAS =     3   57   58   64   66   67
+
+ GLUE AREAS
+      INPUT AREAS =     7   54   62   53   63   67
+      INPUT AREAS WILL BE DELETED IF POSSIBLE
+      OUTPUT AREAS =     8   53   54   62   63   67
+
+ GLUE AREAS
+      INPUT AREAS =     6   56   65   55   63   67
+      INPUT AREAS WILL BE DELETED IF POSSIBLE
+      OUTPUT AREAS =     7   55   56   63   65   67
+
+ GLUE AREAS
+      INPUT AREAS =    40   48   34   28
+      INPUT AREAS WILL BE DELETED IF POSSIBLE
+      OUTPUT AREAS =     6   34   40   48
+
+ GLUE AREAS
+      INPUT AREAS =    49   50   23   29
+      INPUT AREAS WILL BE DELETED IF POSSIBLE
+      OUTPUT AREAS =    13   29   49   50
+
+ GLUE AREAS
+      INPUT AREAS =    59   13   29   67
+      INPUT AREAS WILL BE DELETED IF POSSIBLE
+      OUTPUT AREAS =    23   29   59   67
+
+ GLUE AREAS
+      INPUT AREAS =     4    2   73   71   74   72
+      INPUT AREAS WILL BE DELETED IF POSSIBLE
+      OUTPUT AREAS =     2    4   71   72   73   74
+
+ GLUE AREAS
+      INPUT AREAS =    20   41   67
+      INPUT AREAS WILL BE DELETED IF POSSIBLE
+      OUTPUT AREAS =    20   41   67
+
+ GLUE AREAS
+      INPUT AREAS =    22   12   11   69   68   43   71   73   44
+      INPUT AREAS WILL BE DELETED IF POSSIBLE
+      OUTPUT AREAS =    11   12   13   43   44   68   69   71   73
+
+ GLUE AREAS
+      INPUT AREAS =    68   11   43   41
+      INPUT AREAS WILL BE DELETED IF POSSIBLE
+      OUTPUT AREAS =    11   22   43   68
+
+ GLUE AREAS
+      INPUT AREAS =    69   12   44   22
+      INPUT AREAS WILL BE DELETED IF POSSIBLE
+      OUTPUT AREAS =    12   22   44   69
+
+ GLUE AREAS
+      INPUT AREAS =    15   23   29   49   50   59   67
+      INPUT AREAS WILL BE DELETED IF POSSIBLE
+      OUTPUT AREAS =    15   23   29   49   50   59   67
+
+ GLUE AREAS
+      INPUT AREAS =    16    6   34   48   71   73    4   40
+      INPUT AREAS WILL BE DELETED IF POSSIBLE
+      OUTPUT AREAS =     4   16   28   35   40   48   71   73
+
+ ELEMENT TYPE SET TO         1
+
+ MATERIAL NUMBER SET TO         1
+
+ REAL CONSTANT NUMBER=        1
+
+ ELEMENT COORDINATE SYSTEM IS AS DEFINED FOR THE ELEMENTS.
+ (NOTE- FOR GLOBAL SYSTEM  0  (CARTESIAN), DEFINE
+ LOCAL CARTESIAN SYSTEM  (LOCAL,N,0)  AND USE ESYS,N.)
+
+ SECTION ID NUMBER=        1
+
+ *** NOTE ***                            CP =       1.938   TIME= 21:35:44
+ Setting the current shape of target element as line.                    
+
+ GENERATE NODES AND ELEMENTS
+       IN AREAS        43  TO     43  IN STEPS OF      1
+    ** AREA    43 MESHED WITH   127 QUADRILATERALS,      0 TRIANGLES **
+
+ NUMBER OF AREAS MESHED     =        1
+ MAXIMUM NODE NUMBER        =      424
+ MAXIMUM ELEMENT NUMBER     =      127
+
+ GENERATE NODES AND ELEMENTS
+       IN AREAS        44  TO     44  IN STEPS OF      1
+    ** AREA    44 MESHED WITH   131 QUADRILATERALS,      0 TRIANGLES **
+
+ NUMBER OF AREAS MESHED     =        1
+ MAXIMUM NODE NUMBER        =      860
+ MAXIMUM ELEMENT NUMBER     =      258
+
+ GENERATE NODES AND ELEMENTS
+       IN AREAS        68  TO     68  IN STEPS OF      1
+    ** AREA    68 MESHED WITH   111 QUADRILATERALS,      1 TRIANGLES **
+
+ NUMBER OF AREAS MESHED     =        1
+ MAXIMUM NODE NUMBER        =     1222
+ MAXIMUM ELEMENT NUMBER     =      370
+
+ ------------------------------------------------------------------------------
+            <<<<<<          SHAPE TESTING SUMMARY           >>>>>>
+            <<<<<<       FOR NEW OR MODIFIED ELEMENTS       >>>>>>
+ ------------------------------------------------------------------------------
+                    --------------------------------------
+                    |  Element count       112 SHELL281  |
+                    --------------------------------------
+
+  Test                Number tested  Warning count  Error count    Warn+Err %
+  ----                -------------  -------------  -----------    ----------
+  Aspect Ratio                112              0             0         0.00 %
+  Parallel Deviation          111              0             0         0.00 %
+  Maximum Angle               112              0             0         0.00 %
+  Jacobian Ratio              112              1             0         0.89 %
+
+  Any                         112              1             0         0.89 %
+ ------------------------------------------------------------------------------
+
+ *** WARNING ***                         CP =       2.078   TIME= 21:35:44
+ Shape testing revealed that 1 of the 112 new or modified elements       
+ violate shape warning limits.  To review test results, please see the   
+ output file or issue the CHECK command.                                 
+
+ GENERATE NODES AND ELEMENTS
+       IN AREAS        69  TO     69  IN STEPS OF      1
+    ** AREA    69 MESHED WITH   105 QUADRILATERALS,      1 TRIANGLES **
+
+ NUMBER OF AREAS MESHED     =        1
+ MAXIMUM NODE NUMBER        =     1565
+ MAXIMUM ELEMENT NUMBER     =      476
+
+ ------------------------------------------------------------------------------
+            <<<<<<          SHAPE TESTING SUMMARY           >>>>>>
+            <<<<<<       FOR NEW OR MODIFIED ELEMENTS       >>>>>>
+ ------------------------------------------------------------------------------
+                    --------------------------------------
+                    |  Element count       106 SHELL281  |
+                    --------------------------------------
+
+  Test                Number tested  Warning count  Error count    Warn+Err %
+  ----                -------------  -------------  -----------    ----------
+  Aspect Ratio                106              0             0         0.00 %
+  Parallel Deviation          105              0             0         0.00 %
+  Maximum Angle               106              0             0         0.00 %
+  Jacobian Ratio              106              1             0         0.94 %
+
+  Any                         106              1             0         0.94 %
+ ------------------------------------------------------------------------------
+
+ *** WARNING ***                         CP =       2.141   TIME= 21:35:44
+ Shape testing revealed that 1 of the 106 new or modified elements       
+ violate shape warning limits.  To review test results, please see the   
+ output file or issue the CHECK command.                                 
+
+ GENERATE NODES AND ELEMENTS
+       IN AREAS        22  TO     22  IN STEPS OF      1
+    ** AREA    22 MESHED WITH    78 QUADRILATERALS,      0 TRIANGLES **
+
+ NUMBER OF AREAS MESHED     =        1
+ MAXIMUM NODE NUMBER        =     1805
+ MAXIMUM ELEMENT NUMBER     =      554
+
+ GENERATE NODES AND ELEMENTS
+       IN AREAS        10  TO     10  IN STEPS OF      1
+    ** AREA    10 MESHED WITH      20 QUADRILATERALS,        0 TRIANGLES **
+
+ NUMBER OF AREAS MESHED     =        1
+ MAXIMUM NODE NUMBER        =     1908
+ MAXIMUM ELEMENT NUMBER     =      574
+
+ GENERATE NODES AND ELEMENTS
+       IN AREAS        56  TO     56  IN STEPS OF      1
+    ** AREA    56 MESHED WITH      11 QUADRILATERALS,        0 TRIANGLES **
+
+ NUMBER OF AREAS MESHED     =        1
+ MAXIMUM NODE NUMBER        =     1966
+ MAXIMUM ELEMENT NUMBER     =      585
+
+ GENERATE NODES AND ELEMENTS
+       IN AREAS        55  TO     55  IN STEPS OF      1
+    ** AREA    55 MESHED WITH       6 QUADRILATERALS,        0 TRIANGLES **
+
+ NUMBER OF AREAS MESHED     =        1
+ MAXIMUM NODE NUMBER        =     1999
+ MAXIMUM ELEMENT NUMBER     =      591
+
+ GENERATE NODES AND ELEMENTS
+       IN AREAS        54  TO     54  IN STEPS OF      1
+    ** AREA    54 MESHED WITH      11 QUADRILATERALS,        0 TRIANGLES **
+
+ NUMBER OF AREAS MESHED     =        1
+ MAXIMUM NODE NUMBER        =     2057
+ MAXIMUM ELEMENT NUMBER     =      602
+
+ GENERATE NODES AND ELEMENTS
+       IN AREAS        53  TO     53  IN STEPS OF      1
+    ** AREA    53 MESHED WITH       6 QUADRILATERALS,        0 TRIANGLES **
+
+ NUMBER OF AREAS MESHED     =        1
+ MAXIMUM NODE NUMBER        =     2090
+ MAXIMUM ELEMENT NUMBER     =      608
+
+ GENERATE NODES AND ELEMENTS
+       IN AREAS        58  TO     58  IN STEPS OF      1
+    ** AREA    58 MESHED WITH      11 QUADRILATERALS,        0 TRIANGLES **
+
+ NUMBER OF AREAS MESHED     =        1
+ MAXIMUM NODE NUMBER        =     2148
+ MAXIMUM ELEMENT NUMBER     =      619
+
+ GENERATE NODES AND ELEMENTS
+       IN AREAS        57  TO     57  IN STEPS OF      1
+    ** AREA    57 MESHED WITH       6 QUADRILATERALS,        0 TRIANGLES **
+
+ NUMBER OF AREAS MESHED     =        1
+ MAXIMUM NODE NUMBER        =     2181
+ MAXIMUM ELEMENT NUMBER     =      625
+
+ GENERATE NODES AND ELEMENTS
+       IN AREAS        14  TO     14  IN STEPS OF      1
+    ** AREA    14 MESHED WITH      20 QUADRILATERALS,        0 TRIANGLES **
+
+ NUMBER OF AREAS MESHED     =        1
+ MAXIMUM NODE NUMBER        =     2284
+ MAXIMUM ELEMENT NUMBER     =      645
+
+ GENERATE NODES AND ELEMENTS
+       IN AREAS        59  TO     59  IN STEPS OF      1
+    ** AREA    59 MESHED WITH     3 QUADRILATERALS,      1 TRIANGLES **
+
+ NUMBER OF AREAS MESHED     =        1
+ MAXIMUM NODE NUMBER        =     2303
+ MAXIMUM ELEMENT NUMBER     =      649
+
+ GENERATE NODES AND ELEMENTS
+       IN AREAS        67  TO     67  IN STEPS OF      1
+    ** AREA    67 MESHED WITH   844 QUADRILATERALS,      8 TRIANGLES **
+
+ NUMBER OF AREAS MESHED     =        1
+ MAXIMUM NODE NUMBER        =     4747
+ MAXIMUM ELEMENT NUMBER     =     1501
+
+ ------------------------------------------------------------------------------
+            <<<<<<          SHAPE TESTING SUMMARY           >>>>>>
+            <<<<<<       FOR NEW OR MODIFIED ELEMENTS       >>>>>>
+ ------------------------------------------------------------------------------
+                    --------------------------------------
+                    |  Element count       852 SHELL281  |
+                    --------------------------------------
+
+  Test                Number tested  Warning count  Error count    Warn+Err %
+  ----                -------------  -------------  -----------    ----------
+  Aspect Ratio                852              0             0         0.00 %
+  Parallel Deviation          844              0             0         0.00 %
+  Maximum Angle               852              0             0         0.00 %
+  Jacobian Ratio              852              2             0         0.23 %
+
+  Any                         852              2             0         0.23 %
+ ------------------------------------------------------------------------------
+
+ *** WARNING ***                         CP =       2.891   TIME= 21:35:45
+ Shape testing revealed that 2 of the 852 new or modified elements       
+ violate shape warning limits.  To review test results, please see the   
+ output file or issue the CHECK command.                                 
+
+ ELEMENT TYPE SET TO        10
+
+ MATERIAL NUMBER SET TO        10
+
+ REAL CONSTANT NUMBER=        1
+
+ ELEMENT COORDINATE SYSTEM IS AS DEFINED FOR THE ELEMENTS.
+ (NOTE- FOR GLOBAL SYSTEM  0  (CARTESIAN), DEFINE
+ LOCAL CARTESIAN SYSTEM  (LOCAL,N,0)  AND USE ESYS,N.)
+
+ SECTION ID NUMBER=       10
+
+ *** NOTE ***                            CP =       2.891   TIME= 21:35:45
+ Setting the current shape of target element as line.                    
+
+ GENERATE NODES AND ELEMENTS
+       IN AREAS        23  TO     23  IN STEPS OF      1
+    ** AREA    23 MESHED WITH   165 QUADRILATERALS,      0 TRIANGLES **
+
+ NUMBER OF AREAS MESHED     =        1
+ MAXIMUM NODE NUMBER        =     5266
+ MAXIMUM ELEMENT NUMBER     =     1666
+
+ GENERATE NODES AND ELEMENTS
+       IN AREAS        24  TO     24  IN STEPS OF      1
+    ** AREA    24 MESHED WITH     192 QUADRILATERALS,        0 TRIANGLES **
+
+ NUMBER OF AREAS MESHED     =        1
+ MAXIMUM NODE NUMBER        =     5842
+ MAXIMUM ELEMENT NUMBER     =     1858
+
+ GENERATE NODES AND ELEMENTS
+       IN AREAS        25  TO     25  IN STEPS OF      1
+    ** AREA    25 MESHED WITH     192 QUADRILATERALS,        0 TRIANGLES **
+
+ NUMBER OF AREAS MESHED     =        1
+ MAXIMUM NODE NUMBER        =     6418
+ MAXIMUM ELEMENT NUMBER     =     2050
+
+ GENERATE NODES AND ELEMENTS
+       IN AREAS        26  TO     26  IN STEPS OF      1
+    ** AREA    26 MESHED WITH     132 QUADRILATERALS,        0 TRIANGLES **
+
+ NUMBER OF AREAS MESHED     =        1
+ MAXIMUM NODE NUMBER        =     6814
+ MAXIMUM ELEMENT NUMBER     =     2182
+
+ GENERATE NODES AND ELEMENTS
+       IN AREAS        27  TO     27  IN STEPS OF      1
+    ** AREA    27 MESHED WITH     144 QUADRILATERALS,        0 TRIANGLES **
+
+ NUMBER OF AREAS MESHED     =        1
+ MAXIMUM NODE NUMBER        =     7246
+ MAXIMUM ELEMENT NUMBER     =     2326
+
+ GENERATE NODES AND ELEMENTS
+       IN AREAS        35  TO     35  IN STEPS OF      1
+    ** AREA    35 MESHED WITH   136 QUADRILATERALS,      0 TRIANGLES **
+
+ NUMBER OF AREAS MESHED     =        1
+ MAXIMUM NODE NUMBER        =     7664
+ MAXIMUM ELEMENT NUMBER     =     2462
+
+ GENERATE NODES AND ELEMENTS
+       IN AREAS        28  TO     28  IN STEPS OF      1
+    ** AREA    28 MESHED WITH   127 QUADRILATERALS,      0 TRIANGLES **
+
+ NUMBER OF AREAS MESHED     =        1
+ MAXIMUM NODE NUMBER        =     8052
+ MAXIMUM ELEMENT NUMBER     =     2589
+
+ GENERATE NODES AND ELEMENTS
+       IN AREAS        33  TO     33  IN STEPS OF      1
+    ** AREA    33 MESHED WITH     144 QUADRILATERALS,        0 TRIANGLES **
+
+ NUMBER OF AREAS MESHED     =        1
+ MAXIMUM NODE NUMBER        =     8484
+ MAXIMUM ELEMENT NUMBER     =     2733
+
+ GENERATE NODES AND ELEMENTS
+       IN AREAS        32  TO     32  IN STEPS OF      1
+    ** AREA    32 MESHED WITH     132 QUADRILATERALS,        0 TRIANGLES **
+
+ NUMBER OF AREAS MESHED     =        1
+ MAXIMUM NODE NUMBER        =     8880
+ MAXIMUM ELEMENT NUMBER     =     2865
+
+ GENERATE NODES AND ELEMENTS
+       IN AREAS        31  TO     31  IN STEPS OF      1
+    ** AREA    31 MESHED WITH     192 QUADRILATERALS,        0 TRIANGLES **
+
+ NUMBER OF AREAS MESHED     =        1
+ MAXIMUM NODE NUMBER        =     9456
+ MAXIMUM ELEMENT NUMBER     =     3057
+
+ GENERATE NODES AND ELEMENTS
+       IN AREAS        30  TO     30  IN STEPS OF      1
+    ** AREA    30 MESHED WITH     192 QUADRILATERALS,        0 TRIANGLES **
+
+ NUMBER OF AREAS MESHED     =        1
+ MAXIMUM NODE NUMBER        =    10032
+ MAXIMUM ELEMENT NUMBER     =     3249
+
+ GENERATE NODES AND ELEMENTS
+       IN AREAS        29  TO     29  IN STEPS OF      1
+    ** AREA    29 MESHED WITH     168 QUADRILATERALS,        0 TRIANGLES **
+
+ NUMBER OF AREAS MESHED     =        1
+ MAXIMUM NODE NUMBER        =    10512
+ MAXIMUM ELEMENT NUMBER     =     3417
+
+ ELEMENT TYPE SET TO        11
+
+ MATERIAL NUMBER SET TO        11
+
+ REAL CONSTANT NUMBER=        1
+
+ ELEMENT COORDINATE SYSTEM IS AS DEFINED FOR THE ELEMENTS.
+ (NOTE- FOR GLOBAL SYSTEM  0  (CARTESIAN), DEFINE
+ LOCAL CARTESIAN SYSTEM  (LOCAL,N,0)  AND USE ESYS,N.)
+
+ SECTION ID NUMBER=       11
+
+ *** NOTE ***                            CP =       3.172   TIME= 21:35:45
+ Setting the current shape of target element as line.                    
+
+ GENERATE NODES AND ELEMENTS
+       IN AREAS        40  TO     40  IN STEPS OF      1
+    ** AREA    40 MESHED WITH     3 QUADRILATERALS,      1 TRIANGLES **
+
+ NUMBER OF AREAS MESHED     =        1
+ MAXIMUM NODE NUMBER        =    10526
+ MAXIMUM ELEMENT NUMBER     =     3421
+
+ GENERATE NODES AND ELEMENTS
+       IN AREAS        48  TO     48  IN STEPS OF      1
+    ** AREA    48 MESHED WITH   345 QUADRILATERALS,      0 TRIANGLES **
+
+ NUMBER OF AREAS MESHED     =        1
+ MAXIMUM NODE NUMBER        =    11541
+ MAXIMUM ELEMENT NUMBER     =     3766
+
+ GENERATE NODES AND ELEMENTS
+       IN AREAS        36  TO     36  IN STEPS OF      1
+    ** AREA    36 MESHED WITH     382 QUADRILATERALS,        0 TRIANGLES **
+
+ NUMBER OF AREAS MESHED     =        1
+ MAXIMUM NODE NUMBER        =    12661
+ MAXIMUM ELEMENT NUMBER     =     4148
+
+ GENERATE NODES AND ELEMENTS
+       IN AREAS        42  TO     42  IN STEPS OF      1
+    ** AREA    42 MESHED WITH      78 QUADRILATERALS,        0 TRIANGLES **
+
+ NUMBER OF AREAS MESHED     =        1
+ MAXIMUM NODE NUMBER        =    12901
+ MAXIMUM ELEMENT NUMBER     =     4226
+
+ GENERATE NODES AND ELEMENTS
+       IN AREAS         1  TO      1  IN STEPS OF      1
+    ** AREA     1 MESHED WITH   378 QUADRILATERALS,      2 TRIANGLES **
+
+ NUMBER OF AREAS MESHED     =        1
+ MAXIMUM NODE NUMBER        =    14015
+ MAXIMUM ELEMENT NUMBER     =     4606
+
+ ------------------------------------------------------------------------------
+            <<<<<<          SHAPE TESTING SUMMARY           >>>>>>
+            <<<<<<       FOR NEW OR MODIFIED ELEMENTS       >>>>>>
+ ------------------------------------------------------------------------------
+                    --------------------------------------
+                    |  Element count       380 SHELL281  |
+                    --------------------------------------
+
+  Test                Number tested  Warning count  Error count    Warn+Err %
+  ----                -------------  -------------  -----------    ----------
+  Aspect Ratio                380              0             0         0.00 %
+  Parallel Deviation          378              0             0         0.00 %
+  Maximum Angle               380              0             0         0.00 %
+  Jacobian Ratio              380              2             0         0.53 %
+
+  Any                         380              2             0         0.53 %
+ ------------------------------------------------------------------------------
+
+ *** WARNING ***                         CP =       3.500   TIME= 21:35:45
+ Shape testing revealed that 2 of the 380 new or modified elements       
+ violate shape warning limits.  To review test results, please see the   
+ output file or issue the CHECK command.                                 
+
+ GENERATE NODES AND ELEMENTS
+       IN AREAS        38  TO     38  IN STEPS OF      1
+    ** AREA    38 MESHED WITH   582 QUADRILATERALS,      1 TRIANGLES **
+
+ NUMBER OF AREAS MESHED     =        1
+ MAXIMUM NODE NUMBER        =    15718
+ MAXIMUM ELEMENT NUMBER     =     5189
+
+ GENERATE NODES AND ELEMENTS
+       IN AREAS        50  TO     50  IN STEPS OF      1
+    ** AREA    50 MESHED WITH    48 QUADRILATERALS,      3 TRIANGLES **
+
+ NUMBER OF AREAS MESHED     =        1
+ MAXIMUM NODE NUMBER        =    15819
+ MAXIMUM ELEMENT NUMBER     =     5240
+
+ GENERATE NODES AND ELEMENTS
+       IN AREAS        49  TO     49  IN STEPS OF      1
+    ** AREA    49 MESHED WITH     3 QUADRILATERALS,      1 TRIANGLES **
+
+ NUMBER OF AREAS MESHED     =        1
+ MAXIMUM NODE NUMBER        =    15824
+ MAXIMUM ELEMENT NUMBER     =     5244
+
+ ELEMENT TYPE SET TO         2
+
+ MATERIAL NUMBER SET TO         2
+
+ REAL CONSTANT NUMBER=        1
+
+ ELEMENT COORDINATE SYSTEM IS AS DEFINED FOR THE ELEMENTS.
+ (NOTE- FOR GLOBAL SYSTEM  0  (CARTESIAN), DEFINE
+ LOCAL CARTESIAN SYSTEM  (LOCAL,N,0)  AND USE ESYS,N.)
+
+ SECTION ID NUMBER=        2
+
+ *** NOTE ***                            CP =       3.719   TIME= 21:35:45
+ Setting the current shape of target element as line.                    
+
+ GENERATE NODES AND ELEMENTS
+       IN AREAS        11  TO     11  IN STEPS OF      1
+    ** AREA    11 MESHED WITH     4 QUADRILATERALS,      2 TRIANGLES **
+
+ NUMBER OF AREAS MESHED     =        1
+ MAXIMUM NODE NUMBER        =    15846
+ MAXIMUM ELEMENT NUMBER     =     5250
+
+ ------------------------------------------------------------------------------
+            <<<<<<          SHAPE TESTING SUMMARY           >>>>>>
+            <<<<<<       FOR NEW OR MODIFIED ELEMENTS       >>>>>>
+ ------------------------------------------------------------------------------
+                    --------------------------------------
+                    |  Element count         6 SHELL281  |
+                    --------------------------------------
+
+  Test                Number tested  Warning count  Error count    Warn+Err %
+  ----                -------------  -------------  -----------    ----------
+  Aspect Ratio                  6              0             0         0.00 %
+  Parallel Deviation            4              0             0         0.00 %
+  Maximum Angle                 6              0             0         0.00 %
+  Jacobian Ratio                6              1             0        16.67 %
+
+  Any                           6              1             0        16.67 %
+ ------------------------------------------------------------------------------
+
+ *** WARNING ***                         CP =       3.719   TIME= 21:35:45
+ Shape testing revealed that 1 of the 6 new or modified elements violate 
+ shape warning limits.  To review test results, please see the output    
+ file or issue the CHECK command.                                        
+
+ GENERATE NODES AND ELEMENTS
+       IN AREAS        12  TO     12  IN STEPS OF      1
+    ** AREA    12 MESHED WITH     3 QUADRILATERALS,      2 TRIANGLES **
+
+ NUMBER OF AREAS MESHED     =        1
+ MAXIMUM NODE NUMBER        =    15864
+ MAXIMUM ELEMENT NUMBER     =     5255
+
+ ------------------------------------------------------------------------------
+            <<<<<<          SHAPE TESTING SUMMARY           >>>>>>
+            <<<<<<       FOR NEW OR MODIFIED ELEMENTS       >>>>>>
+ ------------------------------------------------------------------------------
+                    --------------------------------------
+                    |  Element count         5 SHELL281  |
+                    --------------------------------------
+
+  Test                Number tested  Warning count  Error count    Warn+Err %
+  ----                -------------  -------------  -----------    ----------
+  Aspect Ratio                  5              0             0         0.00 %
+  Parallel Deviation            3              0             0         0.00 %
+  Maximum Angle                 5              0             0         0.00 %
+  Jacobian Ratio                5              1             0        20.00 %
+
+  Any                           5              1             0        20.00 %
+ ------------------------------------------------------------------------------
+
+ *** WARNING ***                         CP =       3.734   TIME= 21:35:45
+ Shape testing revealed that 1 of the 5 new or modified elements violate 
+ shape warning limits.  To review test results, please see the output    
+ file or issue the CHECK command.                                        
+
+ GENERATE NODES AND ELEMENTS
+       IN AREAS        72  TO     72  IN STEPS OF      1
+    ** AREA    72 MESHED WITH   115 QUADRILATERALS,      0 TRIANGLES **
+
+ NUMBER OF AREAS MESHED     =        1
+ MAXIMUM NODE NUMBER        =    16283
+ MAXIMUM ELEMENT NUMBER     =     5370
+
+ GENERATE NODES AND ELEMENTS
+       IN AREAS        74  TO     74  IN STEPS OF      1
+    ** AREA    74 MESHED WITH   115 QUADRILATERALS,      1 TRIANGLES **
+
+ NUMBER OF AREAS MESHED     =        1
+ MAXIMUM NODE NUMBER        =    16636
+ MAXIMUM ELEMENT NUMBER     =     5486
+
+ GENERATE NODES AND ELEMENTS
+       IN AREAS        73  TO     73  IN STEPS OF      1
+    ** AREA    73 MESHED WITH    43 QUADRILATERALS,      1 TRIANGLES **
+
+ NUMBER OF AREAS MESHED     =        1
+ MAXIMUM NODE NUMBER        =    16762
+ MAXIMUM ELEMENT NUMBER     =     5530
+
+ GENERATE NODES AND ELEMENTS
+       IN AREAS        71  TO     71  IN STEPS OF      1
+    ** AREA    71 MESHED WITH    45 QUADRILATERALS,      1 TRIANGLES **
+
+ NUMBER OF AREAS MESHED     =        1
+ MAXIMUM NODE NUMBER        =    16872
+ MAXIMUM ELEMENT NUMBER     =     5576
+
+ GENERATE NODES AND ELEMENTS
+       IN AREAS         2  TO      2  IN STEPS OF      1
+    ** AREA     2 MESHED WITH     3 QUADRILATERALS,      2 TRIANGLES **
+
+ NUMBER OF AREAS MESHED     =        1
+ MAXIMUM NODE NUMBER        =    16876
+ MAXIMUM ELEMENT NUMBER     =     5581
+
+ GENERATE NODES AND ELEMENTS
+       IN AREAS         4  TO      4  IN STEPS OF      1
+    ** AREA     4 MESHED WITH     3 QUADRILATERALS,      1 TRIANGLES **
+
+ NUMBER OF AREAS MESHED     =        1
+ MAXIMUM NODE NUMBER        =    16881
+ MAXIMUM ELEMENT NUMBER     =     5585
+
+ ELEMENT TYPE SET TO        20
+
+ MATERIAL NUMBER SET TO        20
+
+ REAL CONSTANT NUMBER=        1
+
+ ELEMENT COORDINATE SYSTEM IS AS DEFINED FOR THE ELEMENTS.
+ (NOTE- FOR GLOBAL SYSTEM  0  (CARTESIAN), DEFINE
+ LOCAL CARTESIAN SYSTEM  (LOCAL,N,0)  AND USE ESYS,N.)
+
+ SECTION ID NUMBER=       20
+
+ *** NOTE ***                            CP =       3.812   TIME= 21:35:45
+ Setting the current shape of target element as line.                    
+
+ GENERATE NODES AND ELEMENTS
+       IN AREAS        45  TO     45  IN STEPS OF      1
+    ** AREA    45 MESHED WITH     108 QUADRILATERALS,        0 TRIANGLES **
+
+ NUMBER OF AREAS MESHED     =        1
+ MAXIMUM NODE NUMBER        =    17211
+ MAXIMUM ELEMENT NUMBER     =     5693
+
+ ELEMENT TYPE SET TO        21
+
+ MATERIAL NUMBER SET TO        21
+
+ REAL CONSTANT NUMBER=        1
+
+ ELEMENT COORDINATE SYSTEM IS AS DEFINED FOR THE ELEMENTS.
+ (NOTE- FOR GLOBAL SYSTEM  0  (CARTESIAN), DEFINE
+ LOCAL CARTESIAN SYSTEM  (LOCAL,N,0)  AND USE ESYS,N.)
+
+ SECTION ID NUMBER=       21
+
+ *** NOTE ***                            CP =       3.812   TIME= 21:35:45
+ Setting the current shape of target element as line.                    
+
+ GENERATE NODES AND ELEMENTS
+       IN AREAS        47  TO     47  IN STEPS OF      1
+    ** AREA    47 MESHED WITH   114 QUADRILATERALS,      0 TRIANGLES **
+
+ NUMBER OF AREAS MESHED     =        1
+ MAXIMUM NODE NUMBER        =    17591
+ MAXIMUM ELEMENT NUMBER     =     5807
+
+ ELEMENT TYPE SET TO         3
+
+ MATERIAL NUMBER SET TO         3
+
+ REAL CONSTANT NUMBER=        1
+
+ ELEMENT COORDINATE SYSTEM IS AS DEFINED FOR THE ELEMENTS.
+ (NOTE- FOR GLOBAL SYSTEM  0  (CARTESIAN), DEFINE
+ LOCAL CARTESIAN SYSTEM  (LOCAL,N,0)  AND USE ESYS,N.)
+
+ SECTION ID NUMBER=        3
+
+ *** NOTE ***                            CP =       3.844   TIME= 21:35:46
+ Setting the current shape of target element as line.                    
+
+ GENERATE NODES AND ELEMENTS
+       IN AREAS        60  TO     60  IN STEPS OF      1
+    ** AREA    60 MESHED WITH      12 QUADRILATERALS,        0 TRIANGLES **
+
+ NUMBER OF AREAS MESHED     =        1
+ MAXIMUM NODE NUMBER        =    17619
+ MAXIMUM ELEMENT NUMBER     =     5819
+
+ GENERATE NODES AND ELEMENTS
+       IN AREAS        65  TO     65  IN STEPS OF      1
+    ** AREA    65 MESHED WITH       3 QUADRILATERALS,        0 TRIANGLES **
+
+ NUMBER OF AREAS MESHED     =        1
+ MAXIMUM NODE NUMBER        =    17626
+ MAXIMUM ELEMENT NUMBER     =     5822
+
+ GENERATE NODES AND ELEMENTS
+       IN AREAS        63  TO     63  IN STEPS OF      1
+    ** AREA    63 MESHED WITH    16 QUADRILATERALS,      1 TRIANGLES **
+
+ NUMBER OF AREAS MESHED     =        1
+ MAXIMUM NODE NUMBER        =    17665
+ MAXIMUM ELEMENT NUMBER     =     5839
+
+ GENERATE NODES AND ELEMENTS
+       IN AREAS        62  TO     62  IN STEPS OF      1
+    ** AREA    62 MESHED WITH       3 QUADRILATERALS,        0 TRIANGLES **
+
+ NUMBER OF AREAS MESHED     =        1
+ MAXIMUM NODE NUMBER        =    17672
+ MAXIMUM ELEMENT NUMBER     =     5842
+
+ GENERATE NODES AND ELEMENTS
+       IN AREAS        64  TO     64  IN STEPS OF      1
+    ** AREA    64 MESHED WITH    16 QUADRILATERALS,      1 TRIANGLES **
+
+ NUMBER OF AREAS MESHED     =        1
+ MAXIMUM NODE NUMBER        =    17711
+ MAXIMUM ELEMENT NUMBER     =     5859
+
+ GENERATE NODES AND ELEMENTS
+       IN AREAS        66  TO     66  IN STEPS OF      1
+    ** AREA    66 MESHED WITH       3 QUADRILATERALS,        0 TRIANGLES **
+
+ NUMBER OF AREAS MESHED     =        1
+ MAXIMUM NODE NUMBER        =    17718
+ MAXIMUM ELEMENT NUMBER     =     5862
+
+ GENERATE NODES AND ELEMENTS
+       IN AREAS        61  TO     61  IN STEPS OF      1
+    ** AREA    61 MESHED WITH      12 QUADRILATERALS,        0 TRIANGLES **
+
+ NUMBER OF AREAS MESHED     =        1
+ MAXIMUM NODE NUMBER        =    17741
+ MAXIMUM ELEMENT NUMBER     =     5874
+
+ ELEMENT TYPE SET TO         4
+
+ MATERIAL NUMBER SET TO         4
+
+ REAL CONSTANT NUMBER=        1
+
+ ELEMENT COORDINATE SYSTEM IS AS DEFINED FOR THE ELEMENTS.
+ (NOTE- FOR GLOBAL SYSTEM  0  (CARTESIAN), DEFINE
+ LOCAL CARTESIAN SYSTEM  (LOCAL,N,0)  AND USE ESYS,N.)
+
+ SECTION ID NUMBER=        4
+
+ *** NOTE ***                            CP =       3.859   TIME= 21:35:46
+ Setting the current shape of target element as line.                    
+
+ GENERATE NODES AND ELEMENTS
+       IN AREAS        16  TO     16  IN STEPS OF      1
+    ** AREA    16 MESHED WITH      24 QUADRILATERALS,        0 TRIANGLES **
+
+ NUMBER OF AREAS MESHED     =        1
+ MAXIMUM NODE NUMBER        =    17809
+ MAXIMUM ELEMENT NUMBER     =     5898
+
+ GENERATE NODES AND ELEMENTS
+       IN AREAS        46  TO     46  IN STEPS OF      1
+    ** AREA    46 MESHED WITH    23 QUADRILATERALS,      1 TRIANGLES **
+
+ NUMBER OF AREAS MESHED     =        1
+ MAXIMUM NODE NUMBER        =    17875
+ MAXIMUM ELEMENT NUMBER     =     5922
+
+ GENERATE NODES AND ELEMENTS
+       IN AREAS        15  TO     15  IN STEPS OF      1
+    ** AREA    15 MESHED WITH      24 QUADRILATERALS,        0 TRIANGLES **
+
+ NUMBER OF AREAS MESHED     =        1
+ MAXIMUM NODE NUMBER        =    17943
+ MAXIMUM ELEMENT NUMBER     =     5946
+
+ ELEMENT TYPE SET TO         5
+
+ MATERIAL NUMBER SET TO         5
+
+ REAL CONSTANT NUMBER=        1
+
+ ELEMENT COORDINATE SYSTEM IS AS DEFINED FOR THE ELEMENTS.
+ (NOTE- FOR GLOBAL SYSTEM  0  (CARTESIAN), DEFINE
+ LOCAL CARTESIAN SYSTEM  (LOCAL,N,0)  AND USE ESYS,N.)
+
+ SECTION ID NUMBER=        5
+
+ *** NOTE ***                            CP =       3.859   TIME= 21:35:46
+ Setting the current shape of target element as line.                    
+
+ GENERATE NODES AND ELEMENTS
+       IN AREAS         5  TO      5  IN STEPS OF      1
+    ** AREA     5 MESHED WITH      20 QUADRILATERALS,        0 TRIANGLES **
+
+ NUMBER OF AREAS MESHED     =        1
+ MAXIMUM NODE NUMBER        =    18005
+ MAXIMUM ELEMENT NUMBER     =     5966
+
+ GENERATE NODES AND ELEMENTS
+       IN AREAS         3  TO      3  IN STEPS OF      1
+    ** AREA     3 MESHED WITH    20 QUADRILATERALS,      1 TRIANGLES **
+
+ NUMBER OF AREAS MESHED     =        1
+ MAXIMUM NODE NUMBER        =    18068
+ MAXIMUM ELEMENT NUMBER     =     5987
+
+ GENERATE NODES AND ELEMENTS
+       IN AREAS         8  TO      8  IN STEPS OF      1
+    ** AREA     8 MESHED WITH    20 QUADRILATERALS,      1 TRIANGLES **
+
+ NUMBER OF AREAS MESHED     =        1
+ MAXIMUM NODE NUMBER        =    18131
+ MAXIMUM ELEMENT NUMBER     =     6008
+
+ GENERATE NODES AND ELEMENTS
+       IN AREAS         7  TO      7  IN STEPS OF      1
+    ** AREA     7 MESHED WITH    20 QUADRILATERALS,      1 TRIANGLES **
+
+ NUMBER OF AREAS MESHED     =        1
+ MAXIMUM NODE NUMBER        =    18194
+ MAXIMUM ELEMENT NUMBER     =     6029
+
+ GENERATE NODES AND ELEMENTS
+       IN AREAS         9  TO      9  IN STEPS OF      1
+    ** AREA     9 MESHED WITH      20 QUADRILATERALS,        0 TRIANGLES **
+
+ NUMBER OF AREAS MESHED     =        1
+ MAXIMUM NODE NUMBER        =    18256
+ MAXIMUM ELEMENT NUMBER     =     6049
+
+ ELEMENT TYPE SET TO         6
+
+ MATERIAL NUMBER SET TO         6
+
+ REAL CONSTANT NUMBER=        1
+
+ ELEMENT COORDINATE SYSTEM IS AS DEFINED FOR THE ELEMENTS.
+ (NOTE- FOR GLOBAL SYSTEM  0  (CARTESIAN), DEFINE
+ LOCAL CARTESIAN SYSTEM  (LOCAL,N,0)  AND USE ESYS,N.)
+
+ SECTION ID NUMBER=        6
+
+ *** NOTE ***                            CP =       3.875   TIME= 21:35:46
+ Setting the current shape of target element as line.                    
+
+ GENERATE NODES AND ELEMENTS
+       IN AREAS        13  TO     13  IN STEPS OF      1
+    ** AREA    13 MESHED WITH    34 QUADRILATERALS,      4 TRIANGLES **
+
+ NUMBER OF AREAS MESHED     =        1
+ MAXIMUM NODE NUMBER        =    18368
+ MAXIMUM ELEMENT NUMBER     =     6087
+
+ GENERATE NODES AND ELEMENTS
+       IN AREAS        21  TO     21  IN STEPS OF      1
+    ** AREA    21 MESHED WITH      60 QUADRILATERALS,        0 TRIANGLES **
+
+ NUMBER OF AREAS MESHED     =        1
+ MAXIMUM NODE NUMBER        =    18552
+ MAXIMUM ELEMENT NUMBER     =     6147
+
+ GENERATE NODES AND ELEMENTS
+       IN AREAS        19  TO     19  IN STEPS OF      1
+    ** AREA    19 MESHED WITH      52 QUADRILATERALS,        0 TRIANGLES **
+
+ NUMBER OF AREAS MESHED     =        1
+ MAXIMUM NODE NUMBER        =    18712
+ MAXIMUM ELEMENT NUMBER     =     6199
+
+ GENERATE NODES AND ELEMENTS
+       IN AREAS        18  TO     18  IN STEPS OF      1
+    ** AREA    18 MESHED WITH      80 QUADRILATERALS,        0 TRIANGLES **
+
+ NUMBER OF AREAS MESHED     =        1
+ MAXIMUM NODE NUMBER        =    18956
+ MAXIMUM ELEMENT NUMBER     =     6279
+
+ GENERATE NODES AND ELEMENTS
+       IN AREAS        20  TO     20  IN STEPS OF      1
+    ** AREA    20 MESHED WITH      52 QUADRILATERALS,        0 TRIANGLES **
+
+ NUMBER OF AREAS MESHED     =        1
+ MAXIMUM NODE NUMBER        =    19116
+ MAXIMUM ELEMENT NUMBER     =     6331
+
+ GENERATE NODES AND ELEMENTS
+       IN AREAS        17  TO     17  IN STEPS OF      1
+    ** AREA    17 MESHED WITH      54 QUADRILATERALS,        0 TRIANGLES **
+
+ NUMBER OF AREAS MESHED     =        1
+ MAXIMUM NODE NUMBER        =    19282
+ MAXIMUM ELEMENT NUMBER     =     6385
+
+ CONSTRAINT AT KEYPOINT   110
+           LOAD LABELS = UX    UY    UZ  
+      VALUES =      0.0000         0.0000          EXPANSION KEY =  0
+
+ TRANSFER SOLID MODEL CONSTRAINTS TO FINITE ELEMENT MODEL
+      CONSTRAINTS    TRANSFERRED FROM KEYPOINTS     =      3
+
+
+ ***** ROUTINE COMPLETED *****  CP =         3.891
+
+
+
+ *****  ANSYS SOLUTION ROUTINE  *****
+
+
+ PERFORM A MODAL ANALYSIS
+  THIS WILL BE A NEW ANALYSIS
+
+
+ USE SUBSPACE ITERATION METHOD
+  EXTRACT   16 MODES
+  NORMALIZE THE MODE SHAPES TO THE MASS MATRIX
+
+ *****  ANSYS SOLVE    COMMAND  *****
+
+ TRANSFER SOLID MODEL BOUNDARY CONDITIONS TO FINITE ELEMENT MODEL
+      CONSTRAINTS    TRANSFERRED FROM KEYPOINTS     =      3
+
+ *** NOTE ***                            CP =       3.922   TIME= 21:35:46
+ No modes are being expanded (MXPAND command) and therefore the element  
+ results will not be written to the mode file.  For more efficient       
+ calculation of element results in the expansion pass of any downstream  
+ mode superposition analyses, expand all modes during the modal          
+ analysis.                                                               
+
+ *** WARNING ***                         CP =       3.953   TIME= 21:35:46
+ Previous testing revealed that 8 of the 6385 selected elements violate  
+ shape warning limits.  To review warning messages, please see the       
+ output or error file, or issue the CHECK command.                       
+
+ *** NOTE ***                            CP =       3.953   TIME= 21:35:46
+ The model data was checked and warning messages were found.             
+  Please review output or errors file ( C:\Users\asdasd\Dropbox\Bolsa    
+ Voluntaria Gabriel Silva Prado\ATUALIZACAODEMODELO\file.err ) for       
+ these warning messages.                                                 
+
+ *** SELECTION OF ELEMENT TECHNOLOGIES FOR APPLICABLE ELEMENTS ***
+                ---GIVE SUGGESTIONS ONLY---
+
+ ELEMENT TYPE    1 IS SHELL281. IT IS ASSOCIATED WITH ELASTOPLASTIC 
+ MATERIALS ONLY. KEYOPT(8)=2 IS SUGGESTED.
+
+ ELEMENT TYPE    2 IS SHELL281. IT IS ASSOCIATED WITH ELASTOPLASTIC 
+ MATERIALS ONLY. KEYOPT(8)=2 IS SUGGESTED.
+
+ ELEMENT TYPE    3 IS SHELL281. IT IS ASSOCIATED WITH ELASTOPLASTIC 
+ MATERIALS ONLY. KEYOPT(8)=2 IS SUGGESTED.
+
+ ELEMENT TYPE    4 IS SHELL281. IT IS ASSOCIATED WITH ELASTOPLASTIC 
+ MATERIALS ONLY. KEYOPT(8)=2 IS SUGGESTED.
+
+ ELEMENT TYPE    5 IS SHELL281. IT IS ASSOCIATED WITH ELASTOPLASTIC 
+ MATERIALS ONLY. KEYOPT(8)=2 IS SUGGESTED.
+
+ ELEMENT TYPE    6 IS SHELL281. IT IS ASSOCIATED WITH ELASTOPLASTIC 
+ MATERIALS ONLY. KEYOPT(8)=2 IS SUGGESTED.
+
+ ELEMENT TYPE   10 IS SHELL281. IT IS ASSOCIATED WITH ELASTOPLASTIC 
+ MATERIALS ONLY. KEYOPT(8)=2 IS SUGGESTED.
+
+ ELEMENT TYPE   11 IS SHELL281. IT IS ASSOCIATED WITH ELASTOPLASTIC 
+ MATERIALS ONLY. KEYOPT(8)=2 IS SUGGESTED.
+
+ ELEMENT TYPE   20 IS SHELL281. IT IS ASSOCIATED WITH ELASTOPLASTIC 
+ MATERIALS ONLY. KEYOPT(8)=2 IS SUGGESTED.
+
+ ELEMENT TYPE   21 IS SHELL281. IT IS ASSOCIATED WITH ELASTOPLASTIC 
+ MATERIALS ONLY. KEYOPT(8)=2 IS SUGGESTED.
+
+
+1
+
+ ***** ANSYS - ENGINEERING ANALYSIS SYSTEM  RELEASE 14.0     *****
+ ANSYS Multiphysics                                
+ 00176432          VERSION=WINDOWS x64   21:35:46  NOV 21, 2017 CP=      3.953
+
+  Modal Analysis                                                               
+
+
+                       S O L U T I O N   O P T I O N S
+
+   PROBLEM DIMENSIONALITY. . . . . . . . . . . . .3-D                  
+   DEGREES OF FREEDOM. . . . . . UX   UY   UZ   ROTX ROTY ROTZ
+   ANALYSIS TYPE . . . . . . . . . . . . . . . . .MODAL                
+      EXTRACTION METHOD. . . . . . . . . . . . . .SUBSPACE     
+   NUMBER OF MODES TO EXTRACT. . . . . . . . . . .    16
+   GLOBALLY ASSEMBLED MATRIX . . . . . . . . . . .SYMMETRIC  
+
+ *** NOTE ***                            CP =       3.953   TIME= 21:35:46
+ Poisson's ratio PR input has been converted to NU input.                
+
+ *** NOTE ***                            CP =       3.969   TIME= 21:35:46
+ The conditions for direct assembly have been met.  No .emat or .erot    
+ files will be produced.                                                 
+
+                      L O A D   S T E P   O P T I O N S
+
+   LOAD STEP NUMBER. . . . . . . . . . . . . . . .     1
+
+ 
+ Estimated number of active degrees of freedom = 115689.                 
+ Maximum wavefront= 1948.                                                
+ 
+
+
+
+            **** CENTER OF MASS, MASS, AND MASS MOMENTS OF INERTIA ****
+
+  CALCULATIONS ASSUME ELEMENT MASS AT ELEMENT CENTROID
+
+  TOTAL MASS =   1.4502    
+
+                           MOM. OF INERTIA         MOM. OF INERTIA
+  CENTER OF MASS            ABOUT ORIGIN        ABOUT CENTER OF MASS
+
+  XC =  0.20412E-05      IXX =   0.4000          IXX =   0.1272    
+  YC =  0.43178          IYY =   0.1223E-01      IYY =   0.9861E-02
+  ZC =  0.40392E-01      IZZ =   0.4023          IZZ =   0.1319    
+                         IXY =  -0.4547E-06      IXY =   0.8235E-06
+                         IYZ =  -0.1840E-01      IYZ =   0.6890E-02
+                         IZX =  -0.3403E-07      IZX =   0.8554E-07
+
+
+  *** MASS SUMMARY BY ELEMENT TYPE ***
+
+  TYPE      MASS
+     1  0.121405    
+     2  0.212924    
+     3  0.664310E-01
+     4  0.110497    
+     5  0.377266E-02
+     6  0.226688E-01
+    10  0.227982    
+    11  0.301720    
+    20  0.136878    
+    21  0.245904    
+
+ Range of element maximum matrix coefficients in global coordinates
+ Maximum = 1.454813773E+09 at element 5905.                              
+ Minimum = 6870210.05 at element 6009.                                   
+
+   *** ELEMENT MATRIX FORMULATION TIMES
+  TYPE  NUMBER   ENAME      TOTAL CP  AVE CP
+
+     1    1501  SHELL281      1.234   0.000822
+     2     341  SHELL281      0.125   0.000367
+     3      67  SHELL281      0.047   0.000700
+     4      72  SHELL281      0.031   0.000434
+     5     103  SHELL281      0.156   0.001517
+     6     336  SHELL281      0.203   0.000605
+    10    1916  SHELL281      1.453   0.000758
+    11    1827  SHELL281      1.281   0.000701
+    20     108  SHELL281      0.062   0.000579
+    21     114  SHELL281      0.016   0.000137
+ Time at end of element matrix formulation CP = 8.8125.                  
+ Time at end of matrix triangularization CP= 8.8125.                     
+
+ SUBSPACE SIZE OF   20 VECTORS USED FOR CALCULATION OF FIRST   16 EIGENVECTORS.
+  MAXIMUM ITERATIONS   =     100
+  NUMBER OF EQUATIONS  =  115689
+  MAXIMUM WAVEFRONT    =    1948
+  ITERATIONS PER SHIFT =       5
+  MAXIMUM MODES STORED =      20
+  MAXIMUM EIGENVALUE   = 0.10000E+09
+  WORK SPACE           =     9547508      36.000     (MB)
+                                                                         
+ Equation solver maximum pivot= 2.169467208E+09 at node 17479 UX.        
+                                                                         
+ Equation solver minimum pivot= 6.286515918E-03 at node 861 ROTZ.        
+
+
+
+     *****  ITERATION    1  COMPLETE *****  CP=      66.969  WALL=     21.6067
+
+      *****  CURRENT EIGENVALUE CALCULATIONS  *****
+  MODE  CURRENT VALUE    PREVIOUS VALUE    CONVERGENCE RATIO
+    1 0.2018589417637E-02  0.000000000000         1.60863E-04
+    2 0.4029469579068E-02  0.000000000000         6.40996E-04
+    3 0.8905502819679E-02  0.000000000000         3.13095E-03
+    4  31.29244310273      0.000000000000         1.00000E+00
+    5  64.05914983134      0.000000000000         1.00000E+00
+    6  82.92392980648      0.000000000000         1.00000E+00
+    7  94.91823536682      0.000000000000         1.00000E+00
+    8  109.7627081651      0.000000000000         1.00000E+00
+    9  146.0809645395      0.000000000000         1.00000E+00
+   10  162.6517111456      0.000000000000         1.00000E+00
+   11  216.7167875716      0.000000000000         1.00000E+00
+   12  251.8859379104      0.000000000000         1.00000E+00
+   13  272.4658534163      0.000000000000         1.00000E+00
+   14  308.8954053564      0.000000000000         1.00000E+00
+   15  332.6272523090      0.000000000000         1.00000E+00
+   16  376.2960954486      0.000000000000         1.00000E+00
+   17  423.2914365223      0.000000000000         1.00000E+00
+   18  448.4524387380      0.000000000000         1.00000E+00
+   19  517.1240471201      0.000000000000         1.00000E+00
+   20  554.1499947306      0.000000000000         1.00000E+00
+
+ ITERATIONS SINCE LAST SHIFT=     1
+ TOTAL NUMBER OF ITERATIONS=      1
+ NUMBER OF MODES CONVERGED=       0
+ NUMBER OF WORKING VECTORS=      20
+ CURRENT SHIFT POINT=           -1.0000    
+ CP TIME FOR TRIANGULARIZATION=    48.984
+ CP TIME SINCE LAST SHIFT=          8.938
+
+
+
+     *****  ITERATION    2  COMPLETE *****  CP=      75.703  WALL=     21.6078
+
+      *****  CURRENT EIGENVALUE CALCULATIONS  *****
+  MODE  CURRENT VALUE    PREVIOUS VALUE    CONVERGENCE RATIO
+    1-0.2863489717456E-02 0.2018589417637E-02     4.84569E-04
+    2-0.6211989326603E-03 0.4029469579068E-02     6.56231E-04
+    3 0.5029792959694E-02 0.8905502819679E-02     2.13220E-03
+    4  30.89429798105      31.29244310273         2.59408E-02
+    5  62.94272534286      64.05914983134         3.57889E-02
+    6  79.81207147808      82.92392980648         7.94998E-02
+    7  90.63995942884      94.91823536682         9.66295E-02
+    8  102.6016773795      109.7627081651         1.44460E-01
+    9  127.4831689614      146.0809645395         3.13051E-01
+   10  131.2983197103      162.6517111456         5.34613E-01
+   11  158.1288837153      216.7167875716         8.78290E-01
+   12  184.7543779947      251.8859379104         8.58739E-01
+   13  201.7736264106      272.4658534163         8.23456E-01
+   14  208.6319320490      308.8954053564         1.19210E+00
+   15  223.0952009827      332.6272523090         1.22298E+00
+   16  229.2371055578      376.2960954486         1.69457E+00
+   17  255.1777954839      423.2914365223         1.75165E+00
+   18  269.9761227059      448.4524387380         1.75919E+00
+   19  280.1305090727      517.1240471201         2.40776E+00
+   20  318.7621614045      554.1499947306         2.02219E+00
+
+ ITERATIONS SINCE LAST SHIFT=     2
+ TOTAL NUMBER OF ITERATIONS=      2
+ NUMBER OF MODES CONVERGED=       0
+ NUMBER OF WORKING VECTORS=      20
+ CURRENT SHIFT POINT=           -1.0000    
+ CP TIME FOR TRIANGULARIZATION=    48.984
+ CP TIME SINCE LAST SHIFT=         17.672
+
+
+
+     *****  ITERATION    3  COMPLETE *****  CP=      84.484  WALL=     21.6092
+
+      *****  CURRENT EIGENVALUE CALCULATIONS  *****
+  MODE  CURRENT VALUE    PREVIOUS VALUE    CONVERGENCE RATIO
+    1-0.2880488516299E-02-0.2863489717456E-02     3.85470E-06
+    2-0.5580613167662E-03-0.6211989326603E-03     2.93939E-06
+    3 0.5024265042401E-02 0.5029792959694E-02     2.19413E-06
+    4  30.89427018209      30.89429798105         1.79962E-06
+    5  62.94207044437      62.94272534286         2.08097E-05
+    6  79.80507849352      79.81207147808         1.75259E-04
+    7  90.61859179257      90.63995942884         4.71651E-04
+    8  102.5239696325      102.6016773795         1.51647E-03
+    9  126.1126142648      127.4831689614         2.18535E-02
+   10  130.6473112294      131.2983197103         9.99072E-03
+   11  154.7947527609      158.1288837153         4.35420E-02
+   12  179.2769703325      184.7543779947         6.20390E-02
+   13  198.0854462986      201.7736264106         3.75849E-02
+   14  200.1159245832      208.6319320490         8.69217E-02
+   15  208.2100790543      223.0952009827         1.48093E-01
+   16  217.6402333022      229.2371055578         1.09408E-01
+   17  246.0597018221      255.1777954839         7.54860E-02
+   18  255.4014979072      269.9761227059         1.17388E-01
+   19  272.7221157082      280.1305090727         5.50672E-02
+   20  297.4982943191      318.7621614045         1.48060E-01
+
+ ITERATIONS SINCE LAST SHIFT=     3
+ TOTAL NUMBER OF ITERATIONS=      3
+ NUMBER OF MODES CONVERGED=       4
+ NUMBER OF WORKING VECTORS=      20
+ CURRENT SHIFT POINT=           -1.0000    
+ CP TIME FOR TRIANGULARIZATION=    48.984
+ CP TIME SINCE LAST SHIFT=         26.453
+
+
+
+     *****  ITERATION    4  COMPLETE *****  CP=      92.547  WALL=     21.6103
+
+     ******  PREVIOUS CONVERGED EIGENVALUES  *****
+     1-0.2880488516299E-02     2-0.5580613167662E-03     3 0.5024265042401E-02
+     4  30.89427018209    
+
+      *****  CURRENT EIGENVALUE CALCULATIONS  *****
+  MODE  CURRENT VALUE    PREVIOUS VALUE    CONVERGENCE RATIO
+    5  62.94206934821      62.94207044437         3.48309E-08
+    6  79.80499769303      79.80507849352         2.02495E-06
+    7  90.61835978212      90.61859179257         5.12061E-06
+    8  102.5216953996      102.5239696325         4.43664E-05
+    9  125.9850010013      126.1126142648         2.02687E-03
+   10  130.6077809464      130.6473112294         6.05420E-04
+   11  154.4556271709      154.7947527609         4.39606E-03
+   12  177.1058277973      179.2769703325         2.46683E-02
+   13  196.0542647182      198.0854462986         2.08279E-02
+   14  199.7863930291      200.1159245832         3.30156E-03
+   15  204.7349996609      208.2100790543         3.42352E-02
+   16  214.7014476095      217.6402333022         2.75629E-02
+   17  243.6566321495      246.0597018221         1.98223E-02
+   18  251.8898046176      255.4014979072         2.80771E-02
+   19  268.6337220970      272.7221157082         3.06700E-02
+   20  288.3945075942      297.4982943191         6.41307E-02
+
+ ITERATIONS SINCE LAST SHIFT=     4
+ TOTAL NUMBER OF ITERATIONS=      4
+ NUMBER OF MODES CONVERGED=       7
+ NUMBER OF WORKING VECTORS=      20
+ CURRENT SHIFT POINT=           -1.0000    
+ CP TIME FOR TRIANGULARIZATION=    48.984
+ CP TIME SINCE LAST SHIFT=         34.516
+
+
+
+     *****  ITERATION    5  COMPLETE *****  CP=      99.656  WALL=     21.6114
+
+     ******  PREVIOUS CONVERGED EIGENVALUES  *****
+     1-0.2880488516299E-02     2-0.5580613167662E-03     3 0.5024265042401E-02
+     4  30.89427018209         5  62.94206934821         6  79.80499769303    
+     7  90.61835978212    
+
+      *****  CURRENT EIGENVALUE CALCULATIONS  *****
+  MODE  CURRENT VALUE    PREVIOUS VALUE    CONVERGENCE RATIO
+    8  102.5216269127      102.5216953996         1.33605E-06
+    9  125.9764179824      125.9850010013         1.36269E-04
+   10  130.6051204180      130.6077809464         4.07420E-05
+   11  154.4193674807      154.4556271709         4.69681E-04
+   12  176.3784463757      177.1058277973         8.26497E-03
+   13  195.1244175108      196.0542647182         9.55352E-03
+   14  199.7320166475      199.7863930291         5.44568E-04
+   15  203.6146181414      204.7349996609         1.10352E-02
+   16  213.8349456353      214.7014476095         8.12082E-03
+   17  242.7625503502      243.6566321495         7.37946E-03
+   18  250.2423912856      251.8898046176         1.32099E-02
+   19  264.3026045347      268.6337220970         3.30425E-02
+   20  282.9292315996      288.3945075942         3.90067E-02
+
+ ITERATIONS SINCE LAST SHIFT=     5
+ TOTAL NUMBER OF ITERATIONS=      5
+ NUMBER OF MODES CONVERGED=       8
+ NUMBER OF WORKING VECTORS=      20
+ CURRENT SHIFT POINT=           -1.0000    
+ CP TIME FOR TRIANGULARIZATION=    48.984
+ CP TIME SINCE LAST SHIFT=         41.625
+
+ *** NOTE ***                            CP =      99.656   TIME= 21:36:41
+ NEW SHIFT= 124.908323.                                                  
+
+ *** NOTE ***                            CP =     147.641   TIME= 21:37:06
+ STURM number= 8 should be 8.                                            
+
+
+
+     *****  ITERATION    6  COMPLETE *****  CP=     155.250  WALL=     21.6192
+
+     ******  PREVIOUS CONVERGED EIGENVALUES  *****
+     1-0.2880488516299E-02     2-0.5580613167662E-03     3 0.5024265042401E-02
+     4  30.89427018209         5  62.94206934821         6  79.80499769303    
+     7  90.61835978212         8  102.5216269127    
+
+      *****  CURRENT EIGENVALUE CALCULATIONS  *****
+  MODE  CURRENT VALUE    PREVIOUS VALUE    CONVERGENCE RATIO
+    9  125.9759250766      125.9764179824         7.82541E-06
+   10  130.6049525750      130.6051204180         2.57024E-06
+   11  154.4153327840      154.4193674807         5.22584E-05
+   12  176.1703545756      176.3784463757         2.36379E-03
+   13  194.7046422097      195.1244175108         4.31657E-03
+   14  199.7156978995      199.7320166475         1.63426E-04
+   15  203.1888981009      203.6146181414         4.19478E-03
+   16  213.4398486901      213.8349456353         3.70561E-03
+   17  242.3003479574      242.7625503502         3.81876E-03
+   18  248.2910417907      250.2423912856         1.57800E-02
+   19  259.3491034662      264.3026045347         3.85643E-02
+   20  278.8467218824      282.9292315996         2.94957E-02
+
+ ITERATIONS SINCE LAST SHIFT=     1
+ TOTAL NUMBER OF ITERATIONS=      6
+ NUMBER OF MODES CONVERGED=      10
+ NUMBER OF WORKING VECTORS=      20
+ CURRENT SHIFT POINT=            124.91    
+ CP TIME FOR TRIANGULARIZATION=    48.031
+ CP TIME SINCE LAST SHIFT=          7.562
+
+
+
+     *****  ITERATION    7  COMPLETE *****  CP=     161.531  WALL=     21.6203
+
+     ******  PREVIOUS CONVERGED EIGENVALUES  *****
+     1-0.2880488516299E-02     2-0.5580613167662E-03     3 0.5024265042401E-02
+     4  30.89427018209         5  62.94206934821         6  79.80499769303    
+     7  90.61835978212         8  102.5216269127         9  125.9759250766    
+    10  130.6049525750    
+
+      *****  CURRENT EIGENVALUE CALCULATIONS  *****
+  MODE  CURRENT VALUE    PREVIOUS VALUE    CONVERGENCE RATIO
+   11  154.4152600441      154.4153327840         9.42133E-07
+   12  176.1536683568      176.1703545756         1.89460E-04
+   13  194.6310510777      194.7046422097         7.56355E-04
+   14  199.7130155190      199.7156978995         2.68625E-05
+   15  203.1047051592      203.1888981009         8.29231E-04
+   16  213.3258720051      213.4398486901         1.06885E-03
+   17  242.1203500354      242.3003479574         1.48740E-03
+   18  246.2945069416      248.2910417907         1.62783E-02
+   19  256.4520952624      259.3491034662         2.27206E-02
+   20  276.4566660051      278.8467218824         1.73654E-02
+
+ ITERATIONS SINCE LAST SHIFT=     2
+ TOTAL NUMBER OF ITERATIONS=      7
+ NUMBER OF MODES CONVERGED=      11
+ NUMBER OF WORKING VECTORS=      20
+ CURRENT SHIFT POINT=            124.91    
+ CP TIME FOR TRIANGULARIZATION=    48.031
+ CP TIME SINCE LAST SHIFT=         13.844
+
+
+
+     *****  ITERATION    8  COMPLETE *****  CP=     167.891  WALL=     21.6211
+
+     ******  PREVIOUS CONVERGED EIGENVALUES  *****
+     1-0.2880488516299E-02     2-0.5580613167662E-03     3 0.5024265042401E-02
+     4  30.89427018209         5  62.94206934821         6  79.80499769303    
+     7  90.61835978212         8  102.5216269127         9  125.9759250766    
+    10  130.6049525750        11  154.4152600441    
+
+      *****  CURRENT EIGENVALUE CALCULATIONS  *****
+  MODE  CURRENT VALUE    PREVIOUS VALUE    CONVERGENCE RATIO
+   12  176.1525938530      176.1536683568         1.21997E-05
+   13  194.6207855228      194.6310510777         1.05496E-04
+   14  199.7126098924      199.7130155190         4.06211E-06
+   15  203.0897744122      203.1047051592         1.47041E-04
+   16  213.2965244457      213.3258720051         2.75200E-04
+   17  242.0466607903      242.1203500354         6.08977E-04
+   18  244.8662093800      246.2945069416         1.17000E-02
+   19  255.1137204049      256.4520952624         1.05199E-02
+   20  274.9503935813      276.4566660051         1.09867E-02
+
+ ITERATIONS SINCE LAST SHIFT=     3
+ TOTAL NUMBER OF ITERATIONS=      8
+ NUMBER OF MODES CONVERGED=      11
+ NUMBER OF WORKING VECTORS=      20
+ CURRENT SHIFT POINT=            124.91    
+ CP TIME FOR TRIANGULARIZATION=    48.031
+ CP TIME SINCE LAST SHIFT=         20.203
+
+
+
+     *****  ITERATION    9  COMPLETE *****  CP=     174.234  WALL=     21.6219
+
+     ******  PREVIOUS CONVERGED EIGENVALUES  *****
+     1-0.2880488516299E-02     2-0.5580613167662E-03     3 0.5024265042401E-02
+     4  30.89427018209         5  62.94206934821         6  79.80499769303    
+     7  90.61835978212         8  102.5216269127         9  125.9759250766    
+    10  130.6049525750        11  154.4152600441    
+
+      *****  CURRENT EIGENVALUE CALCULATIONS  *****
+  MODE  CURRENT VALUE    PREVIOUS VALUE    CONVERGENCE RATIO
+   12  176.1525329750      176.1525938530         6.91197E-07
+   13  194.6195425226      194.6207855228         1.27737E-05
+   14  199.7125533038      199.7126098924         5.66700E-07
+   15  203.0873986967      203.0897744122         2.33961E-05
+   16  213.2899332818      213.2965244457         6.18057E-05
+   17  242.0155162829      242.0466607903         2.57393E-04
+   18  244.1096149176      244.8662093800         6.20842E-03
+   19  254.4959402680      255.1137204049         4.86082E-03
+   20  273.9558439875      274.9503935813         7.27384E-03
+
+ ITERATIONS SINCE LAST SHIFT=     4
+ TOTAL NUMBER OF ITERATIONS=      9
+ NUMBER OF MODES CONVERGED=      12
+ NUMBER OF WORKING VECTORS=      20
+ CURRENT SHIFT POINT=            124.91    
+ CP TIME FOR TRIANGULARIZATION=    48.031
+ CP TIME SINCE LAST SHIFT=         26.547
+
+
+
+     *****  ITERATION   10  COMPLETE *****  CP=     180.391  WALL=     21.6228
+
+     ******  PREVIOUS CONVERGED EIGENVALUES  *****
+     1-0.2880488516299E-02     2-0.5580613167662E-03     3 0.5024265042401E-02
+     4  30.89427018209         5  62.94206934821         6  79.80499769303    
+     7  90.61835978212         8  102.5216269127         9  125.9759250766    
+    10  130.6049525750        11  154.4152600441        12  176.1525329750    
+
+      *****  CURRENT EIGENVALUE CALCULATIONS  *****
+  MODE  CURRENT VALUE    PREVIOUS VALUE    CONVERGENCE RATIO
+   13  194.6194031190      194.6195425226         1.43258E-06
+   14  199.7125458042      199.7125533038         7.51037E-08
+   15  203.0870458064      203.0873986967         3.47526E-06
+   16  213.2885810725      213.2899332818         1.26797E-05
+   17  242.0021860198      242.0155162829         1.10170E-04
+   18  243.7662505455      244.1096149176         2.81914E-03
+   19  254.1964293009      254.4959402680         2.35792E-03
+   20  273.2881132176      273.9558439875         4.89261E-03
+
+ ITERATIONS SINCE LAST SHIFT=     5
+ TOTAL NUMBER OF ITERATIONS=     10
+ NUMBER OF MODES CONVERGED=      15
+ NUMBER OF WORKING VECTORS=      20
+ CURRENT SHIFT POINT=            124.91    
+ CP TIME FOR TRIANGULARIZATION=    48.031
+ CP TIME SINCE LAST SHIFT=         32.703
+
+ *** NOTE ***                            CP =     180.391   TIME= 21:37:22
+ NEW SHIFT= 212.79012.                                                   
+
+ *** NOTE ***                            CP =     226.781   TIME= 21:37:46
+ STURM number= 15 should be 15.                                          
+
+
+
+     *****  ITERATION   11  COMPLETE *****  CP=     232.375  WALL=     21.6303
+
+     ******  PREVIOUS CONVERGED EIGENVALUES  *****
+     1-0.2880488516299E-02     2-0.5580613167662E-03     3 0.5024265042401E-02
+     4  30.89427018209         5  62.94206934821         6  79.80499769303    
+     7  90.61835978212         8  102.5216269127         9  125.9759250766    
+    10  130.6049525750        11  154.4152600441        12  176.1525329750    
+    13  194.6194031190        14  199.7125458042        15  203.0870458064    
+
+      *****  CURRENT EIGENVALUE CALCULATIONS  *****
+  MODE  CURRENT VALUE    PREVIOUS VALUE    CONVERGENCE RATIO
+   16  213.2882540329      213.2885810725         3.06665E-06
+
+ *** NOTE ***                            CP =     232.375   TIME= 21:37:49
+ NEW SHIFT= 216.330266.                                                  
+
+ *** NOTE ***                            CP =     278.531   TIME= 21:38:12
+ STURM number= 16 should be 16.                                          
+1
+
+ ***** ANSYS - ENGINEERING ANALYSIS SYSTEM  RELEASE 14.0     *****
+ ANSYS Multiphysics                                
+ 00176432          VERSION=WINDOWS x64   21:38:12  NOV 21, 2017 CP=    278.578
+
+  Modal Analysis                                                               
+
+ NEGATIVE FREQUENCY OF -0.1810E-01 SET TO ZERO
+ NEGATIVE FREQUENCY OF -0.3506E-02 SET TO ZERO
+
+  ***** FREQUENCIES FROM SUBSPACE ITERATION *****
+
+  MODE    FREQUENCY (HERTZ)      
+
+
+    1     0.000000000000    
+    2     0.000000000000    
+    3    0.5024265042401E-02
+    4     30.89427018209    
+    5     62.94206934821    
+    6     79.80499769303    
+    7     90.61835978212    
+    8     102.5216269127    
+    9     125.9759250766    
+   10     130.6049525750    
+   11     154.4152600441    
+   12     176.1525329750    
+   13     194.6194031190    
+   14     199.7125458042    
+   15     203.0870458064    
+   16     213.2882540329    
+1
+
+ ***** ANSYS - ENGINEERING ANALYSIS SYSTEM  RELEASE 14.0     *****
+ ANSYS Multiphysics                                
+ 00176432          VERSION=WINDOWS x64   21:38:13  NOV 21, 2017 CP=    279.094
+
+  Modal Analysis                                                               
+
+
+
+
+          ***** PARTICIPATION FACTOR CALCULATION *****  X  DIRECTION
+                                                                                  CUMULATIVE     RATIO EFF.MASS
+  MODE   FREQUENCY       PERIOD      PARTIC.FACTOR     RATIO    EFFECTIVE MASS   MASS FRACTION   TO TOTAL MASS
+    1     0.00000        0.0000       0.71240E-01    0.075851    0.507519E-02    0.419312E-02    0.349969E-02
+    2     0.00000        0.0000       0.93921        1.000000    0.882123        0.733002        0.608284    
+    3    0.502427E-02    199.03       0.12602        0.134179    0.158817E-01    0.746124        0.109515E-01
+    4     30.8943       0.32368E-01   0.10729E-02    0.001142    0.115118E-05    0.746125        0.793819E-06
+    5     62.9421       0.15888E-01  -0.20398        0.217184    0.416088E-01    0.780502        0.286921E-01
+    6     79.8050       0.12531E-01   0.70277E-03    0.000748    0.493890E-06    0.780502        0.340571E-06
+    7     90.6184       0.11035E-01   0.42501E-03    0.000453    0.180630E-06    0.780503        0.124557E-06
+    8     102.522       0.97540E-02   0.51324        0.546455    0.263413        0.998135        0.181642    
+    9     125.976       0.79380E-02   0.20839E-02    0.002219    0.434272E-05    0.998138        0.299460E-05
+   10     130.605       0.76567E-02  -0.47335E-01    0.050398    0.224059E-02    0.999989        0.154504E-02
+   11     154.415       0.64760E-02  -0.88448E-03    0.000942    0.782309E-06    0.999990        0.539455E-06
+   12     176.153       0.56769E-02   0.21311E-02    0.002269    0.454153E-05    0.999994        0.313170E-05
+   13     194.619       0.51382E-02  -0.17535E-02    0.001867    0.307492E-05    0.999996        0.212037E-05
+   14     199.713       0.50072E-02  -0.67478E-03    0.000718    0.455332E-06    0.999997        0.313982E-06
+   15     203.087       0.49240E-02  -0.37731E-03    0.000402    0.142359E-06    0.999997        0.981666E-07
+   16     213.288       0.46885E-02  -0.19906E-02    0.002119    0.396262E-05     1.00000        0.273249E-05
+ -----------------------------------------------------------------------------------------------------------------
+   sum                                                            1.21036                        0.834627    
+ -----------------------------------------------------------------------------------------------------------------
+
+
+
+          ***** PARTICIPATION FACTOR CALCULATION *****  Y  DIRECTION
+                                                                                  CUMULATIVE     RATIO EFF.MASS
+  MODE   FREQUENCY       PERIOD      PARTIC.FACTOR     RATIO    EFFECTIVE MASS   MASS FRACTION   TO TOTAL MASS
+    1     0.00000        0.0000      -0.10142        0.205040    0.102861E-01    0.138464E-01    0.709293E-02
+    2     0.00000        0.0000       0.77144E-02    0.015596    0.595127E-04    0.139265E-01    0.410381E-04
+    3    0.502427E-02    199.03      -0.11605E-03    0.000235    0.134673E-07    0.139265E-01    0.928660E-08
+    4     30.8943       0.32368E-01   0.13920        0.281414    0.193759E-01    0.400091E-01    0.133610E-01
+    5     62.9421       0.15888E-01  -0.16779E-02    0.003392    0.281545E-05    0.400128E-01    0.194144E-05
+    6     79.8050       0.12531E-01   0.57531E-01    0.116310    0.330982E-02    0.444683E-01    0.228234E-02
+    7     90.6184       0.11035E-01  -0.20407        0.412564    0.416441E-01    0.100527        0.287165E-01
+    8     102.522       0.97540E-02   0.28504E-02    0.005763    0.812492E-05    0.100538        0.560269E-05
+    9     125.976       0.79380E-02  -0.18105        0.366018    0.327774E-01    0.144660        0.226022E-01
+   10     130.605       0.76567E-02   0.38015E-02    0.007685    0.144512E-04    0.144680        0.996507E-05
+   11     154.415       0.64760E-02  -0.57638E-01    0.116525    0.332208E-02    0.149152        0.229080E-02
+   12     176.153       0.56769E-02  -0.17900        0.361893    0.320428E-01    0.192286        0.220957E-01
+   13     194.619       0.51382E-02   0.49464        1.000000    0.244664        0.521636        0.168713    
+   14     199.713       0.50072E-02   0.45692        0.923742    0.208772        0.802670        0.143962    
+   15     203.087       0.49240E-02   0.38234        0.772981    0.146187        0.999457        0.100806    
+   16     213.288       0.46885E-02   0.20082E-01    0.040600    0.403299E-03     1.00000        0.278102E-03
+ -----------------------------------------------------------------------------------------------------------------
+   sum                                                           0.742869                        0.512259    
+ -----------------------------------------------------------------------------------------------------------------
+
+
+
+          ***** PARTICIPATION FACTOR CALCULATION *****  Z  DIRECTION
+                                                                                  CUMULATIVE     RATIO EFF.MASS
+  MODE   FREQUENCY       PERIOD      PARTIC.FACTOR     RATIO    EFFECTIVE MASS   MASS FRACTION   TO TOTAL MASS
+    1     0.00000        0.0000      -0.94372        1.000000    0.890614        0.732843        0.614139    
+    2     0.00000        0.0000       0.71729E-01    0.076006    0.514499E-02    0.737077        0.354782E-02
+    3    0.502427E-02    199.03      -0.10872E-02    0.001152    0.118195E-05    0.737078        0.815032E-06
+    4     30.8943       0.32368E-01  -0.19593        0.207613    0.383883E-01    0.768666        0.264713E-01
+    5     62.9421       0.15888E-01   0.17138E-02    0.001816    0.293717E-05    0.768668        0.202538E-05
+    6     79.8050       0.12531E-01   0.98810E-02    0.010470    0.976332E-04    0.768749        0.673248E-04
+    7     90.6184       0.11035E-01   0.51033        0.540762    0.260436        0.983049        0.179588    
+    8     102.522       0.97540E-02   0.44852E-03    0.000475    0.201174E-06    0.983049        0.138723E-06
+    9     125.976       0.79380E-02   0.40283E-01    0.042685    0.162271E-02    0.984384        0.111897E-02
+   10     130.605       0.76567E-02  -0.25441E-02    0.002696    0.647263E-05    0.984390        0.446332E-05
+   11     154.415       0.64760E-02   0.72725E-01    0.077062    0.528897E-02    0.988742        0.364711E-02
+   12     176.153       0.56769E-02   0.93413E-01    0.098983    0.872590E-02    0.995922        0.601710E-02
+   13     194.619       0.51382E-02  -0.40079E-01    0.042469    0.160631E-02    0.997244        0.110766E-02
+   14     199.713       0.50072E-02  -0.18787E-01    0.019907    0.352935E-03    0.997534        0.243373E-03
+   15     203.087       0.49240E-02  -0.54237E-01    0.057471    0.294167E-02    0.999955        0.202848E-02
+   16     213.288       0.46885E-02   0.74348E-02    0.007878    0.552758E-04     1.00000        0.381164E-04
+ -----------------------------------------------------------------------------------------------------------------
+   sum                                                            1.21529                        0.838022    
+ -----------------------------------------------------------------------------------------------------------------
+
+
+
+          ***** PARTICIPATION FACTOR CALCULATION *****ROTX DIRECTION
+                                                                                  CUMULATIVE
+  MODE   FREQUENCY       PERIOD      PARTIC.FACTOR     RATIO    EFFECTIVE MASS   MASS FRACTION
+
+    1     0.00000        0.0000      -0.18545        0.447591    0.343932E-01    0.140255    
+    2     0.00000        0.0000       0.14096E-01    0.034020    0.198685E-03    0.141065    
+    3    0.502427E-02    199.03      -0.21181E-03    0.000511    0.448629E-07    0.141066    
+    4     30.8943       0.32368E-01  -0.15908        0.383927    0.253050E-01    0.244259    
+    5     62.9421       0.15888E-01   0.13915E-02    0.003358    0.193614E-05    0.244267    
+    6     79.8050       0.12531E-01   0.80224E-02    0.019362    0.643584E-04    0.244530    
+    7     90.6184       0.11035E-01   0.41434        1.000000    0.171676        0.944623    
+    8     102.522       0.97540E-02   0.36416E-03    0.000879    0.132611E-06    0.944623    
+    9     125.976       0.79380E-02   0.32706E-01    0.078935    0.106967E-02    0.948985    
+   10     130.605       0.76567E-02  -0.20656E-02    0.004985    0.426667E-05    0.949003    
+   11     154.415       0.64760E-02   0.59046E-01    0.142507    0.348641E-02    0.963220    
+   12     176.153       0.56769E-02   0.75842E-01    0.183044    0.575199E-02    0.986677    
+   13     194.619       0.51382E-02  -0.32540E-01    0.078535    0.105886E-02    0.990995    
+   14     199.713       0.50072E-02  -0.15253E-01    0.036813    0.232650E-03    0.991944    
+   15     203.087       0.49240E-02  -0.44035E-01    0.106279    0.193910E-02    0.999851    
+   16     213.288       0.46885E-02   0.60363E-02    0.014569    0.364370E-04     1.00000    
+ ----------------------------------------------------------------------------------------------
+   sum                                                           0.245218    
+ ----------------------------------------------------------------------------------------------
+
+
+
+          ***** PARTICIPATION FACTOR CALCULATION *****ROTY DIRECTION
+                                                                                  CUMULATIVE
+  MODE   FREQUENCY       PERIOD      PARTIC.FACTOR     RATIO    EFFECTIVE MASS   MASS FRACTION
+
+    1     0.00000        0.0000       0.36470E-02    0.036640    0.133003E-04    0.107563E-02
+    2     0.00000        0.0000       0.49443E-01    0.496740    0.244462E-02    0.198778    
+    3    0.502427E-02    199.03       0.99535E-01    1.000000    0.990722E-02     1.00000    
+    4     30.8943       0.32368E-01  -0.72090E-10    0.000000    0.519700E-20     1.00000    
+    5     62.9421       0.15888E-01   0.78993E-09    0.000000    0.623988E-18     1.00000    
+    6     79.8050       0.12531E-01   0.11530E-10    0.000000    0.132944E-21     1.00000    
+    7     90.6184       0.11035E-01  -0.25396E-10    0.000000    0.644971E-21     1.00000    
+    8     102.522       0.97540E-02   0.86061E-09    0.000000    0.740655E-18     1.00000    
+    9     125.976       0.79380E-02   0.12528E-10    0.000000    0.156954E-21     1.00000    
+   10     130.605       0.76567E-02  -0.42665E-10    0.000000    0.182029E-20     1.00000    
+   11     154.415       0.64760E-02  -0.12778E-10    0.000000    0.163275E-21     1.00000    
+   12     176.153       0.56769E-02  -0.18193E-11    0.000000    0.330991E-23     1.00000    
+   13     194.619       0.51382E-02   0.18344E-11    0.000000    0.336488E-23     1.00000    
+   14     199.713       0.50072E-02  -0.17094E-11    0.000000    0.292213E-23     1.00000    
+   15     203.087       0.49240E-02  -0.23318E-11    0.000000    0.543714E-23     1.00000    
+   16     213.288       0.46885E-02  -0.22771E-11    0.000000    0.518540E-23     1.00000    
+ ----------------------------------------------------------------------------------------------
+   sum                                                           0.123651E-01
+ ----------------------------------------------------------------------------------------------
+
+
+
+          ***** PARTICIPATION FACTOR CALCULATION *****ROTZ DIRECTION
+                                                                                  CUMULATIVE
+  MODE   FREQUENCY       PERIOD      PARTIC.FACTOR     RATIO    EFFECTIVE MASS   MASS FRACTION
+
+    1     0.00000        0.0000      -0.13559E-01    0.032539    0.183850E-03    0.752610E-03
+    2     0.00000        0.0000      -0.17985        0.431612    0.323470E-01    0.133168    
+    3    0.502427E-02    199.03      -0.95899E-01    0.230140    0.919665E-02    0.170816    
+    4     30.8943       0.32368E-01  -0.87112E-03    0.002091    0.758843E-06    0.170819    
+    5     62.9421       0.15888E-01   0.16561        0.397442    0.274279E-01    0.283098    
+    6     79.8050       0.12531E-01  -0.57058E-03    0.001369    0.325565E-06    0.283099    
+    7     90.6184       0.11035E-01  -0.34506E-03    0.000828    0.119069E-06    0.283100    
+    8     102.522       0.97540E-02  -0.41670        1.000000    0.173638        0.993907    
+    9     125.976       0.79380E-02  -0.16919E-02    0.004060    0.286266E-05    0.993919    
+   10     130.605       0.76567E-02   0.38431E-01    0.092228    0.147696E-02    0.999965    
+   11     154.415       0.64760E-02   0.71811E-03    0.001723    0.515686E-06    0.999967    
+   12     176.153       0.56769E-02  -0.17302E-02    0.004152    0.299371E-05    0.999979    
+   13     194.619       0.51382E-02   0.14237E-02    0.003417    0.202694E-05    0.999988    
+   14     199.713       0.50072E-02   0.54786E-03    0.001315    0.300148E-06    0.999989    
+   15     203.087       0.49240E-02   0.30634E-03    0.000735    0.938413E-07    0.999989    
+   16     213.288       0.46885E-02   0.16162E-02    0.003879    0.261210E-05     1.00000    
+ ----------------------------------------------------------------------------------------------
+   sum                                                           0.244283    
+ ----------------------------------------------------------------------------------------------
+
+
+   *** PROBLEM STATISTICS
+  ACTUAL NO. OF ACTIVE DEGREES OF FREEDOM = 115689
+  R.M.S. WAVEFRONT SIZE =  1164.6
+
+
+ *** ANSYS BINARY FILE STATISTICS
+  BUFFER SIZE USED= 16384
+       78.375 MB WRITTEN ON ELEMENT SAVED DATA FILE: file.esav
+       85.750 MB WRITTEN ON ASSEMBLED MATRIX FILE: file.full
+       15.125 MB WRITTEN ON MODAL MATRIX FILE: file.mode
+
+ FINISH SOLUTION PROCESSING
+
+
+ ***** ROUTINE COMPLETED *****  CP =       279.094
+
+
+
+ ***** END OF INPUT ENCOUNTERED *****
+
+ PURGE ALL SOLUTION AND POST DATA
+ SAVE ALL MODEL DATA
+
+ ALL CURRENT ANSYS DATA WRITTEN TO FILE NAME= file.db
+  FOR POSSIBLE RESUME FROM THIS POINT
+
+
+ NUMBER OF WARNING MESSAGES ENCOUNTERED=         19
+ NUMBER OF ERROR   MESSAGES ENCOUNTERED=          0
+
++--------------------- A N S Y S   S T A T I S T I C S ------------------------+
+
+Release: 14.0       Build: UP20111024   Platform: WINDOWS x64 
+Date Run: 11/21/2017   Time: 21:38
+Windows Process ID:         7348
+
+Compiler: Intel(R) FORTRAN Compiler Version 11.1.0  (Build: 20100414)
+          Microsoft(R) Visual C/C++ Compiler Version 15.0  (Build: 30729)
+          Intel(R) Math Kernel Library Version 10.3.3 Product Build 20110314
+
+Number of cores:   2 (Shared Memory Parallel)
+
+GPU Acceleration: Not Requested
+
+Job Name: file
+Working Directory: C:\Users\asdasd\Dropbox\Bolsa Voluntaria Gabriel Silva Prado\ATUALIZACAODEMODELO
+
+Elapsed time spent pre-processing model (/PREP7)  :      2.8 seconds
+Elapsed time spent solution - preprocessing       :      0.1 seconds
+Elapsed time spent computing solution             :    146.9 seconds
+Elapsed time spent solution - postprocessing      :      0.0 seconds
+Elapsed time spent post-processing model (/POST1) :      0.0 seconds
+
+Maximum total memory used                         :    588.0 Mbytes
+Maximum total memory allocated                    :   1028.0 Mbytes
+
++------------------ E N D   A N S Y S   S T A T I S T I C S -------------------+
+
+
+ *---------------------------------------------------------------------------*
+ |                                                                           |
+ |                            ANSYS RUN COMPLETED                            |
+ |                                                                           |
+ |---------------------------------------------------------------------------|
+ |                                                                           |
+ |            Release 14.0           UP20111024         WINDOWS x64          |
+ |                                                                           |
+ |---------------------------------------------------------------------------|
+ |                                                                           |
+ | Database Requested(-db)   512 MB    Scratch Memory Requested       512 MB |
+ | Maximum Database Used      11 MB    Maximum Scratch Memory Used     72 MB |
+ |                                                                           |
+ |---------------------------------------------------------------------------|
+ |                                                                           |
+ |        CP Time      (sec) =        279.156       Time  =  21:38:13        |
+ |        Elapsed Time (sec) =        153.000       Date  =  11/21/2017      |
+ |                                                                           |
+ *---------------------------------------------------------------------------*

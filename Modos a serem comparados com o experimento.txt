@@ -1,0 +1,4 @@
+8o. modo - Respiração abre e fecha tampos de cima e de baixo em placa fora de fase
+9o. modo - tampo de cima e de baixo vibrando modo de placa em fase
+13o. modo - 2o. modo de placa do trecho do tampo onde está a ponte
+opção 11o. modo  - 2o. modo antissimétrico da placa do trecho do tampo onde está a ponte

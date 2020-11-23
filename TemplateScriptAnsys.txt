@@ -1,0 +1,981 @@
+FINISH
+/CLEAR
+/TITLE, Modal Analysis
+/PREP7
+!-------------------------------------------
+!Parametros do modelo
+!-------------------------------------------
+!parametros auxiliares
+aux1=30e-3		 !distancia entre o travejamento da cintura e os enrijecedores
+RaioBoca=43e-3	 !raio da boca
+pos1=327e-3      !distancia entre a altura do tampo e a curva inferior
+pos2=97e-3       !distancia entre a altura do tampo e a curva superior
+
+AltTampo=480e-3  !altura do tampo/fundo
+EspCaixa=105e-3  !Distância entre o Tampo e o Fundo
+
+!curva inferior
+LargCurvaInferior=363e-3        !largura da curva inferior
+AltCurvaInferior=(AltTampo-pos1) !altura da curva inferior
+
+!cintura
+LargCintura=236e-3                     !largura da cintura
+AltCintura=(AltTampo-pos2-2*RaioBoca)  !altura da cintura
+
+!curva superior
+LargCurvaSuperior=274e-3         !largura da curva superior
+AltCurvaSuperior=(AltTampo-pos2) !altura da curva superior
+
+!travejamentos=enrijecedores que ligam as duas splines laterais
+EspTravej=20e-3*0.50		    !espessura dos travejamentos   <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+DistTravejCintura=34e-3*0.8	    !dist?ncia entre o travejamento da cintura e a cintura   !<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+
+!suporte do tampo
+AltSuporteCaixa=12e-3   !altura dos retangulos 
+
+!ponte
+LargPonte=(190e-3)	    !largura do ret?ngulo dos fios 
+AltPonte=27e-3          !altura da ponte
+
+!enrijecedores
+AltEnrij=50e-3          !altura dos enrijecedores           
+EspEnrij=10e-3*1.0      !espessura dos enrijecedores 
+OffsetEnrij=30e-3       !offset entre os pontos superiores e inferiores dos enrij 
+DistEnrij=40e-3		    !distancia entre os enrijecedores
+AltEnrijSuperior=AltCintura-DistTravejCintura-aux1
+
+!braco
+LargBraco=64e-3	    !largura do retângulo do braço
+AltBraco=340e-3 
+EspBraco=20e-3*1.0  !<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<  
+
+!mao    
+LargMao=49e-3   
+AltMao=160e-3 
+EspMao=50e-3 
+
+!Espessura do tampo 4mm
+
+!propriedades das placas (nao ilustradas no modelo)
+AEspTampo=0.002*0.70  !<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+AEspFaixa=0.002 
+AEspFundo=0.002*1.5   !<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+AEspEscala=7E-3*1.8   !<<<<<<<<<<<<<<<<<<<<<<<<<<<<<     
+AEspBraco=18E-3*2.3   !<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+AEspMao=22E-3*2.7     !<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+AEspPonte=0.02 
+AEspSuporteCaixa=58E-3 
+AEspEnrij=0.006*0.5 
+AEspTravej=0.010*0.9   !<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< 
+
+!propriedades mecanicas das madeiras
+CasteloDens=760 
+CasteloEX=11.105E9 
+CasteloEY=0.55E9 
+CasteloEZ=0.55E9 
+CasteloPRxy=0.3 
+CasteloPRyz=0.08 
+CasteloPRxz=0.08 
+CasteloGxy=0.55E9 
+CasteloGyz=0.55E9 
+CasteloGxz=0.55E9 
+
+PauFerroDens=680 
+PauFerroEX=9228E6 
+PauFerroEY=461.4E6 
+PauFerroEZ=461.4E6 
+PauFerroPRxy=0.1 
+PauFerroPRyz=0.4 
+PauFerroPRxz=0.1 
+PauFerroGxy=461.4E6 
+PauFerroGyz=461.4E6 
+PauFerroGxz=461.4E6 
+
+CedroDens=504 
+CedroEX=9839E6 
+CedroEY=491.95E6 
+CedroEZ=491.95E6 
+CedroPRxy=0.1 
+CedroPRyz=0.4 
+CedroPRxz=0.1 
+CedroGxy=491.95E6 
+CedroGyz=491.95E6 
+CedroGxz=491.95E6 
+
+BalsaDens=155 
+BalsaEX=4100E6 
+BalsaEY=125E6 
+BalsaEZ=125E6 
+BalsaPRxy=0.186 
+BalsaPRyz=0.448 
+BalsaPRxz=0.186 
+BalsaGxy=166E6 
+BalsaGyz=20.5E6 
+BalsaGxz=166E6 
+
+
+Nmod=50             !number of modes to be calculated
+Nrig=3              !number of a priori known rigid body modes
+
+
+!-------------------------------------------
+!Defining element type, material properties mesh size
+!-------------------------------------------
+esize,10e-3,0 	 !Mesh size
+
+!----Material 1 - TAMPO
+et,1,SHELL281	 !Define element type
+mp,ex,1,CasteloEX	 !Young's Modulus 
+mp,prxy,1,CasteloPRxy	 !Poisson's ratio
+mp,dens,1,CasteloDens !Density for 
+
+MPTEMP,1,0  
+MPDATA,EX,1,1,CasteloEX  
+MPDATA,EY,1,1,CasteloEY
+MPDATA,EZ,1,1,CasteloEZ
+MPDATA,PRXY,1,1,CasteloPRxy  
+MPDATA,PRYZ,1,1,CasteloPRyz  
+MPDATA,PRXZ,1,1,CasteloPRxz  
+MPDATA,GXY,1,1,CasteloGxy 
+MPDATA,GYZ,1,1,CasteloGyz 
+MPDATA,GXZ,1,1,CasteloGxz 
+MPDATA,DENS,1,1,CasteloDens 
+
+!----Material 10 - FAIXA
+et,10,SHELL281	 !Define element type
+mp,ex,10,CasteloEX	 !Young's Modulus 
+mp,prxy,10,CasteloPRxy	 !Poisson's ratio
+mp,dens,10,CasteloDens !Density for 
+
+MPTEMP,1,0  
+MPDATA,EX,10,1,CasteloEX  
+MPDATA,EY,10,1,CasteloEY
+MPDATA,EZ,10,1,CasteloEZ
+MPDATA,PRXY,10,1,CasteloPRxy  
+MPDATA,PRYZ,10,1,CasteloPRyz  
+MPDATA,PRXZ,10,1,CasteloPRxz  
+MPDATA,GXY,10,1,CasteloGxy 
+MPDATA,GYZ,10,1,CasteloGyz 
+MPDATA,GXZ,10,1,CasteloGxz 
+MPDATA,DENS,10,1,CasteloDens 
+
+!----Material 11
+et,11,SHELL281	 !Define element type
+mp,ex,11,CasteloEX	 !Young's Modulus 
+mp,prxy,11,CasteloPRxy	 !Poisson's ratio
+mp,dens,11,CasteloDens !Density for 
+
+MPTEMP,1,0  
+MPDATA,EX,11,1,CasteloEX  
+MPDATA,EY,11,1,CasteloEY
+MPDATA,EZ,11,1,CasteloEZ
+MPDATA,PRXY,11,1,CasteloPRxy  
+MPDATA,PRYZ,11,1,CasteloPRyz  
+MPDATA,PRXZ,11,1,CasteloPRxz  
+MPDATA,GXY,11,1,CasteloGxy 
+MPDATA,GYZ,11,1,CasteloGyz 
+MPDATA,GXZ,11,1,CasteloGxz 
+MPDATA,DENS,11,1,CasteloDens 
+
+!----Material 2 - ESCALA
+et,2,SHELL281	 !Define element type
+mp,ex,2,PauFerroEX	 !Young's Modulus 
+mp,prxy,2,PauFerroPRxy	 !Poisson's ratio
+mp,dens,2,PauFerroDens !Density for
+
+MPTEMP,1,0  
+MPDATA,EX,2,1,PauFerroEX
+MPDATA,EY,2,1,PauFerroEY
+MPDATA,EZ,2,1,PauFerroEZ
+MPDATA,PRXY,2,1,PauFerroPRxy  
+MPDATA,PRYZ,2,1,PauFerroPRyz  
+MPDATA,PRXZ,2,1,PauFerroPRxz
+MPDATA,GXY,2,1,PauFerroGxy 
+MPDATA,GYZ,2,1,PauFerroGyz 
+MPDATA,GXZ,2,1,PauFerroGxz 
+MPDATA,DENS,2,1,PauFerroDens 
+
+!----Material 20 - BRACO
+et,20,SHELL281	 !Define element type
+mp,ex,20,CedroEX 	 !Young's Modulus 
+mp,prxy,20,CedroPRxy	 !Poisson's ratio
+mp,dens,20,CedroDens !Density for
+
+MPTEMP,1,0  
+MPDATA,EX,20,1,CedroEX  
+MPDATA,EY,20,1,CedroEY
+MPDATA,EZ,20,1,CedroEZ
+MPDATA,PRXY,20,1,CedroPRxy
+MPDATA,PRYZ,20,1,CedroPRyz
+MPDATA,PRXZ,20,1,CedroPRxz
+MPDATA,GXY,20,1,CedroGxy
+MPDATA,GYZ,20,1,CedroGyz
+MPDATA,GXZ,20,1,CedroGxz 
+MPDATA,DENS,20,1,CedroDens
+
+!----Material 21 - MAO
+et,21,SHELL281	 !Define element type
+mp,ex,21,CedroEX 	 !Young's Modulus 
+mp,prxy,21,CedroPRxy	 !Poisson's ratio
+mp,dens,21,CedroDens !Density for
+
+MPTEMP,1,0  
+MPDATA,EX,21,1,CedroEX  
+MPDATA,EY,21,1,CedroEY
+MPDATA,EZ,21,1,CedroEZ
+MPDATA,PRXY,21,1,CedroPRxy
+MPDATA,PRYZ,21,1,CedroPRyz
+MPDATA,PRXZ,21,1,CedroPRxz
+MPDATA,GXY,21,1,CedroGxy
+MPDATA,GYZ,21,1,CedroGyz
+MPDATA,GXZ,21,1,CedroGxz 
+MPDATA,DENS,21,1,CedroDens
+
+!----Material 3 - PONTE
+et,3,SHELL281	 !Define element type
+mp,ex,3,PauFerroEX	 !Young's Modulus 
+mp,prxy,3,PauFerroPRxy	 !Poisson's ratio
+mp,dens,3,PauFerroDens !Density for
+
+MPTEMP,1,0  
+MPDATA,EX,3,1,PauFerroEX
+MPDATA,EY,3,1,PauFerroEY
+MPDATA,EZ,3,1,PauFerroEZ
+MPDATA,PRXY,3,1,PauFerroPRxy  
+MPDATA,PRYZ,3,1,PauFerroPRyz  
+MPDATA,PRXZ,3,1,PauFerroPRxz
+MPDATA,GXY,3,1,PauFerroGxy 
+MPDATA,GYZ,3,1,PauFerroGyz 
+MPDATA,GXZ,3,1,PauFerroGxz 
+MPDATA,DENS,3,1,PauFerroDens 
+
+!----Material 4
+et,4,SHELL281	 !Define element type
+mp,ex,4,CedroEX 	 !Young's Modulus 
+mp,prxy,4,CedroPRxy	 !Poisson's ratio
+mp,dens,4,CedroDens !Density for
+
+MPTEMP,1,0  
+MPDATA,EX,4,1,CedroEX  
+MPDATA,EY,4,1,CedroEY
+MPDATA,EZ,4,1,CedroEZ
+MPDATA,PRXY,4,1,CedroPRxy
+MPDATA,PRYZ,4,1,CedroPRyz
+MPDATA,PRXZ,4,1,CedroPRxz
+MPDATA,GXY,4,1,CedroGxy
+MPDATA,GYZ,4,1,CedroGyz
+MPDATA,GXZ,4,1,CedroGxz 
+MPDATA,DENS,4,1,CedroDens 
+
+!----Material 5
+et,5,SHELL281	 !Define element type
+mp,ex,5,BalsaEX	 !Young's Modulus 
+mp,prxy,5,BalsaPRxy	 !Poisson's ratio
+mp,dens,5,BalsaDens !Density for 
+
+MPTEMP,1,0  
+MPDATA,EX,5,1,BalsaEX
+MPDATA,EY,5,1,BalsaEY
+MPDATA,EZ,5,1,BalsaEZ
+MPDATA,PRXY,5,1,BalsaPRxy  
+MPDATA,PRYZ,5,1,BalsaPRyz
+MPDATA,PRXZ,5,1,BalsaPRxz
+MPDATA,GXY,5,1,BalsaGxy
+MPDATA,GYZ,5,1,BalsaGyz
+MPDATA,GXZ,5,1,BalsaGxz
+MPDATA,DENS,5,1,BalsaDens
+
+!----Material 6
+et,6,SHELL281	 !Define element type
+mp,ex,6,BalsaEX	 !Young's Modulus 
+mp,prxy,6,BalsaPRxy	 !Poisson's ratio
+mp,dens,6,BalsaDens !Density for 
+
+MPTEMP,1,0  
+MPDATA,EX,6,1,BalsaEX
+MPDATA,EY,6,1,BalsaEY
+MPDATA,EZ,6,1,BalsaEZ
+MPDATA,PRXY,6,1,BalsaPRxy  
+MPDATA,PRYZ,6,1,BalsaPRyz
+MPDATA,PRXZ,6,1,BalsaPRxz
+MPDATA,GXY,6,1,BalsaGxy
+MPDATA,GYZ,6,1,BalsaGyz
+MPDATA,GXZ,6,1,BalsaGxz
+MPDATA,DENS,6,1,BalsaDens
+
+!--------------------------------------
+! Definição das orientação das fibras e camadas do violão
+!--------------------------------------
+!Camadas Material 1  - Tampo superior
+sect,1,shell,,  
+secdata, AEspTampo/3,1,0.0,3
+secdata, AEspTampo/3,1,0.0,3
+secdata, AEspTampo/3,1,0.0,3
+secoffset,MID   
+seccontrol, , , , , , ,
+
+!Camadas Material 1.0  - Faixa
+sect,10,shell,,  
+secdata, AEspFaixa/3,10,0.0,3
+secdata, AEspFaixa/3,10,0.0,3
+secdata, AEspFaixa/3,10,0.0,3
+secoffset,MID   
+seccontrol, , , , , , ,
+
+!Camadas Material 1.1  - Fundo
+sect,11,shell,,  
+secdata, AEspFundo/3,11,0.0,3
+secdata, AEspFundo/3,11,0.0,3
+secdata, AEspFundo/3,11,0.0,3
+secoffset,MID   
+seccontrol, , , , , , ,
+
+
+!Camadas Material 2 - Escala
+sect,2,shell,,  
+secdata, AEspEscala,2,0.0,3
+secoffset,MID   
+seccontrol, , , , , , ,
+
+!Camadas Material 2.0 - Braço
+sect,20,shell,,  
+secdata, AEspBraco,20,0.0,3
+secoffset,MID   
+seccontrol, , , , , , ,
+
+!Camadas Material 2.1 - Suporte Fios
+sect,21,shell,,  
+secdata, AEspMao,21,0.0,3
+secoffset,MID   
+seccontrol, , , , , , ,
+
+
+!Camadas Material 3 - Ponte
+sect,3,shell,,  
+secdata, AEspPonte,3,0.0,3
+secoffset,USER,-AEspPonte/2              !<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<  
+seccontrol, , , , , , ,
+
+!Camadas Material 4 - Retângulos de Suporte
+sect,4,shell,,  
+secdata, AEspSuporteCaixa,4,0.0,3
+secoffset,MID   
+seccontrol, , , , , , ,
+
+!Camadas Material 5 - Enrijecedores do tampo
+sect,5,shell,,  
+secdata, AEspEnrij,5,0.0,3
+secoffset,MID   
+seccontrol, , , , , , ,
+
+!Camadas Material 6 - Travejamentos
+sect,6,shell,,  
+secdata, AEspTravej,6,0.0,3
+secoffset,MID   
+seccontrol, , , , , , ,
+
+!-------------------------------------------
+!Defining Geometry
+!-------------------------------------------
+K, 1,     0,      0,  0	           
+K,2,(LargCurvaInferior/3) , (AltCurvaInferior/8), 0
+K,3,-(LargCurvaInferior/3) , (AltCurvaInferior/8), 0
+K, 4,(LargCurvaInferior/2),(AltCurvaInferior),  0
+K, 5,-(LargCurvaInferior/2), (AltCurvaInferior),  0
+K, 6, (LargCintura/2), (AltCintura),  0
+K, 7, -(LargCintura/2), (AltCintura), 0
+K,8, (LargCurvaSuperior/2),(AltCurvaSuperior),0
+K,9, -(LargCurvaSuperior/2),(AltCurvaSuperior),0
+K,10, (LargCurvaSuperior/3),(AltTampo-pos2/8),0
+K,11, -(LargCurvaSuperior/3),(AltTampo-pos2/8),0
+K, 12, 0, AltTampo, 0
+SPLINE, 1, 2, 4, 6, ,,-1,,,,1,, !SPLINE do inicio at? a cintura lado direito
+SPLINE, 6,8, 10, 12,,,,-1,,-1,,, !SPLINE da cintura at? o final
+SPLINE, 1, 3,5,7,,,1,,,,1, !SPLINE do inicio at? a cintura lado esquerdo
+SPLINE, 7, 9, 11 , 12, ,,,-1,,1,, !SPLINE do inicio at? a cintura lado esquerdo
+L, 7,6 !linha auxiliar
+!AL, 1, 2, 3,13,9,8,7 !?rea 1
+!AL, 13, 4, 5, 6, 12, 11, 10 !?rea 2
+!AADD, 1, 2
+
+K, (1+12),     0,      0,  EspCaixa	           
+K,(2+12),(LargCurvaInferior/3) , (AltCurvaInferior/8), EspCaixa
+K,(3+12),-(LargCurvaInferior/3) , (AltCurvaInferior/8), EspCaixa
+K, (4+12),(LargCurvaInferior/2),(AltCurvaInferior),  EspCaixa
+K, (5+12),-(LargCurvaInferior/2), (AltCurvaInferior),  EspCaixa
+K, (6+12), (LargCintura/2), (AltCintura),  EspCaixa
+K, (7+12), -(LargCintura/2), (AltCintura), EspCaixa
+K,(8+12), (LargCurvaSuperior/2),(AltCurvaSuperior),EspCaixa
+K,(9+12), -(LargCurvaSuperior/2),(AltCurvaSuperior),EspCaixa
+K,(10+12), (LargCurvaSuperior/3),(AltTampo-pos2/8),EspCaixa
+K,(11+12), -(LargCurvaSuperior/3),(AltTampo-pos2/8),EspCaixa
+K, (12+12), 0, AltTampo, EspCaixa
+SPLINE, (1+12), (2+12), (4+12), (6+12), ,,-1,,,,1,, !SPLINE do inicio at? a cintura lado direito
+SPLINE, (6+12),(8+12), (10+12), (12+12),,,,-1,,-1,,, !SPLINE da cintura at? o final
+SPLINE, (1+12), (3+12),(5+12),(7+12),,,1,,,,1, !SPLINE do inicio at? a cintura lado esquerdo
+SPLINE, (7+12), (9+12), (11+12) , (12+12), ,,,-1,,1,, !SPLINE do inicio at? a cintura lado esquerdo
+L, 19,18 !linha auxiliar
+!AL, (1+12), (2+12), (3+12),(13+12),(9+12),(8+12),(7+12) !?rea 1
+!AL, (13+12), (4+12), (5+12), (6+12), (12+12), (11+12), (10+12) !?rea 2
+!AADD, 1, 2
+
+L,1,1+12
+L,2,2+12
+L,3,3+12
+L,4,4+12
+L,5,5+12
+L,6,6+12
+L,7,7+12
+L,8,8+12
+L,9,9+12
+L,10,10+12
+L,11,11+12
+L,12,12+12
+
+
+!Linhas Auxiliares
+L,8,9                !linha 39 curva cima superior
+L,8+12,9+12	     !linha 40 , curva cima, inferior
+
+
+
+
+!travejamentos superiores
+
+!K,30, (LargCintura/2), (AltCintura),  EspTravej
+!K,31, -(LargCintura/2), (AltCintura), EspTravej
+K,32, (LargCurvaSuperior/2),(AltCurvaSuperior),EspTravej
+K,33, -(LargCurvaSuperior/2),(AltCurvaSuperior),EspTravej
+!L,30,31 	 	!L41
+!L,30,6			!L42
+!L,31,7			!L43
+L,32,33			!L44
+L,32,8			!L45
+L,33,9			!L46
+
+!Travejamento Inferior a Cintura na parte superior
+
+K,94, LargCintura/2,AltCintura-DistTravejCintura,0
+K,95, -LargCintura/2,AltCintura-DistTravejCintura,0
+K,96, LargCintura/2, AltCintura-DistTravejCintura, EspTravej
+K,97, -LargCintura/2, AltCintura-DistTravejCintura, EspTravej
+L,96,97
+L,97,95
+L,96,94
+L,94,95
+L, 6, 94
+L, 7,95
+
+!travejamentos inferiores
+
+!K,34, (LargCintura/2), (AltCintura),  EspCaixa-EspTravej
+!K,35, -(LargCintura/2), (AltCintura), EspCaixa-EspTravej
+!L,34,35 	 		!L47
+!L,34,6+12			!L48
+!L,35,7+12			!L49
+!Travejamento Inferior a Cintura na parte inferior
+
+K,98, LargCintura/2,AltCintura-DistTravejCintura,EspCaixa
+K,99, -LargCintura/2,AltCintura-DistTravejCintura,EspCaixa
+K,100, LargCintura/2, AltCintura-DistTravejCintura, EspCaixa-EspTravej
+K,101, -LargCintura/2, AltCintura-DistTravejCintura, EspCaixa-EspTravej
+L,98,99
+L,100,101
+L,98,100
+L,99,101
+L, 6+12, 98
+L, 7+12,99
+
+K,36, (LargCurvaSuperior/2),(AltCurvaSuperior),EspCaixa-EspTravej
+K,37, -(LargCurvaSuperior/2),(AltCurvaSuperior),EspCaixa-EspTravej
+L,36,37			        !L50
+L,36,8+12			!L51
+L,37,9+12			!L52
+
+L, 17,16			!L53
+K, 38,LargCurvaInferior/2,AltCurvaInferior, EspCaixa-EspTravej
+K, 39,-LargCurvaInferior/2,AltCurvaInferior, EspCaixa-EspTravej
+L, 38, 39			!L54
+L, 38, 16			!L55
+L, 39, 17			!L56
+
+L, 14, 15
+K,40,(LargCurvaInferior/3) , (AltCurvaInferior/8), EspCaixa-EspTravej
+K,41,-(LargCurvaInferior/3) , (AltCurvaInferior/8), EspCaixa-EspTravej
+L, 40, 41
+L, 40, 14
+L, 41, 15
+
+!enrijecedores
+K,50,EspEnrij/2,AltEnrijSuperior,0
+K,51,EspEnrij/2,AltEnrij,0
+K,52,-EspEnrij/2,AltEnrijSuperior,0
+K,53,-EspEnrij/2,AltEnrij,0
+L,50,51
+L,50,52
+L,51,53
+L,52,53
+
+K,54,DistEnrij,AltEnrijSuperior,0
+K,55,DistEnrij+OffsetEnrij,AltEnrij,0
+K,56,DistEnrij+EspEnrij,AltEnrijSuperior,0
+K,57,DistEnrij+EspEnrij+OffsetEnrij,AltEnrij,0
+L,(50+4),(51+4)
+L,(50+4),(52+4)
+L,(51+4),(53+4)
+L,(52+4),(53+4)
+
+K,58,-DistEnrij,AltEnrijSuperior,0
+K,59,-(DistEnrij+OffsetEnrij),AltEnrij,0
+K,60,-(DistEnrij+EspEnrij),AltEnrijSuperior,0
+K,61,-(DistEnrij+EspEnrij+OffsetEnrij),AltEnrij,0
+L,(50+4*2),(51+4*2)
+L,(50+4*2),(52+4*2)
+L,(51+4*2),(53+4*2)
+L,(52+4*2),(53+4*2)
+
+K,62,2*DistEnrij,AltEnrijSuperior,0
+K,63,2*DistEnrij+2*OffsetEnrij,AltEnrij,0
+K,64,2*DistEnrij+EspEnrij,AltEnrijSuperior,0
+K,65,2*DistEnrij+2*OffsetEnrij+EspEnrij,AltEnrij,0
+L,(50+4*3),(51+4*3)
+L,(50+4*3),(52+4*3)
+L,(51+12),(53+12)
+L,(52+4*3),(53+4*3)
+
+K,66,-(2*DistEnrij),AltEnrijSuperior,0
+K,67,-(2*DistEnrij+2*OffsetEnrij),AltEnrij,0
+K,68,-(2*DistEnrij+EspEnrij),AltEnrijSuperior,0
+K,69,-(2*DistEnrij+2*OffsetEnrij+EspEnrij),AltEnrij,0
+L,(50+4*4),(51+4*4)
+L,(50+4*4),(52+4*4)
+L,(51+4*4),(53+4*4)
+L,(52+4*4),(53+4*4)
+
+!retangulos de suporte
+
+K,71,0,AltSuporteCaixa,0
+K,72,0,AltSuporteCaixa,EspCaixa
+L,1,71
+L,72,13
+L,72,71
+
+K,74,0,(AltTampo-AltSuporteCaixa),0
+K,75,0,(AltTampo-AltSuporteCaixa),EspCaixa
+L,12,74
+L,74,75
+L,75,24
+
+!Enrijecedores PT.2
+K,80,EspEnrij/2,AltEnrijSuperior,EspEnrij
+K,81,EspEnrij/2,AltEnrij,EspEnrij
+L, 80,81
+L, 80, 50
+L, 81, 51
+
+K,82,DistEnrij,AltEnrijSuperior,EspEnrij
+K,83,DistEnrij+OffsetEnrij,AltEnrij,EspEnrij
+L, 82, 83
+L, 82, 54
+L, 83, 55
+
+K,84,-(DistEnrij),AltEnrijSuperior,EspEnrij
+K,85,-(DistEnrij+OffsetEnrij),AltEnrij,EspEnrij
+L,84, 85
+L, 84, 58
+L, 85, 59
+
+K,86,(2*DistEnrij),AltEnrijSuperior,EspEnrij
+K,87,2*(DistEnrij+OffsetEnrij),AltEnrij,EspEnrij
+L, 86, 87
+L, 86, 62
+L, 87, 63
+
+K,88,-(2*DistEnrij),AltEnrijSuperior,EspEnrij
+K,89,-2*(DistEnrij+OffsetEnrij),AltEnrij,EspEnrij
+L, 88, 89
+L, 88, 66
+L, 89, 67
+
+!PONTE
+
+K, 90, LargPonte/2, AltCurvaInferior,0
+K, 91, -(LargPonte/2), AltCurvaInferior, 0
+K, 92, LargPonte/2, AltCurvaInferior+AltPonte,0
+K,93, -(LargPonte/2), AltCurvaInferior+AltPonte,0
+L,90,91
+L,90,92
+L,91,93
+L,92,93
+
+!Retângulo do Braço
+K,102,LargMao/2,AltTampo+AltBraco,0
+K,103,-LargMao/2,AltTampo+AltBraco,0
+K,104,LargBraco/2,(AltCurvaSuperior+AltCintura)/2,0
+K,105,-LargBraco/2,(AltCurvaSuperior+AltCintura)/2,0
+K,110,0,AltTampo+AltBraco,0
+K,113,0,(AltCurvaSuperior+AltCintura)/2,0
+L,102,110
+L,110,103
+L,104,113
+L,113,105
+L,103,105
+L,102,104
+
+!Retangulo do tampo auxilliar
+K,106,0,AltTampo+AltSuporteCaixa,0
+K,107,0,AltTampo+AltSuporteCaixa,EspCaixa
+L,106,12
+L,107,24
+L,110,106
+L,106,113
+
+!Mao do Violao
+K,108,LargMao/2,AltTampo+AltBraco+AltMao,EspMao
+K,109,-LargMao/2,AltTampo+AltBraco+AltMao,EspMao
+L,108,109
+L,108,102
+L,109,103
+
+!ret suport braco
+K,111,0,AltTampo+AltSuporteCaixa,EspBraco
+K,112,0,AltTampo+AltBraco,EspBraco
+L,111,112
+L,112,110
+L,106,111
+L,111,107
+
+!retangulos auxiliares p/ os retangulos auxiliares
+K,121,EspEnrij,AltTampo-AltSuporteCaixa,0
+K,114,EspEnrij,AltTampo+30e-3,0
+L,121,114
+L,121,74
+L,114,12
+
+K,115,EspEnrij,AltTampo-AltSuporteCaixa,EspCaixa
+K,116,EspEnrij,AltTampo+30e-3,EspCaixa
+L,115,116
+L,115,75
+L,116,24
+
+K,117,EspEnrij,AltSuporteCaixa,0
+K,118,EspEnrij,0-30e-3,0
+L,117,118
+L,117,71
+L,118,1
+
+
+K,119,EspEnrij,AltSuporteCaixa,EspCaixa
+K,120,EspEnrij,0-30e-3,EspCaixa
+L,119,120
+L,119,72
+L,120,13
+
+!?reas Auxiliares Casco Superior
+AL, 1,2,3,13,9,8,7 		!A1
+AL, 13,10,4,39			!A2
+AL, 39, 11,12,6,5		!A3
+
+!Circulo
+CYL4, 0, (AltTampo-pos2-RaioBoca), RaioBoca,0,0,0,0  		!A4
+
+!?reas Enrijecedores
+AL,102,103,104,79		!A5
+AL,71,96,97,98			!A6
+AL,94,93,95,67			!A7
+AL,75,100,99,101		!A8
+AL,83,105,106,107		!A9
+
+!ENRIJECEDORES
+AL,79,80,81,82			!A10
+AL,71,72,73,74			!A11
+AL,67,68,69,70			!A12
+AL,75,76,77,78			!A13
+AL,83,84,85,86			!A14
+
+!?REA RETANGULOS
+AL,27,87,88,89			!A15 parte de baixo
+
+AL,38,90,91,92			!A16 parte de cima
+
+!?rea Travejadores
+AL,63,64,65,66			!A17
+AL,59,60,61,62			!A18
+
+AL,50,51,52,53			!A19parte de baixo do circulo
+AL,44,45,46,47			!A20
+
+AL,40,56,57,58			!A21parte de cima do circulo
+AL,39,41,42,43			!A22
+
+!?reas Laterais
+AL,1, 14,27,28			!A23
+AL, 2, 28, 30 , 15
+AL, 3, 30 , 16 ,32		!A25
+AL, 4, 32, 17, 34
+AL, 5, 34, 18 , 36		!A27
+AL, 6, 36, 19 , 38
+AL, 7, 27, 20, 29		!A29
+AL, 8, 21,29,31			!A30
+AL, 9, 22, 31, 33
+AL, 10 , 33, 35, 23		!A32
+AL, 11,24, 35, 37
+AL, 12, 37,38, 25		!A34
+
+!?reas Auxiliares Casco Inferior
+AL,19,18,24,25,40		!A35
+AL,26,17,40,23			!A36
+AL,26,22,59,16			!A37
+AL,59,21,63,15			!A38
+AL,63,14,20			!A39
+
+!?rea Ret?ngulo de suporte dos Fios
+AL,108,109,110,111
+
+!?reas Auxiliares
+AL,49,13,48,47
+AL,26,50,54,55
+
+!área retangulo do braço
+AL,113,120,116,121,115
+AL,114,120,117,121,112
+
+!área bracos
+AL,127,125,120,126
+AL,128,127,118,119,38
+AL,122,124,113,112,123
+
+!Auxiliares
+AL,90,129,130,131
+AL,92,132,133,134
+AL,87,135,136,137
+AL,88,138,139,140
+
+!Opera??es de ?rea
+
+AOVLAP,1,40,41,10,11,12,13,14,50
+AOVLAP,37,42
+
+AOVLAP,2,4,44,43
+AOVLAP,3,40,50,48
+
+AOVLAP, 35, 49
+AOVLAP, 39, 51
+
+ADELE,3
+ADELE, 35
+ADELE, 52
+
+ADELE, 13
+ADELE, 37
+ADELE, 70
+
+AGLUE,8,58,66,57,64,67
+AGLUE,7,54,62,53,63,67
+AGLUE,6,56,65,55,63,67
+
+AGLUE, 40,48,34,28
+AGLUE, 49,50,23,29
+AGLUE, 59,13,29,67
+AGLUE, 4,2,73,71,74,72
+
+AGLUE, 20,41,67
+
+AGLUE,22,12,11,69,68,43,71,73,44
+
+AGLUE,68,11,43,41
+AGLUE, 69,12,44,22
+
+AGLUE, 15,23,29,49,50,59,67
+AGLUE, 16,6,34,48,71,73,4,40
+
+!--------------------------------------
+! Gerando a malha por regiões e especificando as propriedades
+!--------------------------------------
+!Tampo superior e inferior e laterais---#1
+TYPE,   1   
+MAT,    1
+REAL,   
+ESYS,   0   
+SECNUM, 1 
+TSHAP,LINE 
+
+!Tampo superior
+AMESH,43
+AMESH,44
+AMESH,68
+AMESH,69
+AMESH,22
+AMESH,10
+AMESH,56
+AMESH,55
+AMESH,54
+AMESH,53
+AMESH,58
+AMESH,57
+AMESH,14
+AMESH,59
+AMESH,67
+
+TYPE,   10   
+MAT,    10
+REAL,   
+ESYS,   0   
+SECNUM, 10 
+TSHAP,LINE 
+
+!Laterais
+AMESH, 23
+AMESH, 24
+AMESH, 25
+AMESH, 26
+AMESH, 27
+AMESH, 35
+
+AMESH, 28
+AMESH, 33
+AMESH, 32
+AMESH, 31
+AMESH, 30
+AMESH, 29
+
+TYPE,   11   
+MAT,    11
+REAL,   
+ESYS,   0   
+SECNUM, 11 
+TSHAP,LINE 
+
+!Tampo inferior
+AMESH,40
+AMESH,48
+AMESH,36
+AMESH,42
+AMESH,1
+AMESH,38
+AMESH,50
+AMESH,49
+
+!Braço  --#2
+TYPE,   2   
+MAT,    2
+REAL,   
+ESYS,   0   
+SECNUM, 2 
+TSHAP,LINE 
+
+!Braço cima
+AMESH, 11
+AMESH, 12
+AMESH, 72
+AMESH,74
+AMESH,73
+AMESH,71
+AMESH,2
+AMESH,4
+
+!Braço  --#2
+TYPE,   20   
+MAT,    20
+REAL,   
+ESYS,   0   
+SECNUM, 20 
+TSHAP,LINE 
+
+!Braço baixo
+AMESH, 45
+
+!Braço  --#2
+TYPE,   21   
+MAT,    21
+REAL,   
+ESYS,   0   
+SECNUM, 21 
+TSHAP,LINE 
+
+!suporte fios
+AMESH, 47
+
+!Ponte   --#3
+TYPE,   3   
+MAT,    3
+REAL,   
+ESYS,   0   
+SECNUM, 3 
+TSHAP,LINE 
+
+!Ponte
+AMESH,60
+AMESH,65
+AMESH,63
+AMESH,62
+AMESH,64
+AMESH,66
+AMESH,61
+
+!Retangulos de suporte---#4 
+TYPE,   4  
+MAT,    4
+REAL,  
+ESYS,   0   
+SECNUM, 4 
+TSHAP,LINE 
+
+AMESH, 16
+AMESH, 46
+AMESH, 15
+
+!Enrijecedores tampo---#5 
+TYPE,   5 
+MAT,    5
+REAL,   
+ESYS,   0   
+SECNUM, 5 
+TSHAP,LINE 
+
+AMESH, 5
+AMESH, 3
+AMESH, 8
+AMESH, 7
+AMESH, 9
+
+!Travejamentos---#6 
+TYPE,   6 
+MAT,    6
+REAL,   
+ESYS,   0   
+SECNUM, 6 
+TSHAP,LINE 
+
+AMESH, 13
+AMESH, 21
+AMESH, 19
+AMESH, 18
+AMESH, 20
+AMESH, 17
+
+!Condições de contorno aplicada a keypoints
+DK, 110,UX, 0,,, UY,UZ
+
+!ksel,s,loc,x,-2e-3,2e-3
+!ksel,r,loc,y,AltCurvaInferior+AltPonte/2-2e-3,AltCurvaInferior+AltPonte/2+2e-3
+!ksel,r,loc,z,-2e-3,2e-3
+
+!FK,all,FZ,1			! Apply force
+
+!ksel,all
+
+DTRAN   !Trasnferir condições de contoro aos nós da malha
+
+FINISH
+
+/SOLU                   !Solution Phase
+antype,2                !Modal Analysis
+MODOPT,SUBSP,16,,,,,    !Subspace iteration method and first 12 modes
+!-------------------------------------------
+!Solve the Eigenvalue/EigenVector
+!-------------------------------------------
+SOLVE
+FINISH
+
+
